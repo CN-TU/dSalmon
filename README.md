@@ -4,7 +4,7 @@ dSalmon (Data Stream Analysis Algorithms for the Impatient) is a framework for a
 Installation
 ------------
 dSalmon can be installed using `pip` by running
-```pip install github+https://github.com/CN-TU/dSalmon```
+```pip install git+https://github.com/CN-TU/dSalmon```
 
 Outlier Detectors
 -----------------
