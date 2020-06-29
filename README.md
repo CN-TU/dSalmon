@@ -51,6 +51,7 @@ Extending dSalmon
 -----------------
 dSalmon uses `swig` for generating wrapper code for the C++ core algorithms and instantiates single and double precision floating point algorithms of each algorithm.
 The `cpp` folder contains the C++ code, which might be used directly by C++ projects. The `python` folder contains the Python interface invoking the `swig` wrappers and the `swig` folder contains the C++ interface.
-When adding new algorithms, the `swig` wrappers have to be recreated. To this end, `swig` has to be installed and a `pip` package can be created and installed  using ```
-make && pip install dSalmon.tar.xz`
+When adding new algorithms, the `swig` wrappers have to be recreated. To this end, `swig` has to be installed and a `pip` package can be created and installed  using
+```
+make && pip install dSalmon.tar.xz
 ```
