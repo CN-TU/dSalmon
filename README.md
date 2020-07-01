@@ -44,7 +44,7 @@ import numpy as np
 tree = MTree()
 
 # insert a point [1,2,3,4] with key 5
-tr[5] = [1,2,3,4]
+tree[5] = [1,2,3,4]
 
 # insert some random test data
 X = np.random.rand(1000,4)
