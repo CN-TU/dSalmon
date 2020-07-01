@@ -3,7 +3,9 @@ dSalmon (Data Stream Analysis Algorithms for the Impatient) is a framework for a
 
 ## Installation
 dSalmon can be installed using `pip` by running
-```pip install git+https://github.com/CN-TU/dSalmon```
+```
+pip3 install git+https://github.com/CN-TU/dSalmon
+```
 
 ## Outlier Detectors
 dSalmon provides several algorithms for detecting outliers in data streams. Usage is easiest using the Python interface, which provides an interface similar to the algorithms from scikit-learn. The following example performs k-nearest neighbor outlier detection with a window size of 100 samples:
