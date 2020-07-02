@@ -2,7 +2,9 @@
 #ifndef DSALMON_ARRAY_TYPES_H
 #define DSALMON_ARRAY_TYPES_H
 
-
+// Array types for passing Numpy data from python to C++ and back. For
+// const NumpyArray1 and const NumpyArray2 arguments, data is
+// automatically converted from compatible Python types.
 template<typename DataType>
 struct NumpyArray1 {
 	DataType* data;

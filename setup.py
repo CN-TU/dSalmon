@@ -18,7 +18,6 @@ numpy_path = os.path.dirname(numpy.__file__)
 numpy_include = numpy_path + '/core/include'
 
 CPP_SOURCES = [
-	'cpp/slidingWindow.cpp',
 	'swig/MTree_wrapper.cpp',
 	'swig/outlier_wrapper.cpp',
 	'swig/dSalmon_wrap.cxx'

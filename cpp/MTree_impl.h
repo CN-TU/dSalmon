@@ -5,10 +5,8 @@
 #include <algorithm>
 #include <assert.h>
 #include <unordered_map>
+#include <unordered_set>
 
-#include <unordered_set> // TODO
-
-#include <iostream> // TODO
 #include <thread>
 
 #include "PlaceholderQueue.h"
@@ -115,7 +113,6 @@ void MTree<Key,T,DistanceType,NodeStats>::computeNodeRadius(RoutingNode& node) {
 		// A node is allowed to have slightly less than min_node_size children at this point
 		assert (node.children.size() >= min_node_size - 1);
 		if (node.is_leaf) {
-			// std::cout << "recomputeParentRadius leaf" << std::endl;
 			DistanceType max_distance = std::numeric_limits<DistanceType>::lowest();
 			ObjectNode* new_furthest = nullptr;
 			for (Node* child : node.children) {
@@ -125,7 +122,6 @@ void MTree<Key,T,DistanceType,NodeStats>::computeNodeRadius(RoutingNode& node) {
 				}
 			}
 			assert(new_furthest != nullptr);
-			// std::cout << "changing radius from " << node.covering_radius << " to " << max_distance << std::endl;
 			node.furthest_descendant = new_furthest;
 			node.covering_radius = max_distance;
 		}
@@ -197,7 +193,6 @@ void MTree<Key,T,DistanceType,NodeStats>::check() {
 				false
 			);
 			DistanceType furthest_dist = distance_function(node->furthest_descendant->getKey(), node->getKey());
-			// std::cout << furthest_dist << " " << node->covering_radius << " " << furthest.second << " " << node->children.size() << " " << node->is_leaf << std::endl;
 			assert(isDescendant(*node->furthest_descendant, *node));
 			assert(furthest_dist == node->covering_radius);
 			assert(node->covering_radius == furthest.second);
@@ -219,7 +214,6 @@ void MTree<Key,T,DistanceType,NodeStats>::check() {
 	assert (total_routingnodes == routing_nodes.size());
 	assert(total_children == entries.size());
 	assert(root->stats.getDescendantCount() == total_children);
-	// std::cout << "Check successful" << std::endl;
 #endif
 }
 
@@ -264,7 +258,6 @@ void MTree<Key,T,DistanceType,NodeStats>::promoteAndPartition(std::vector<Node*>
 
 template<typename Key, typename T, typename DistanceType, typename NodeStats>
 void MTree<Key,T,DistanceType,NodeStats>::split(RoutingNode& to_split) {
-	// std::cout << "split" << std::endl;
 	for (RoutingNode *node = &to_split; ; node = node->parent) {
 		std::size_t children_cnt = node->children.size();
 		(void)children_cnt; // only used for asserts. suppress warning
@@ -403,13 +396,11 @@ void MTree<Key,T,DistanceType,NodeStats>::treeInsert(ObjectNode& new_entry, std:
 			DistanceType parent_distance = distance_function(child_as_RoutingNode.key, key);
 			
 			if (!within_covering_radius && parent_distance <= child_as_RoutingNode.covering_radius) {
-				// std::cout << "Case A " << child_as_RoutingNode.is_leaf << " "  << parent_distance << " " << child_as_RoutingNode.covering_radius << std::endl;
 				within_covering_radius = true;
 				nearest = child;
 				nearest_distance = parent_distance;
 			}
 			else if (within_covering_radius) {
-				// std::cout << "Case B " << child_as_RoutingNode.is_leaf << " "  << parent_distance << std::endl;
 				if (parent_distance <= child_as_RoutingNode.covering_radius) {
 					if (parent_distance < nearest_distance) {
 						nearest = child;
@@ -419,7 +410,6 @@ void MTree<Key,T,DistanceType,NodeStats>::treeInsert(ObjectNode& new_entry, std:
 			}
 			else {
 				assert(parent_distance > child_as_RoutingNode.covering_radius);
-				// std::cout << "Case C " << child_as_RoutingNode.is_leaf << " " << parent_distance << std::endl;
 				if (parent_distance < child_as_RoutingNode.covering_radius + radius_increase) {
 					nearest = child;
 					nearest_distance = parent_distance;
@@ -430,11 +420,9 @@ void MTree<Key,T,DistanceType,NodeStats>::treeInsert(ObjectNode& new_entry, std:
 		assert(nearest != nullptr);
 		node = static_cast<RoutingNode*>(nearest);
 		if (!within_covering_radius) {
-			// std::cout << "Increasing radius from " << node->covering_radius << " to " << node->covering_radius + nearest_distance << std::endl;
 			node->covering_radius = nearest_distance;
 			node->furthest_descendant = &new_entry;
 		}
-		// while (!node->mutex.try_lock()) std::this_thread::yield();
 		node->mutex.lock();
 		node->stats.addDescendant(new_entry.value);
 		if (node->children.size() < max_node_size) {
@@ -520,7 +508,6 @@ void MTree<Key,T,DistanceType,NodeStats>::donateChild(RoutingNode& from, Routing
 			nearestGrandchildIt = it;
 		}
 	}
-	// std::cout << "donate middle" << " " << distanceNearestGrandchild << std::endl;
 	Node& nearestGrandchild = **nearestGrandchildIt;
 	bool recompute_donors_radius;
 	if (from.is_leaf) {
@@ -538,7 +525,6 @@ void MTree<Key,T,DistanceType,NodeStats>::donateChild(RoutingNode& from, Routing
 	grandchildren.erase(nearestGrandchildIt);
 	nearestGrandchild.parent = &to;
 	nearestGrandchild.parent_distance = distanceNearestGrandchild;
-	// std::cout << "donor " << from.is_leaf << " " << from.covering_radius << " " << distance_function(from.getKey(), nearestGrandchild.getKey()) << " " << recompute_donors_radius << std::endl;
 	if (recompute_donors_radius)
 		computeNodeRadius(from);
 	if (!from.is_leaf) {
@@ -571,15 +557,12 @@ void MTree<Key,T,DistanceType,NodeStats>::mergeRoutingNodes(RoutingNode& from, R
 	}
 	to.children.insert(to.children.end(), from.children.begin(), from.children.end());
 	to.stats.addDescendants(from.stats);
-	// std::cout << "merge" << std::endl;
-	// std::cout << "end parent radius" << std::endl;
 	std::vector<Node*>& siblings = from.parent->children;
 	auto to_erase_it =
 		std::find(siblings.begin(), siblings.end(), &from);
 	assert(to_erase_it != siblings.end());
 	siblings.erase(to_erase_it);
 	delete &from;
-	// std::cout << "end merge" << std::endl;
 }
 
 template<typename Key, typename T, typename DistanceType, typename NodeStats>
@@ -613,14 +596,11 @@ void MTree<Key,T,DistanceType,NodeStats>::rebalanceNode(RoutingNode& node) {
 			}
 		}
 	}
-	// std::cout << "balance middle" << std::endl;
 	if (nearestDonor != nullptr) {
-		// std::cout << "donate" << std::endl;
 		donateChild(*nearestDonor, node);
 		assert (node.children.size() >= min_node_size);
 	}
 	else {
-		// std::cout << "merge" << std::endl;
 		assert (nearestMergeCandidate != nullptr);
 		mergeRoutingNodes(node, *nearestMergeCandidate, distanceNearestMergeCandidate);
 		assert(nearestMergeCandidate->children.size() >= min_node_size);
@@ -637,7 +617,6 @@ void MTree<Key,T,DistanceType,NodeStats>::pullUpRoot() {
 		root = nullptr;
 	}
 	else if (!root->is_leaf) {
-		// std::cout << "Case 1 " << routing_nodes.size() << std::endl;
 		assert (root->children.size() == 1);
 		RoutingNode* old_root = root;
 		root = static_cast<RoutingNode*>(root->children[0]);
@@ -670,14 +649,10 @@ void MTree<Key,T,DistanceType,NodeStats>::treeErase(ObjectNode& to_erase) {
 		RoutingNode* node_parent = node->parent;
 		if (node->children.size() >= min_node_size)
 			break;
-		// std::cout << "begin balance" << std::endl;
 		rebalanceNode(*node);
-		// Note: node might have been freed now
-		// std::cout << "end balance" << std::endl;
 		// *node might have been erased in rebalanceNode()
 		node = node_parent;
 	}
-	// std::cout << "end loop" << std::endl;
 	assert(entries.size() > min_node_size);
 	if (root->children.size() <= 1) {
 		pullUpRoot();
@@ -700,7 +675,6 @@ auto MTree<Key,T,DistanceType,NodeStats>::nnSubtreeSearch(const KeyType& needle,
 	DistanceType best_bound = best_distance;
 	if (reverse) {
 		bound_estimator = [this,&best_bound](Query& query, const NodeStatsType*, NodeTagType, NodeTagType, DistanceType lower, DistanceType) {
-			// std::cout << "bound esti" << lower << std::endl;
 			if (lower > best_bound) {
 				best_bound = lower;
 				query.setMinRadius(best_bound);
@@ -717,10 +691,8 @@ auto MTree<Key,T,DistanceType,NodeStats>::nnSubtreeSearch(const KeyType& needle,
 	}
 	Query query = subtreeSearch(needle, min_radius, max_radius, reverse, bound_estimator, subtree, locking);
 	for (; !query.atEnd(); ++query) {
-		// std::cout << "point" << std::endl;
 		iterator entry = (*query).first;
 		DistanceType distance = (*query).second;
-		// assert (distance == best_distance);
 		assert(reverse ? (distance >= best_distance) : (distance <= best_distance));
 		if (best_distance != distance || best == end()) {
 			best_distance = distance;
@@ -963,7 +935,6 @@ bool MTree<Key,T,DistanceType,NodeStats>::Query::pruneQueue(RoutingNode** node, 
 		(queue.back().distance_bound < tolerant_min_search_radius) :
 		(queue.back().distance_bound > tolerant_max_search_radius) ;
 	if (done) {
-		// std::cout << queue.size() << std::endl;
 		return true;
 	}
 
@@ -1052,7 +1023,6 @@ void MTree<Key,T,DistanceType,NodeStats>::Query::findNextLeaf() {
 			// we need to make sure this branch isn't being rebuilt at the moment
 			// TODO: make this conditional (and check)
 			node->mutex.lock();
-			// while (!node->mutex.try_lock()) std::this_thread::yield();
 			node->mutex.unlock();
 		}
 
@@ -1063,7 +1033,6 @@ void MTree<Key,T,DistanceType,NodeStats>::Query::findNextLeaf() {
 		}
 		for (Node* child : node->children) {
 			RoutingNode& child_as_RoutingNode = static_cast<RoutingNode&>(*child);
-			// std::cout << "first bound: " << distance + child->parent_distance + child_as_RoutingNode.covering_radius << std::endl;
 			if (distance + child->parent_distance + child_as_RoutingNode.covering_radius < tolerant_min_search_radius)
 				continue;
 			double upper_bound = tolerant_max_search_radius + child_as_RoutingNode.covering_radius;
@@ -1074,7 +1043,6 @@ void MTree<Key,T,DistanceType,NodeStats>::Query::findNextLeaf() {
 			DistanceType d_min = std::max<DistanceType>(child_distance - child_as_RoutingNode.covering_radius, 0);
 			// distance of all descendants of child is <d_max
 			DistanceType d_max = child_distance + child_as_RoutingNode.covering_radius;
-			// std::cout << "d_max: " << d_max << std::endl;
 			if (d_max < tolerant_min_search_radius)
 				continue;
 			if (d_min > tolerant_max_search_radius)
@@ -1109,17 +1077,14 @@ auto MTree<Key,T,DistanceType,NodeStats>::Query::operator++() -> Query& {
 		while (leaf_it != current_leaf->children.end()) {
 			ObjectNode& child = static_cast<ObjectNode&>(**leaf_it);
 			leaf_it++;
-			// std::cout << "point first bound: " << current_leaf_distance + child.parent_distance << std::endl;
 			if (current_leaf_distance + child.parent_distance < tolerant_min_search_radius)
 				continue;
 			if (!might_be_contained(current_leaf_distance, child.parent_distance, tolerant_max_search_radius))
 				continue;
 			DistanceType child_distance = tree->distance_function(child.getKey(), needle);
 			bound_estimator(*this, nullptr, NodeTagType{}, child.parent, child_distance, child_distance);
-			// std::cout << "point second bound: " << child_distance << std::endl;
 			// no lower_bound_factor / upper_bound_factor here
 			if (child_distance >= min_search_radius && child_distance <= max_search_radius) {
-				// std::cout << "ok" << std::endl;
 				last_returned = child.list_ref;
 				last_distance = child_distance;
 				return *this;

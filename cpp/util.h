@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-// TODO: check this!!
+// Serialize integers as big endians
 template<typename T>
 void serializeInt(std::ostream& os, T data) {
 	char buffer[sizeof(T)];
@@ -29,6 +29,7 @@ T unserializeInt(std::istream& is) {
 	return data;
 }
 
+// Serialize floating point numbers in native system format
 template<typename T>
 void serializeDistance(std::ostream& os, T distance) {
 	os.write(reinterpret_cast<char*>(&distance), sizeof(distance));

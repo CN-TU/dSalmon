@@ -17,21 +17,7 @@
 #include <map>
 #include <mutex>
 
-#include <iostream> // TODO
-#include "util.h" // TODO
-
-// TODO:
-// * implement rdnn tree ?
-// * add paper references
-// * implement sampling split function
-// * pass bound estimator and distance function by r value reference ?
-// * add nnSubtreeSearch
-// * maybe check if updating parent radius from child radius is more efficient
-// * check insert() code
-// * fix some things when tree is empty
-// * maybe remove SizeType
-// * make distance_function to template
-// * reverse iterator and constness
+#include "util.h"
 
 // Node statistics to simply count all descendants
 template<typename Key, typename T>
@@ -81,8 +67,6 @@ class MTree {
 	class Query;
 	class RangeQuery;
 	
-	// TODO: could define both as templates (for efficiency)
-	// TODO: or allow move semantics
 	// A BoundEstimator receives lower and upper bounds for distances of all descendants of a particular node
 	// and uses them to narrow down the search radius. Together with custom NodeStats, this allows
 	// highly efficient filtering knn queries. An example can be found in the SDO implementation.
@@ -186,7 +170,6 @@ class MTree {
 	void donateChild(RoutingNode& from, RoutingNode& to);
 	void mergeRoutingNodes(RoutingNode& from, RoutingNode& to, DistanceType from_to_distance);
 	
-	// TODO: use move for passing estimator
 	Query subtreeSearch(const KeyType& needle, DistanceType min_radius, DistanceType max_radius, bool reverse, BoundEstimator estimator, RoutingNode& subtree, bool locking) {
 		return Query(this, needle, min_radius, max_radius, reverse, estimator, &subtree, locking);
 	}
@@ -266,9 +249,7 @@ class MTree {
 	template<typename Modifier>
 	void modify(iterator pos, Modifier modifier);
 	// only modify stats while leaving key unmodified
-	// void modifyStats(iterator pos, Modifier modifier);
-
-	// TODO: add remaining stl functions	
+	// void modifyStats(iterator pos, Modifier modifier);	
 	
 	Query search(const KeyType& needle, DistanceType min_radius = 0, DistanceType max_radius = std::numeric_limits<DistanceType>::infinity(), bool reverse = false, BoundEstimator estimator = NopBoundEstimator()) {
 		return subtreeSearch(needle, min_radius, max_radius, reverse, estimator, *root, false);
@@ -339,11 +320,6 @@ class MTree<Key,T,DistanceType,NodeStats>::RangeQuery {
 };
 
 
-
-// TODO: allowing to change min_search_radius while knn search is in
-// progress doesn't seem to make any sense (i.e. yields wrong results). remove this?
-
-
 template<typename Key, typename T,typename DistanceType, typename NodeStats>
 class MTree<Key,T,DistanceType,NodeStats>::Query {
 	MTree* tree;
@@ -353,7 +329,7 @@ class MTree<Key,T,DistanceType,NodeStats>::Query {
 	DistanceType max_search_radius;
 	DistanceType tolerant_max_search_radius;
 
-	BoundEstimator bound_estimator; // TODO: make this a reference?
+	BoundEstimator bound_estimator;
 	bool reverse;
 	RoutingNode* subtree;
 	bool locking;
@@ -382,8 +358,6 @@ class MTree<Key,T,DistanceType,NodeStats>::Query {
 	} queue_cmp;
 	
 	std::vector<QueueEntry> queue;
-	// TODO: if we stick with multimap, remove distance_bound member
-	// std::multimap<DistanceType, QueueEntry> queue;
 	bool pruneQueue(RoutingNode** node, DistanceType* distance);
 	void findNextLeaf();
 	bool is_at_end;
@@ -444,7 +418,6 @@ class MTree<Key,T,DistanceType,NodeStats>::Query {
 };
 
 #include "MTree_impl.h"
-// template class MTree<double,int>;
 
 #endif
 

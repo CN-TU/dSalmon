@@ -20,14 +20,22 @@ class SDOstream {
 	typedef std::function<FloatType(const Vector<FloatType>&, const Vector<FloatType>&)> DistanceFunction;
 
   private:
+	// number of observers we want
 	std::size_t observer_cnt;
+	// fraction of observers to consider active
 	FloatType active_observers;
+	// factor for deciding if a sample should be sampled as observer
 	FloatType sampling_prefactor;
+	// factor for exponential moving average
 	FloatType fading;
+	// number of nearest observers to consider
 	std::size_t neighbor_cnt;
+
+	// counter of processed samples
 	int last_index;
-	
+	// counter index when we sampled the last time
 	int last_added_index;
+	// time when we last sampled
 	FloatType last_added_time;
 
 	DistanceFunction distance_function;
@@ -40,7 +48,6 @@ class SDOstream {
 		FloatType time_added;
 		int index;
 	};
-
 	
 	struct ObserverCompare{
 		FloatType fading;
@@ -100,8 +107,6 @@ class SDOstream {
 		for (auto it = observers.begin(); it != observers.end(); it++) {
 			FloatType distance = distance_function(data, it->data);
 			observations_sum += it->observations * std::pow<FloatType>(fading, now-it->time_touched);
-			// observations_sum += it->observations * std::pow(fading, now - it->time_touched) /
-				// (1-std::pow(fading, now - it->time_added));
 			if (nearest.size() < neighbor_cnt) {
 				nearest.emplace_back(distance, it);
 				std::push_heap(nearest.begin(), nearest.end(), cmp);
@@ -135,12 +140,14 @@ class SDOstream {
 			MapIterator it = observed.second;
 			auto node = observers.extract(it);
 			Observer& observer = node.value();
-			// TODO: according to paper this should be done after modifying P
 			observer.observations *= std::pow<FloatType>(fading, now-observer.time_touched);
-			observations_nearest_sum += observer.observations;
 			observer.observations += 1;
 			observer.time_touched = now;
+			observations_nearest_sum += observer.observations;
 			observers.insert(std::move(node));
+			// take into account that observations have been
+			// incremented by 1 for observations_nearest_sum
+			observations_sum += 1;
 		}
 		// Note: observations_nearest_sum == NaN might happen
 		bool add_as_observer = 

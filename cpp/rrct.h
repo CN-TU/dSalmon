@@ -38,10 +38,10 @@ class RRCT {
 		virtual int getChildrenCount() = 0;
 		virtual BboxRef getBboxRef() = 0;
 	};
-    struct Branch final : public Node {
+	struct Branch final : public Node {
 		int children_cnt;
-        Node* left_child;
-        Node* right_child;
+		Node* left_child;
+		Node* right_child;
 		int cut_dimension;
 		FloatType cut_value;
 		struct {
@@ -50,18 +50,18 @@ class RRCT {
 		} bbox;
 		int getChildrenCount() override { return children_cnt; }
 		BboxRef getBboxRef() override { return BboxRef{bbox.lower, bbox.upper}; }
-    };
-    struct Leaf final : public Node {
+	};
+	struct Leaf final : public Node {
 		std::list<Point*> points; // TODO: would a vector be better here ?
 		int getChildrenCount() override { return points.size(); }
 		BboxRef getBboxRef() override { return BboxRef{*points.front()->value.first, *points.front()->value.first}; }
-    };
+	};
 
 	typedef std::list<Point> PointList;
 	typedef typename PointList::iterator PointListIterator;
-    PointList points;
+	PointList points;
 
-    Node* root;
+	Node* root;
 	int dimension;
 	std::mt19937 rng;
 
@@ -284,7 +284,7 @@ class RRCT {
 	}
 
   public:
-    RRCT(int seed) : root(nullptr), dimension(-1), rng(seed) {}
+	RRCT(int seed) : root(nullptr), dimension(-1), rng(seed) {}
 
 	RRCT(const RRCT& other) = delete;
 	RRCT& operator=(const RRCT&) = delete;
@@ -309,7 +309,7 @@ class RRCT {
 	std::size_t size() const { return points.size(); }
 	bool empty() const { return points.empty(); }
 
-    iterator insert(iterator pos, ValueType&& value) {
+	iterator insert(iterator pos, ValueType&& value) {
 		if (empty()) {
 			dimension = value.first->size();
 			Leaf* leaf = new Leaf{};
@@ -331,7 +331,7 @@ class RRCT {
 	void push_back(ValueType&& value) { insert(end(), std::move(value)); }
 	void push_front(ValueType&& value) { insert(begin(), std::move(value)); }
 
-    void erase(iterator pos) {
+	void erase(iterator pos) {
 		auto it = static_cast<PointListIterator>(pos);
 		Leaf* leaf = it->leaf;
 		if (size() == 1) {
@@ -372,7 +372,7 @@ class RRCT {
 
 	void reverse() { points.reverse(); }
 
-    void clear() {
+	void clear() {
 		Node *node = root;
 		while (node != nullptr) {
 			Branch* branch = dynamic_cast<Branch*>(node);
@@ -404,7 +404,7 @@ class RRCT {
 		//TODO: reset rng ?
 	}
 
-    FloatType codisp(iterator pos) {
+	FloatType codisp(iterator pos) {
 		PointListIterator it = static_cast<PointListIterator>(pos);
 		Leaf *leaf = it->leaf;
 		assert(leaf != nullptr);
