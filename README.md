@@ -81,5 +81,5 @@ Finally, the `python` folder contains the Python interface invoking the Python i
 ### Rebuilding
 When adding new algorithms or modifying the interface, the `swig` wrappers have to be rebuilt. To this end, `swig` has to be installed and a `pip` package can be created and installed  using
 ```
-make && pip install dSalmon.tar.xz
+make && pip3 install dSalmon.tar.xz
 ```
