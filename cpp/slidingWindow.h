@@ -13,19 +13,22 @@
 #include <boost/multi_index/identity.hpp>
 
 #include <map>
-#include <iostream> // TODO
 
 // Distance based Outlier by Radius
 template<typename FloatType=double>
 class DBOR {
+	// size of the sliding window
 	FloatType window;
+	// distance threshold for two points to consider as neighbors
 	FloatType radius;
 	
+	// represents one stored data point in the SW
 	struct Sample {
 		FloatType expire_time;
 		int neighbors;
 	};
 
+	// we use an M-Tree for performing range queries
 	typedef MTree<Vector<FloatType>,Sample,FloatType> Tree;
 	Tree tree;
 	typedef typename Tree::iterator TreeIterator;
@@ -39,6 +42,8 @@ class DBOR {
 	{ }
 	
 	void pruneExpired(FloatType now) {
+		// Samples in the point are stored in order of arrival.
+		// Walk the tree and remove expired ones
 		while (!tree.empty() && tree.front().second.expire_time <= now) {
 			auto& to_prune = tree.front();
 			for (auto q = tree.rangeSearch(to_prune.first, radius); !q.atEnd(); ++q)
@@ -56,6 +61,7 @@ class DBOR {
 	FloatType fitPredict(const Vector<FloatType>& data, FloatType now) {
 		pruneExpired(now);
 		int neighbors = 0;
+		// count neighbors within radius
 		for (auto q = tree.rangeSearch(data, radius); !q.atEnd(); ++q) {
 			(*q).first->second.neighbors++;
 			neighbors++;
@@ -67,6 +73,7 @@ class DBOR {
 	
 	std::size_t windowSize() { return tree.size(); }
 	
+	// interface for investigating the contents of the SW
 	class WindowSample{
 		TreeIterator it;
 	public:
@@ -91,10 +98,14 @@ class DBOR {
 // Distance based Outlier by k nearest neighbors
 template<typename FloatType=double>
 class SWKNN {
+	// size of the sliding window
 	FloatType window;
+	// number of nearest neighbors to consider
 	std::size_t neighbor_cnt;
+	// we keep a counter for all processed samples
 	int last_index;
 	
+	// represents one stored data point in the SW
 	struct Sample {
 		FloatType expire_time;
 		// expire_time does not have to increase for each sample. Store
@@ -102,11 +113,14 @@ class SWKNN {
 		int index;
 	};
 
+	// we use an M-Tree for performing nearest-neighbor queries
 	typedef MTree<Vector<FloatType>,Sample,FloatType> Tree;
 	Tree tree;
 	typedef typename Tree::iterator TreeIterator;
 	
 	void pruneExpired(FloatType now) {
+		// Samples in the tree are stored in order of arrival.
+		// Walk the tree and remove expired samples
 		while (!tree.empty() && tree.front().second.expire_time <= now) {
 			tree.pop_front();
 		}
@@ -115,6 +129,7 @@ class SWKNN {
 	FloatType fitPredict_impl(const Vector<FloatType>& data, FloatType now, std::vector<FloatType>* neighbors) {
 		pruneExpired(now);
 		auto breaker = [](const typename Tree::ValueType& a, const typename Tree::ValueType& b) {
+			// tie breaker for reproducibility
 			return a.second.index < b.second.index;
 		};
 		auto nearest_neighbors = tree.knnSearch(
@@ -129,6 +144,8 @@ class SWKNN {
 		);
 		FloatType score = 0;
 		if (neighbors != nullptr) {
+			// fill the neighbors vector with information about
+			// the distances to nearest neighbors
 			neighbors->clear();
 			neighbors->reserve(nearest_neighbors.size());
 			for (auto& neighbor : nearest_neighbors)
@@ -137,10 +154,13 @@ class SWKNN {
 			score = (*neighbors)[neighbors->size()-1];
 		}
 		else if (nearest_neighbors.size() >= neighbor_cnt) {
+			// we don't sort nearest_neighbors in this case,
+			// so manually find the max distance
 			for (auto& neighbor : nearest_neighbors)
 				score = std::max(score, neighbor.second);
 		}
 		else {
+			// return infty if we have less points than neighbor_cnt
 			score = std::numeric_limits<FloatType>::infinity();
 		}
 		tree.push_back(std::make_pair(data,Sample{now + window, last_index}));
@@ -162,19 +182,22 @@ class SWKNN {
 		tree.push_back(std::make_pair(data,Sample{now + window, last_index}));
 		last_index++;
 	}
-	
-	std::vector<FloatType> fitPredictWithNeighbors(const Vector<FloatType>& data, FloatType now) {
-		std::vector<FloatType> scores;
-		fitPredict_impl(data, now, &scores);
-		return scores;
-	}
-		
+
 	FloatType fitPredict(const Vector<FloatType>& data, FloatType now) {
 		return fitPredict_impl(data, now, nullptr);
 	} 
 	
+	std::vector<FloatType> fitPredictWithNeighbors(const Vector<FloatType>& data, FloatType now) {
+		// perform a fitPredict operation, but additionally return
+		// the distances to the neighbor_cnt nearest neighbors
+		std::vector<FloatType> scores;
+		fitPredict_impl(data, now, &scores);
+		return scores;
+	}
+	
 	std::size_t windowSize() { return tree.size(); }
 	
+	// interface for investigating the SW contents
 	class WindowSample{
 		TreeIterator it;
 	public:
@@ -363,6 +386,7 @@ class SWLOF {
 	
 	std::size_t windowSize() { return tree.size(); }
 	
+	// interface for investigating the SW contents
 	class WindowSample{
 		TreeIterator it;
 	public:
@@ -385,6 +409,8 @@ class SWLOF {
 
 template<typename FloatType=double>
 class SWHBOS {
+	// we use an order statistic tree provided by boost to
+	// retain histograms while adding and removing points
 	class Histogram {
 
 		typedef boost::multi_index_container<
@@ -409,13 +435,19 @@ class SWHBOS {
 		FloatType getNormBinHeight(std::size_t n_bins, iterator pos) {
 			auto& index = map.template get<0>();
 			if (*index.begin() == *std::prev(index.end()))
+				// edge case: all entries have the same value
 				return 1;
+			// how many samples we put in one bin
 			const std::size_t per_bin =
 				std::max<std::size_t>(1,index.size() / n_bins);
 			const FloatType value = *pos;
+			// height of current bin, max. of all bin heights
 			FloatType bin_height = 0, max_bin_height = 0;
+			// Indices of beginning and end of samples in current bin
 			std::size_t start = 0, stop = 0;
+			// lower boundary of values belonging to the current bin
 			FloatType lower_boundary = *index.begin();
+			// upper boundary of values belonging to the current bin
 			FloatType upper_boundary;
 			while (stop < index.size()) {
 				stop = start + per_bin;
@@ -426,6 +458,8 @@ class SWHBOS {
 				else {
 					auto stopIt = index.nth(stop);
 					if (*std::prev(stopIt) == *stopIt) {
+						// move stopIt to the end of a range of
+						// equal-value entries
 						stopIt = index.upper_bound(*stopIt);
 					}
 					if (stopIt == index.end()) {
@@ -440,6 +474,7 @@ class SWHBOS {
 				FloatType this_bin_height = (stop - start) / (upper_boundary - lower_boundary);
 				max_bin_height = std::max(this_bin_height, max_bin_height);
 				if (lower_boundary <= value && upper_boundary >= value)
+					// this is the bin of the currently processed sample
 					bin_height = this_bin_height;
 				lower_boundary = upper_boundary;
 				start = stop; 
@@ -448,7 +483,9 @@ class SWHBOS {
 		}
 	};
 
+	// size of the sliding window
 	FloatType window;
+	// how many bins per histogram we use
 	std::size_t n_bins;
 
 	struct Point {
@@ -456,10 +493,12 @@ class SWHBOS {
 		FloatType expire_time;
 		std::vector<typename Histogram::iterator> iterators;
 	};
+	// store processed points in the order of their arrival
 	typedef std::list<Point> PointList;
 	typedef typename PointList::iterator PointListIterator;
 	PointList points;
 
+	// one histogram per data dimension
 	std::vector<Histogram> histograms;
 
 	void eraseFromHistograms(Point& point) {
@@ -514,6 +553,7 @@ class SWHBOS {
 	}
 	
 	FloatType outlierness(iterator pos) {
+		// compute outlierness score according to HBOS paper
 		FloatType score = 0;
 		for (std::size_t i = 0; i < histograms.size(); i++) {
 			FloatType bin_height = histograms[i].getNormBinHeight(n_bins, pos->iterators[i]);
