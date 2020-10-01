@@ -10,6 +10,7 @@
 #include "SDOstream.h"
 #include "slidingWindow.h"
 #include "rrct.h"
+#include "rshash.h"
 #include "array_types.h"
 #include "distance_wrappers.h"
 
@@ -91,6 +92,20 @@ class RRCT_wrapper {
 	void get_window(NumpyArray2<FloatType> data_out, NumpyArray1<FloatType> times);
 };
 DEFINE_FLOATINSTANTIATIONS(RRCT)
+
+template<typename FloatType>
+class RSHash_wrapper {
+	std::vector<RSHash<FloatType>> ensemble;
+	int n_jobs;
+
+  public:
+	RSHash_wrapper(unsigned ensemble_size, FloatType window, int cms_w_param, int cms_d_param, unsigned s_param, int seed, unsigned n_jobs);
+	void fit(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times);
+	void fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times);
+	int window_size();
+	void get_window(NumpyArray2<FloatType> data_out, NumpyArray1<FloatType> times);
+};
+DEFINE_FLOATINSTANTIATIONS(RSHash)
 
 template<typename FloatType>
 class SWHBOS_wrapper {

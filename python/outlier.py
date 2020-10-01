@@ -51,7 +51,7 @@ class SWDBOR(OutlierDetector):
 		Parameters
 		----------
 		window: float
-			Window size after which samples will be pruned.
+			Window length after which samples will be pruned.
 			
 		radius: float
 			Radius for classification as neighbor.
@@ -157,7 +157,7 @@ class SWKNN(OutlierDetector):
 		Parameters
 		----------
 		window: float
-			Window size after which samples will be pruned.
+			Window length after which samples will be pruned.
 			
 		k: int
 			Number of nearest neighbors to consider for outlier
@@ -266,7 +266,7 @@ class SWLOF(OutlierDetector):
 		Parameters
 		----------
 		window: float
-			Window size after which samples will be pruned.
+			Window length after which samples will be pruned.
 			
 		k: int
 			Number of nearest neighbors to consider for outlier
@@ -507,7 +507,7 @@ class SWRRCT(OutlierDetector):
 		Parameters
 		----------
 		window: float
-			Window size after which samples will be pruned.
+			Window length after which samples will be pruned.
 
 		n_estimators: int
 			Number of trees in the ensemble.
@@ -583,6 +583,110 @@ class SWRRCT(OutlierDetector):
 		self.model.get_window(data, times)
 		return data, times
 
+class RSHash(OutlierDetector):
+	"""RS-Hash."""
+	
+	def __init__(self, n_estimators, window, cms_w, cms_d, s_param=None, float_type=np.float64, seed=0, n_jobs=-1):
+		"""
+		This outlier detector assumes that features are normalized
+		to a [0,1] range.
+
+		Parameters
+		----------
+		n_estimators: int
+			Number of estimators in the ensemble.
+
+		window: float
+			Window length after which samples will be pruned.
+
+		cms_w: int
+			Number of hash functions per estimator for the 
+			count-min sketch.
+
+		cms_d: int
+			Number of bins for the count-min sketch.
+
+		s_param: int, optional
+			The s param of RS-Hash, which should be an estimate
+			of the number of samples in a sliding window.
+			If None, the value of window will be used for s_param,
+			assuming that samples arrive with an inter-arrival
+			time of 1.
+
+		float_type: np.float32 or np.float64
+			Which floating point type to use for internal processing.
+			
+		seed: int
+			Random seed for tree construction.
+
+		n_jobs: int
+			Number of threads to use for processing trees.
+			Pass -1 to use as many jobs as there are CPU cores.
+		"""
+		self.params = { k: v for k, v in locals().items() if k != 'self' }
+		self._init_model(self.params)
+
+	def _init_model(self, p):
+		assert p['float_type'] in [np.float32, np.float64]
+		assert p['n_estimators'] > 0
+		assert p['window'] > 0
+		cpp_obj = {np.float32: dSalmon_cpp.RSHash32, np.float64: dSalmon_cpp.RSHash64}[p['float_type']]
+		self.model = cpp_obj(p['n_estimators'], p['window'], p['cms_w'],
+							 p['cms_d'], p['s_param'] or p['window'], p['seed'],
+							 mp.cpu_count() if p['n_jobs']==-1 else p['n_jobs'])
+		self.last_time = 0
+		self.dimension = -1
+		
+	def fit_predict(self, data, times=None):
+		"""
+		Process next chunk of data.
+		Data in X is assumed to be normalized to [0,1].
+
+		Parameters
+		---------------
+		X: ndarray, shape (n_samples, n_features)
+			The input data.
+			
+		times: ndarray, shape (n_samples,), optional
+			Timestamps for input data. If None,
+			timestamps are linearly increased for
+			each sample. 
+		
+		Returns	
+		---------------
+		y: ndarray, shape (n_samples,)
+			Outlier scores for provided input data.
+		"""
+		data = self._processData(data)
+		times = self._processTimes(data, times)
+		scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
+		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
+		return scores
+		
+	def window_size(self):
+		"""Return the number of samples in the sliding window."""
+		return self.model.window_size()
+		
+	def get_window(self):
+		"""
+		Return samples in the current window.
+		
+		Returns
+		---------------
+		data: ndarray, shape (n_samples, n_features)
+			Samples in the current window.
+			
+		times: ndarray, shape (n_samples,)
+			Expiry times of samples in the current window.
+		"""
+		if self.dimension == -1:
+			return np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type'])
+		window_size = self.model.window_size()
+		data = np.zeros([window_size, self.dimension], dtype=self.params['float_type'])
+		times = np.zeros(window_size, dtype=self.params['float_type'])
+		self.model.get_window(data, times)
+		return data, times
+
 
 class SWHBOS(OutlierDetector):
 	"""Sliding Window Histogram based Outlier Score."""
@@ -592,7 +696,7 @@ class SWHBOS(OutlierDetector):
 		Parameters
 		----------
 		window: float
-			Window size after which samples will be pruned.
+			Window length after which samples will be pruned.
 
 		n_bins: int
 			The number of histogram bins.

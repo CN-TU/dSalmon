@@ -42,7 +42,7 @@ class DBOR {
 	{ }
 	
 	void pruneExpired(FloatType now) {
-		// Samples in the point are stored in order of arrival.
+		// Samples in the tree are stored in order of arrival.
 		// Walk the tree and remove expired ones
 		while (!tree.empty() && tree.front().second.expire_time <= now) {
 			auto& to_prune = tree.front();

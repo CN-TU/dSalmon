@@ -2711,17 +2711,19 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 #define SWIGTYPE_p_MinkowskiDist_wrapperT_float_t swig_types[19]
 #define SWIGTYPE_p_RRCT_wrapperT_double_t swig_types[20]
 #define SWIGTYPE_p_RRCT_wrapperT_float_t swig_types[21]
-#define SWIGTYPE_p_SDOstream_wrapperT_double_t swig_types[22]
-#define SWIGTYPE_p_SDOstream_wrapperT_float_t swig_types[23]
-#define SWIGTYPE_p_SWHBOS_wrapperT_double_t swig_types[24]
-#define SWIGTYPE_p_SWHBOS_wrapperT_float_t swig_types[25]
-#define SWIGTYPE_p_SWKNN_wrapperT_double_t swig_types[26]
-#define SWIGTYPE_p_SWKNN_wrapperT_float_t swig_types[27]
-#define SWIGTYPE_p_SWLOF_wrapperT_double_t swig_types[28]
-#define SWIGTYPE_p_SWLOF_wrapperT_float_t swig_types[29]
-#define SWIGTYPE_p_char swig_types[30]
-static swig_type_info *swig_types[32];
-static swig_module_info swig_module = {swig_types, 31, 0, 0, 0, 0};
+#define SWIGTYPE_p_RSHash_wrapperT_double_t swig_types[22]
+#define SWIGTYPE_p_RSHash_wrapperT_float_t swig_types[23]
+#define SWIGTYPE_p_SDOstream_wrapperT_double_t swig_types[24]
+#define SWIGTYPE_p_SDOstream_wrapperT_float_t swig_types[25]
+#define SWIGTYPE_p_SWHBOS_wrapperT_double_t swig_types[26]
+#define SWIGTYPE_p_SWHBOS_wrapperT_float_t swig_types[27]
+#define SWIGTYPE_p_SWKNN_wrapperT_double_t swig_types[28]
+#define SWIGTYPE_p_SWKNN_wrapperT_float_t swig_types[29]
+#define SWIGTYPE_p_SWLOF_wrapperT_double_t swig_types[30]
+#define SWIGTYPE_p_SWLOF_wrapperT_float_t swig_types[31]
+#define SWIGTYPE_p_char swig_types[32]
+static swig_type_info *swig_types[34];
+static swig_module_info swig_module = {swig_types, 33, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -10645,6 +10647,660 @@ SWIGINTERN PyObject *RRCT64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   return SWIG_Python_InitShadowInstance(args);
 }
 
+SWIGINTERN PyObject *_wrap_new_RSHash32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned int arg1 ;
+  float arg2 ;
+  int arg3 ;
+  int arg4 ;
+  unsigned int arg5 ;
+  int arg6 ;
+  unsigned int arg7 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  float val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned int val5 ;
+  int ecode5 = 0 ;
+  int val6 ;
+  int ecode6 = 0 ;
+  unsigned int val7 ;
+  int ecode7 = 0 ;
+  PyObject *swig_obj[7] ;
+  RSHash_wrapper< float > *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_RSHash32", 7, 7, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_RSHash32" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  ecode2 = SWIG_AsVal_float(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_RSHash32" "', argument " "2"" of type '" "float""'");
+  } 
+  arg2 = static_cast< float >(val2);
+  ecode3 = SWIG_AsVal_int(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_RSHash32" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_RSHash32" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_int(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_RSHash32" "', argument " "5"" of type '" "unsigned int""'");
+  } 
+  arg5 = static_cast< unsigned int >(val5);
+  ecode6 = SWIG_AsVal_int(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_RSHash32" "', argument " "6"" of type '" "int""'");
+  } 
+  arg6 = static_cast< int >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_int(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_RSHash32" "', argument " "7"" of type '" "unsigned int""'");
+  } 
+  arg7 = static_cast< unsigned int >(val7);
+  result = (RSHash_wrapper< float > *)new RSHash_wrapper< float >(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_RSHash_wrapperT_float_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RSHash32_fit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< float > *arg1 = (RSHash_wrapper< float > *) 0 ;
+  NumpyArray2< float > arg2 ;
+  NumpyArray1< float > arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array3 = NULL ;
+  int is_new_object3 = 0 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "RSHash32_fit", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RSHash32_fit" "', argument " "1"" of type '" "RSHash_wrapper< float > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< float > * >(argp1);
+  {
+    npy_intp size[2] = {
+      -1, -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_FLOAT,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 2) ||
+      !require_size(array2, size, 2)) SWIG_fail;
+    (&arg2)->data = (float*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_FLOAT,
+      &is_new_object3);
+    if (!array3 || !require_dimensions(array3, 1) ||
+      !require_size(array3, size, 1)) SWIG_fail;
+    (&arg3)->data = (float*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  (arg1)->fit(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RSHash32_fit_predict(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< float > *arg1 = (RSHash_wrapper< float > *) 0 ;
+  NumpyArray2< float > arg2 ;
+  NumpyArray1< float > arg3 ;
+  NumpyArray1< float > arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array3 = NULL ;
+  int i3 = 1 ;
+  PyArrayObject *array4 = NULL ;
+  int is_new_object4 = 0 ;
+  PyObject *swig_obj[4] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "RSHash32_fit_predict", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RSHash32_fit_predict" "', argument " "1"" of type '" "RSHash_wrapper< float > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< float > * >(argp1);
+  {
+    npy_intp size[2] = {
+      -1, -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_FLOAT,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 2) ||
+      !require_size(array2, size, 2)) SWIG_fail;
+    (&arg2)->data = (float*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_FLOAT);
+    if (!array3 || !require_dimensions(array3,1) || !require_contiguous(array3)
+      || !require_native(array3)) SWIG_fail;
+    (&arg3)->data = (float*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
+      NPY_FLOAT,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 1) ||
+      !require_size(array4, size, 1)) SWIG_fail;
+    (&arg4)->data = (float*) array_data(array4);
+    (&arg4)->dim1 = (int) array_size(array4,0);
+  }
+  (arg1)->fit_predict(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RSHash32_window_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< float > *arg1 = (RSHash_wrapper< float > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  int result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RSHash32_window_size" "', argument " "1"" of type '" "RSHash_wrapper< float > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< float > * >(argp1);
+  result = (int)(arg1)->window_size();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RSHash32_get_window(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< float > *arg1 = (RSHash_wrapper< float > *) 0 ;
+  NumpyArray2< float > arg2 ;
+  NumpyArray1< float > arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  PyArrayObject *array3 = NULL ;
+  int i3 = 1 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "RSHash32_get_window", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RSHash32_get_window" "', argument " "1"" of type '" "RSHash_wrapper< float > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< float > * >(argp1);
+  {
+    array2 = obj_to_array_no_conversion(swig_obj[1], NPY_FLOAT);
+    if (!array2 || !require_dimensions(array2,2) || !require_contiguous(array2)
+      || !require_native(array2)) SWIG_fail;
+    (&arg2)->data = (float*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_FLOAT);
+    if (!array3 || !require_dimensions(array3,1) || !require_contiguous(array3)
+      || !require_native(array3)) SWIG_fail;
+    (&arg3)->data = (float*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  (arg1)->get_window(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_RSHash32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< float > *arg1 = (RSHash_wrapper< float > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_float_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_RSHash32" "', argument " "1"" of type '" "RSHash_wrapper< float > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< float > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *RSHash32_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_RSHash_wrapperT_float_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *RSHash32_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_RSHash64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  unsigned int arg1 ;
+  double arg2 ;
+  int arg3 ;
+  int arg4 ;
+  unsigned int arg5 ;
+  int arg6 ;
+  unsigned int arg7 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned int val5 ;
+  int ecode5 = 0 ;
+  int val6 ;
+  int ecode6 = 0 ;
+  unsigned int val7 ;
+  int ecode7 = 0 ;
+  PyObject *swig_obj[7] ;
+  RSHash_wrapper< double > *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_RSHash64", 7, 7, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_RSHash64" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_RSHash64" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_int(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_RSHash64" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_RSHash64" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_int(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_RSHash64" "', argument " "5"" of type '" "unsigned int""'");
+  } 
+  arg5 = static_cast< unsigned int >(val5);
+  ecode6 = SWIG_AsVal_int(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_RSHash64" "', argument " "6"" of type '" "int""'");
+  } 
+  arg6 = static_cast< int >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_int(swig_obj[6], &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_RSHash64" "', argument " "7"" of type '" "unsigned int""'");
+  } 
+  arg7 = static_cast< unsigned int >(val7);
+  result = (RSHash_wrapper< double > *)new RSHash_wrapper< double >(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_RSHash_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RSHash64_fit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< double > *arg1 = (RSHash_wrapper< double > *) 0 ;
+  NumpyArray2< double > arg2 ;
+  NumpyArray1< double > arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array3 = NULL ;
+  int is_new_object3 = 0 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "RSHash64_fit", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RSHash64_fit" "', argument " "1"" of type '" "RSHash_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< double > * >(argp1);
+  {
+    npy_intp size[2] = {
+      -1, -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_DOUBLE,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 2) ||
+      !require_size(array2, size, 2)) SWIG_fail;
+    (&arg2)->data = (double*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_DOUBLE,
+      &is_new_object3);
+    if (!array3 || !require_dimensions(array3, 1) ||
+      !require_size(array3, size, 1)) SWIG_fail;
+    (&arg3)->data = (double*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  (arg1)->fit(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RSHash64_fit_predict(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< double > *arg1 = (RSHash_wrapper< double > *) 0 ;
+  NumpyArray2< double > arg2 ;
+  NumpyArray1< double > arg3 ;
+  NumpyArray1< double > arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array3 = NULL ;
+  int i3 = 1 ;
+  PyArrayObject *array4 = NULL ;
+  int is_new_object4 = 0 ;
+  PyObject *swig_obj[4] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "RSHash64_fit_predict", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RSHash64_fit_predict" "', argument " "1"" of type '" "RSHash_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< double > * >(argp1);
+  {
+    npy_intp size[2] = {
+      -1, -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_DOUBLE,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 2) ||
+      !require_size(array2, size, 2)) SWIG_fail;
+    (&arg2)->data = (double*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_DOUBLE);
+    if (!array3 || !require_dimensions(array3,1) || !require_contiguous(array3)
+      || !require_native(array3)) SWIG_fail;
+    (&arg3)->data = (double*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
+      NPY_DOUBLE,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 1) ||
+      !require_size(array4, size, 1)) SWIG_fail;
+    (&arg4)->data = (double*) array_data(array4);
+    (&arg4)->dim1 = (int) array_size(array4,0);
+  }
+  (arg1)->fit_predict(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RSHash64_window_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< double > *arg1 = (RSHash_wrapper< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  int result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RSHash64_window_size" "', argument " "1"" of type '" "RSHash_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< double > * >(argp1);
+  result = (int)(arg1)->window_size();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_RSHash64_get_window(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< double > *arg1 = (RSHash_wrapper< double > *) 0 ;
+  NumpyArray2< double > arg2 ;
+  NumpyArray1< double > arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  PyArrayObject *array3 = NULL ;
+  int i3 = 1 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "RSHash64_get_window", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RSHash64_get_window" "', argument " "1"" of type '" "RSHash_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< double > * >(argp1);
+  {
+    array2 = obj_to_array_no_conversion(swig_obj[1], NPY_DOUBLE);
+    if (!array2 || !require_dimensions(array2,2) || !require_contiguous(array2)
+      || !require_native(array2)) SWIG_fail;
+    (&arg2)->data = (double*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_DOUBLE);
+    if (!array3 || !require_dimensions(array3,1) || !require_contiguous(array3)
+      || !require_native(array3)) SWIG_fail;
+    (&arg3)->data = (double*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  (arg1)->get_window(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_RSHash64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  RSHash_wrapper< double > *arg1 = (RSHash_wrapper< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_RSHash_wrapperT_double_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_RSHash64" "', argument " "1"" of type '" "RSHash_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< RSHash_wrapper< double > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *RSHash64_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_RSHash_wrapperT_double_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *RSHash64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 SWIGINTERN PyObject *_wrap_new_SWHBOS32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   float arg1 ;
@@ -11417,6 +12073,22 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_RRCT64", _wrap_delete_RRCT64, METH_O, NULL},
 	 { "RRCT64_swigregister", RRCT64_swigregister, METH_O, NULL},
 	 { "RRCT64_swiginit", RRCT64_swiginit, METH_VARARGS, NULL},
+	 { "new_RSHash32", _wrap_new_RSHash32, METH_VARARGS, NULL},
+	 { "RSHash32_fit", _wrap_RSHash32_fit, METH_VARARGS, NULL},
+	 { "RSHash32_fit_predict", _wrap_RSHash32_fit_predict, METH_VARARGS, NULL},
+	 { "RSHash32_window_size", _wrap_RSHash32_window_size, METH_O, NULL},
+	 { "RSHash32_get_window", _wrap_RSHash32_get_window, METH_VARARGS, NULL},
+	 { "delete_RSHash32", _wrap_delete_RSHash32, METH_O, NULL},
+	 { "RSHash32_swigregister", RSHash32_swigregister, METH_O, NULL},
+	 { "RSHash32_swiginit", RSHash32_swiginit, METH_VARARGS, NULL},
+	 { "new_RSHash64", _wrap_new_RSHash64, METH_VARARGS, NULL},
+	 { "RSHash64_fit", _wrap_RSHash64_fit, METH_VARARGS, NULL},
+	 { "RSHash64_fit_predict", _wrap_RSHash64_fit_predict, METH_VARARGS, NULL},
+	 { "RSHash64_window_size", _wrap_RSHash64_window_size, METH_O, NULL},
+	 { "RSHash64_get_window", _wrap_RSHash64_get_window, METH_VARARGS, NULL},
+	 { "delete_RSHash64", _wrap_delete_RSHash64, METH_O, NULL},
+	 { "RSHash64_swigregister", RSHash64_swigregister, METH_O, NULL},
+	 { "RSHash64_swiginit", RSHash64_swiginit, METH_VARARGS, NULL},
 	 { "new_SWHBOS32", _wrap_new_SWHBOS32, METH_VARARGS, NULL},
 	 { "SWHBOS32_fit", _wrap_SWHBOS32_fit, METH_VARARGS, NULL},
 	 { "SWHBOS32_fit_predict", _wrap_SWHBOS32_fit_predict, METH_VARARGS, NULL},
@@ -11489,6 +12161,8 @@ static swig_type_info _swigt__p_MinkowskiDist_wrapperT_double_t = {"_p_Minkowski
 static swig_type_info _swigt__p_MinkowskiDist_wrapperT_float_t = {"_p_MinkowskiDist_wrapperT_float_t", "MinkowskiDist_wrapper< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_RRCT_wrapperT_double_t = {"_p_RRCT_wrapperT_double_t", "RRCT_wrapper< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_RRCT_wrapperT_float_t = {"_p_RRCT_wrapperT_float_t", "RRCT_wrapper< float > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_RSHash_wrapperT_double_t = {"_p_RSHash_wrapperT_double_t", "RSHash_wrapper< double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_RSHash_wrapperT_float_t = {"_p_RSHash_wrapperT_float_t", "RSHash_wrapper< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SDOstream_wrapperT_double_t = {"_p_SDOstream_wrapperT_double_t", "SDOstream_wrapper< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SDOstream_wrapperT_float_t = {"_p_SDOstream_wrapperT_float_t", "SDOstream_wrapper< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SWHBOS_wrapperT_double_t = {"_p_SWHBOS_wrapperT_double_t", "SWHBOS_wrapper< double > *", 0, 0, (void*)0, 0};
@@ -11522,6 +12196,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_MinkowskiDist_wrapperT_float_t,
   &_swigt__p_RRCT_wrapperT_double_t,
   &_swigt__p_RRCT_wrapperT_float_t,
+  &_swigt__p_RSHash_wrapperT_double_t,
+  &_swigt__p_RSHash_wrapperT_float_t,
   &_swigt__p_SDOstream_wrapperT_double_t,
   &_swigt__p_SDOstream_wrapperT_float_t,
   &_swigt__p_SWHBOS_wrapperT_double_t,
@@ -11555,6 +12231,8 @@ static swig_cast_info _swigc__p_MinkowskiDist_wrapperT_double_t[] = {  {&_swigt_
 static swig_cast_info _swigc__p_MinkowskiDist_wrapperT_float_t[] = {  {&_swigt__p_MinkowskiDist_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_RRCT_wrapperT_double_t[] = {  {&_swigt__p_RRCT_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_RRCT_wrapperT_float_t[] = {  {&_swigt__p_RRCT_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_RSHash_wrapperT_double_t[] = {  {&_swigt__p_RSHash_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_RSHash_wrapperT_float_t[] = {  {&_swigt__p_RSHash_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SDOstream_wrapperT_double_t[] = {  {&_swigt__p_SDOstream_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SDOstream_wrapperT_float_t[] = {  {&_swigt__p_SDOstream_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SWHBOS_wrapperT_double_t[] = {  {&_swigt__p_SWHBOS_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -11588,6 +12266,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_MinkowskiDist_wrapperT_float_t,
   _swigc__p_RRCT_wrapperT_double_t,
   _swigc__p_RRCT_wrapperT_float_t,
+  _swigc__p_RSHash_wrapperT_double_t,
+  _swigc__p_RSHash_wrapperT_float_t,
   _swigc__p_SDOstream_wrapperT_double_t,
   _swigc__p_SDOstream_wrapperT_float_t,
   _swigc__p_SWHBOS_wrapperT_double_t,

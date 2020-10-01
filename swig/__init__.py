@@ -637,6 +637,52 @@ class RRCT64(object):
 # Register RRCT64 in _dSalmon:
 _dSalmon.RRCT64_swigregister(RRCT64)
 
+class RSHash32(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, ensemble_size, window, cms_w_param, cms_d_param, s_param, seed, n_jobs):
+        _dSalmon.RSHash32_swiginit(self, _dSalmon.new_RSHash32(ensemble_size, window, cms_w_param, cms_d_param, s_param, seed, n_jobs))
+
+    def fit(self, data, times):
+        return _dSalmon.RSHash32_fit(self, data, times)
+
+    def fit_predict(self, data, scores, times):
+        return _dSalmon.RSHash32_fit_predict(self, data, scores, times)
+
+    def window_size(self):
+        return _dSalmon.RSHash32_window_size(self)
+
+    def get_window(self, data_out, times):
+        return _dSalmon.RSHash32_get_window(self, data_out, times)
+    __swig_destroy__ = _dSalmon.delete_RSHash32
+
+# Register RSHash32 in _dSalmon:
+_dSalmon.RSHash32_swigregister(RSHash32)
+
+class RSHash64(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, ensemble_size, window, cms_w_param, cms_d_param, s_param, seed, n_jobs):
+        _dSalmon.RSHash64_swiginit(self, _dSalmon.new_RSHash64(ensemble_size, window, cms_w_param, cms_d_param, s_param, seed, n_jobs))
+
+    def fit(self, data, times):
+        return _dSalmon.RSHash64_fit(self, data, times)
+
+    def fit_predict(self, data, scores, times):
+        return _dSalmon.RSHash64_fit_predict(self, data, scores, times)
+
+    def window_size(self):
+        return _dSalmon.RSHash64_window_size(self)
+
+    def get_window(self, data_out, times):
+        return _dSalmon.RSHash64_get_window(self, data_out, times)
+    __swig_destroy__ = _dSalmon.delete_RSHash64
+
+# Register RSHash64 in _dSalmon:
+_dSalmon.RSHash64_swigregister(RSHash64)
+
 class SWHBOS32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr

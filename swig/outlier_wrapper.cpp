@@ -14,8 +14,10 @@
 template<typename FloatType>
 SDOstream_wrapper<FloatType>::SDOstream_wrapper(int observer_cnt, FloatType T, FloatType idle_observers, int neighbour_cnt, int freq_bins, FloatType max_freq, Distance_wrapper<FloatType>* distance, int seed) :
 	dimension(-1),
-	freq_bins(1), // TODO: use freq_bins and max_freq parameters when implementing periodic SDOstream
+	freq_bins(1),
+	// freq_bins(freq_bins), // use freq_bins and max_freq parameters when implementing periodic SDOstream
 	sdo(observer_cnt, T, idle_observers, neighbour_cnt, distance->getFunction(), seed)
+	// sdo(observer_cnt, T, idle_observers, neighbour_cnt, freq_bins, max_freq, distance->getFunction(), seed)
 {
 }
 
@@ -220,38 +222,51 @@ void RRCT_wrapper<FloatType>::fit(const NumpyArray2<FloatType> data, const Numpy
 }
 
 template<typename FloatType>
-void RRCT_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
-	assert (data.dim1 == times.dim1);
-	assert ((scores.data == nullptr && scores.dim1 == 0) || data.dim1 == scores.dim1);
-	bool fit_only = scores.data == nullptr;
+static void fit_predict_ensemble(const NumpyArray2<FloatType>& data, unsigned ensemble_size, int n_jobs, std::function<void(const std::vector<std::shared_ptr<Vector<FloatType>>>&,int)> worker) {
 	std::vector<std::shared_ptr<Vector<FloatType>>> vecs;
 	vecs.reserve(data.dim1);
 	for (int i = 0; i < data.dim1; i++)
 		vecs.emplace_back(new Vector<FloatType>(&data.data[i * data.dim2], data.dim2));
 	std::atomic<unsigned> global_i(0);
-	std::vector<std::mutex> locks(fit_only ? 0 : vecs.size());
+	auto thread_worker = [&]() {
+		for (unsigned tree_index = global_i++; tree_index < ensemble_size; tree_index = global_i++) {
+			worker(vecs, tree_index);
+		}
+	};
+	if (n_jobs < 2) {
+		thread_worker();
+	}
+	else {
+		std::thread threads[n_jobs];
+		for (int i = 0; i < n_jobs; i++)
+			threads[i] = std::thread{thread_worker};
+		for (int i = 0; i < n_jobs; i++)
+			threads[i].join();
+	}
+}
+
+template<typename FloatType>
+void RRCT_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
+	assert (data.dim1 == times.dim1);
+	assert ((scores.data == nullptr && scores.dim1 == 0) || data.dim1 == scores.dim1);
+	bool fit_only = scores.data == nullptr;
+	std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
 	if (!fit_only)
 		std::fill(scores.data, scores.data + data.dim1, 0);
-	auto worker = [&]() {
-		for (unsigned tree_index = global_i++; tree_index < rrct.size(); tree_index = global_i++) {
-			auto& tree = rrct[tree_index];
-			for (int i = 0; i < data.dim1; i++) {
-				pruneExpired(tree, times.data[i]);
-				tree.push_back(std::make_pair(vecs[i], times.data[i] + window));
-				if (!fit_only) {
-					FloatType codisp = tree.codisp(std::prev(tree.end()));
-					locks[i].lock();
-					scores.data[i] += codisp;
-					locks[i].unlock();
-				}
+	auto worker = [&](const std::vector<std::shared_ptr<Vector<FloatType>>>& vecs, int tree_index) {
+		auto& tree = rrct[tree_index];
+		for (std::size_t i = 0; i < vecs.size(); i++) {
+			pruneExpired(tree, times.data[i]);
+			tree.push_back(std::make_pair(vecs[i], times.data[i] + window));
+			if (!fit_only) {
+				FloatType codisp = tree.codisp(std::prev(tree.end()));
+				locks[i].lock();
+				scores.data[i] += codisp;
+				locks[i].unlock();
 			}
 		}
 	};
-	std::thread threads[n_jobs];
-	for (int i = 0; i < n_jobs; i++)
-		threads[i] = std::thread{worker};
-	for (int i = 0; i < n_jobs; i++)
-		threads[i].join();
+	fit_predict_ensemble<FloatType>(data, rrct.size(), n_jobs, worker);
 	if (!fit_only) {
 		// TODO: check if this is really average
 		for (int i = 0; i < data.dim1; i++)
@@ -274,6 +289,68 @@ void RRCT_wrapper<FloatType>::get_window(NumpyArray2<FloatType> data, NumpyArray
 		i++;
 	}
 }
+
+
+template<typename FloatType>
+RSHash_wrapper<FloatType>::RSHash_wrapper(unsigned ensemble_size, FloatType window, int cms_w_param, int cms_d_param, unsigned s_param, int seed, unsigned n_jobs) :
+	n_jobs(n_jobs)
+{
+	ensemble.reserve(ensemble_size);
+	std::mt19937 rng(seed);
+	// Vector<FloatType> min_estimates_vec{min_estimates.data, min_estimates.dim1};
+	// Vector<FloatType> max_estimates_vec{max_estimates.data, max_estimates.dim1};
+	for (unsigned i = 0; i < ensemble_size; i++)
+		ensemble.emplace_back(window, s_param, cms_w_param, cms_d_param, rng());
+}
+
+
+template<typename FloatType>
+void RSHash_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
+	assert (data.dim1 == times.dim1);
+	assert ((scores.data == nullptr && scores.dim1 == 0) || data.dim1 == scores.dim1);
+	bool fit_only = scores.data == nullptr;
+	std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
+	if (!fit_only)
+		std::fill(scores.data, scores.data + data.dim1, 0);
+	auto worker = [&](const std::vector<std::shared_ptr<Vector<FloatType>>>& vecs, int ensemble_index) {
+		auto& detector = ensemble[ensemble_index];
+		for (std::size_t i = 0; i < vecs.size(); i++) {
+			FloatType score = detector.fitPredict(vecs[i], times.data[i]);
+			if (!fit_only) {
+				locks[i].lock();
+				scores.data[i] += score;
+				locks[i].unlock();
+			}
+		}
+	};
+	fit_predict_ensemble<FloatType>(data, ensemble.size(), n_jobs, worker);
+	if (!fit_only) {
+		for (int i = 0; i < data.dim1; i++)
+			scores.data[i] /= ensemble.size();
+	}
+}
+
+template<typename FloatType>
+void RSHash_wrapper<FloatType>::fit(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times) {
+	fit_predict(data, {nullptr,0}, times);
+}
+
+template<typename FloatType>
+int RSHash_wrapper<FloatType>::window_size() {
+	return ensemble[0].windowSize();
+}
+
+template<typename FloatType>
+void RSHash_wrapper<FloatType>::get_window(NumpyArray2<FloatType> data, NumpyArray1<FloatType> times) {
+	int i = 0;
+	for (auto sample : ensemble[0]) {
+		Vector<FloatType> vec_data = sample.getSample();
+		std::copy(vec_data.begin(), vec_data.end(), &data.data[i * data.dim2]);
+		times.data[i] = sample.getExpireTime();
+		i++;
+	}
+}
+
 
 
 template<typename FloatType>
@@ -326,5 +403,7 @@ template class SWLOF_wrapper<double>;
 template class SWLOF_wrapper<float>;
 template class RRCT_wrapper<double>;
 template class RRCT_wrapper<float>;
+template class RSHash_wrapper<double>;
+template class RSHash_wrapper<float>;
 template class SWHBOS_wrapper<double>;
 template class SWHBOS_wrapper<float>;
