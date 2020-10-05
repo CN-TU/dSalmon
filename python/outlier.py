@@ -3,6 +3,7 @@
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
 import numpy as np
+import random
 import multiprocessing as mp
 
 from . import swig as dSalmon_cpp
@@ -62,7 +63,7 @@ class SWDBOR(OutlierDetector):
 			'minkowsi'.
 
 		float_type: np.float32 or np.float64
-			Which floating point type to use for internal processing.
+			The floating point type to use for internal processing.
 			
 		min_node_size: int, optional (default=5)
 			Smallest possible size for M-Tree nodes. min_node_size
@@ -173,7 +174,7 @@ class SWKNN(OutlierDetector):
 			'minkowsi'.
 
 		float_type: np.float32 or np.float64
-			Which floating point type to use for internal processing.
+			The floating point type to use for internal processing.
 			
 		min_node_size: int, optional (default=5)
 			Smallest possible size for M-Tree nodes. min_node_size
@@ -285,7 +286,7 @@ class SWLOF(OutlierDetector):
 			'minkowsi'.
 
 		float_type: np.float32 or np.float64
-			Which floating point type to use for internal processing.
+			The floating point type to use for internal processing.
 			
 		min_node_size: int, optional (default=5)
 			Smallest possible size for M-Tree nodes. min_node_size
@@ -412,7 +413,7 @@ class SDOstream(OutlierDetector):
 			'minkowsi'.
 
 		float_type: np.float32 or np.float64
-			Which floating point type to use for internal processing.
+			The floating point type to use for internal processing.
 
 		seed: int (default=0)
 			Random seed to use.
@@ -513,7 +514,7 @@ class SWRRCT(OutlierDetector):
 			Number of trees in the ensemble.
 
 		float_type: np.float32 or np.float64
-			Which floating point type to use for internal processing.
+			The floating point type to use for internal processing.
 			
 		seed: int
 			Random seed for tree construction.
@@ -614,7 +615,7 @@ class RSHash(OutlierDetector):
 			time of 1.
 
 		float_type: np.float32 or np.float64
-			Which floating point type to use for internal processing.
+			The floating point type to use for internal processing.
 			
 		seed: int
 			Random seed for tree construction.
@@ -688,33 +689,54 @@ class RSHash(OutlierDetector):
 		return data, times
 
 
-class SWHBOS(OutlierDetector):
-	"""Sliding Window Histogram based Outlier Score."""
+class LODA(OutlierDetector):
+	"""
+	LODA.
 	
-	def __init__(self, window, n_bins=10, float_type=np.float64):
+	This detector performs outlier detection based on equi-depth histograms.
+	If random projections are used, this corresponds to the LODA algorithm,
+	otherwise behaviour corresponds to a sliding window adaptation of the
+	HBOS algorithm.
+	"""
+	
+	def __init__(self, window, n_projections=None, n_bins=10, float_type=np.float64):
 		"""
 		Parameters
 		----------
 		window: float
 			Window length after which samples will be pruned.
 
+		n_projections: int
+			The number of random projections to use. If None,
+			random projections are skipped.
+
 		n_bins: int
 			The number of histogram bins.
 
 		float_type: np.float32 or np.float64
-			Which floating point type to use for internal processing.
+			The floating point type to use for internal processing.
 		"""
 		self.params = { k: v for k, v in locals().items() if k != 'self' }
 		self._init_model(self.params)
+
+	def _init_projections(self):
+		n_projections = self.params['n_projections']
+		self.proj_matrix = np.zeros((self.dimension,n_projections), dtype=self.params['float_type'])
+		proj_per_histogram = int(round(np.sqrt(self.dimension)))
+		for i in range(n_projections):
+			indices = random.sample(range(self.dimension), k=proj_per_histogram)
+			self.proj_matrix[indices,i] = np.random.normal(size=proj_per_histogram)
 
 	def _init_model(self, p):
 		assert p['float_type'] in [np.float32, np.float64]
 		assert p['n_bins'] > 0
 		assert p['window'] > 0
+		assert p['n_projections'] is None or p['n_projections'] > 0
 		cpp_obj = {np.float32: dSalmon_cpp.SWHBOS32, np.float64: dSalmon_cpp.SWHBOS64}[p['float_type']]
 		self.model = cpp_obj(p['window'], p['n_bins'])
 		self.last_time = 0
 		self.dimension = -1
+		self.proj_matrix = None
 		
 	def fit_predict(self, data, times = None):
 		"""
@@ -736,6 +758,10 @@ class SWHBOS(OutlierDetector):
 			Outlier scores for provided input data.
 		"""
 		data = self._processData(data)
+		if self.params['n_projections'] is not None:
+			if self.proj_matrix is None:
+				self._init_projections()
+			data = np.matmul(data, self.proj_matrix)
 		times = self._processTimes(data, times)
 		scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
@@ -752,7 +778,8 @@ class SWHBOS(OutlierDetector):
 		Returns
 		---------------
 		data: ndarray, shape (n_samples, n_features)
-			Samples in the current window.
+			Samples in the current window. If n_projections is set, returns
+			the projected data samples.
 			
 		times: ndarray, shape (n_samples,)
 			Expiry times of samples in the current window.
