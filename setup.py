@@ -26,7 +26,8 @@ CPP_SOURCES = [
 dSalmon_cpp = Extension(
 	'dSalmon.swig._dSalmon',
 	CPP_SOURCES,
-	include_dirs=['cpp', numpy_include, 'contrib/boost']
+	include_dirs=['cpp', numpy_include, 'contrib/boost'],
+        extra_compile_args=['-g0'] # Strip .so file to an acceptable size
 )
 
 setup(
