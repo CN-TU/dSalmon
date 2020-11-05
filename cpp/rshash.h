@@ -159,7 +159,9 @@ class RSHash {
 			cms_entry++;
 		}
 		sliding_window.push_back({data, now + window});
-		return std::log2(event_count+1);
+		// RS-Hash reports a score for normality. To be consistent with remaining
+		// algorithms, we multiply with -1 to return an outlier score.
+		return -std::log2(event_count+1);
 	}
 
 	void fit(std::shared_ptr<Vector<FloatType>> data, FloatType now) {
