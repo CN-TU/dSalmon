@@ -56,7 +56,7 @@ auto MTree<Key,T,DistanceType,NodeStats>::operator=(const MTree& other) -> MTree
 		}
 	}
 	// now walk all nodes and update pointers
-	for (Node* mapping : pointers) {
+	for (auto& mapping : pointers) {
 		Node* node = mapping.second;
 		node->parent = static_cast<RoutingNode*>(pointers[node->parent]);
 		RoutingNode* node_as_RoutingNode = dynamic_cast<RoutingNode*>(node);
