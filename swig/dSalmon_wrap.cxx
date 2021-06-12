@@ -10653,7 +10653,7 @@ SWIGINTERN PyObject *_wrap_new_RSHash32(PyObject *SWIGUNUSEDPARM(self), PyObject
   float arg2 ;
   int arg3 ;
   int arg4 ;
-  unsigned int arg5 ;
+  float arg5 ;
   int arg6 ;
   unsigned int arg7 ;
   unsigned int val1 ;
@@ -10664,7 +10664,7 @@ SWIGINTERN PyObject *_wrap_new_RSHash32(PyObject *SWIGUNUSEDPARM(self), PyObject
   int ecode3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned int val5 ;
+  float val5 ;
   int ecode5 = 0 ;
   int val6 ;
   int ecode6 = 0 ;
@@ -10694,11 +10694,11 @@ SWIGINTERN PyObject *_wrap_new_RSHash32(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_RSHash32" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_int(swig_obj[4], &val5);
+  ecode5 = SWIG_AsVal_float(swig_obj[4], &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_RSHash32" "', argument " "5"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_RSHash32" "', argument " "5"" of type '" "float""'");
   } 
-  arg5 = static_cast< unsigned int >(val5);
+  arg5 = static_cast< float >(val5);
   ecode6 = SWIG_AsVal_int(swig_obj[5], &val6);
   if (!SWIG_IsOK(ecode6)) {
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_RSHash32" "', argument " "6"" of type '" "int""'");
@@ -10980,7 +10980,7 @@ SWIGINTERN PyObject *_wrap_new_RSHash64(PyObject *SWIGUNUSEDPARM(self), PyObject
   double arg2 ;
   int arg3 ;
   int arg4 ;
-  unsigned int arg5 ;
+  double arg5 ;
   int arg6 ;
   unsigned int arg7 ;
   unsigned int val1 ;
@@ -10991,7 +10991,7 @@ SWIGINTERN PyObject *_wrap_new_RSHash64(PyObject *SWIGUNUSEDPARM(self), PyObject
   int ecode3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned int val5 ;
+  double val5 ;
   int ecode5 = 0 ;
   int val6 ;
   int ecode6 = 0 ;
@@ -11021,11 +11021,11 @@ SWIGINTERN PyObject *_wrap_new_RSHash64(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_RSHash64" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_int(swig_obj[4], &val5);
+  ecode5 = SWIG_AsVal_double(swig_obj[4], &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_RSHash64" "', argument " "5"" of type '" "unsigned int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_RSHash64" "', argument " "5"" of type '" "double""'");
   } 
-  arg5 = static_cast< unsigned int >(val5);
+  arg5 = static_cast< double >(val5);
   ecode6 = SWIG_AsVal_int(swig_obj[5], &val6);
   if (!SWIG_IsOK(ecode6)) {
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_RSHash64" "', argument " "6"" of type '" "int""'");

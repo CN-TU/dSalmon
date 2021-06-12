@@ -292,7 +292,7 @@ void RRCT_wrapper<FloatType>::get_window(NumpyArray2<FloatType> data, NumpyArray
 
 
 template<typename FloatType>
-RSHash_wrapper<FloatType>::RSHash_wrapper(unsigned ensemble_size, FloatType window, int cms_w_param, int cms_d_param, unsigned s_param, int seed, unsigned n_jobs) :
+RSHash_wrapper<FloatType>::RSHash_wrapper(unsigned ensemble_size, FloatType window, int cms_w_param, int cms_d_param, FloatType s_param, int seed, unsigned n_jobs) :
 	n_jobs(n_jobs)
 {
 	ensemble.reserve(ensemble_size);

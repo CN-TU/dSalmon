@@ -227,7 +227,7 @@ class SWKNN(OutlierDetector):
 		data = self._processData(data)
 		times = self._processTimes(data, times)
 		if self.params['k_is_max']:
-			scores = np.zeros([data.shape[0], self.k], dtype=self.params['float_type'])
+			scores = np.zeros([data.shape[0], self.params['k']], dtype=self.params['float_type'])
 			self.model.fit_predict_with_neighbors(data, scores, np.array(times, dtype=self.params['float_type']))
 		else:
 			scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
@@ -356,7 +356,7 @@ class SWLOF(OutlierDetector):
 		"""
 		data = self._processData(data)
 		times = self._processTimes(data, times)
-		scores = np.zeros([data.shape[0], self.k], dtype=self.params['float_type'])
+		scores = np.zeros([data.shape[0], self.params['k']], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores if self.params['k_is_max'] else scores[:,-1]
 		

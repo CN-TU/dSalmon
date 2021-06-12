@@ -99,7 +99,7 @@ class RSHash_wrapper {
 	int n_jobs;
 
   public:
-	RSHash_wrapper(unsigned ensemble_size, FloatType window, int cms_w_param, int cms_d_param, unsigned s_param, int seed, unsigned n_jobs);
+	RSHash_wrapper(unsigned ensemble_size, FloatType window, int cms_w_param, int cms_d_param, FloatType s_param, int seed, unsigned n_jobs);
 	void fit(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times);
 	void fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times);
 	int window_size();

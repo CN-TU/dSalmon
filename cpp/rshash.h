@@ -125,7 +125,7 @@ class RSHash {
 	}
 
   public:
-	RSHash(FloatType window, std::uint64_t s_param, unsigned cms_w_param, unsigned cms_d_param, int seed) :
+	RSHash(FloatType window, FloatType s_param, unsigned cms_w_param, unsigned cms_d_param, int seed) :
 		window(window),
 		s_param(s_param),
 		dimension(-1),
