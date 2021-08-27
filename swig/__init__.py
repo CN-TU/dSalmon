@@ -729,5 +729,61 @@ class SWHBOS64(object):
 # Register SWHBOS64 in _dSalmon:
 _dSalmon.SWHBOS64_swigregister(SWHBOS64)
 
+class SWZScoreScaler32(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, window):
+        _dSalmon.SWZScoreScaler32_swiginit(self, _dSalmon.new_SWZScoreScaler32(window))
+
+    def transform(self, data, normalized, times):
+        return _dSalmon.SWZScoreScaler32_transform(self, data, normalized, times)
+    __swig_destroy__ = _dSalmon.delete_SWZScoreScaler32
+
+# Register SWZScoreScaler32 in _dSalmon:
+_dSalmon.SWZScoreScaler32_swigregister(SWZScoreScaler32)
+
+class SWZScoreScaler64(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, window):
+        _dSalmon.SWZScoreScaler64_swiginit(self, _dSalmon.new_SWZScoreScaler64(window))
+
+    def transform(self, data, normalized, times):
+        return _dSalmon.SWZScoreScaler64_transform(self, data, normalized, times)
+    __swig_destroy__ = _dSalmon.delete_SWZScoreScaler64
+
+# Register SWZScoreScaler64 in _dSalmon:
+_dSalmon.SWZScoreScaler64_swigregister(SWZScoreScaler64)
+
+class SWQuantileScaler32(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, window, quantile):
+        _dSalmon.SWQuantileScaler32_swiginit(self, _dSalmon.new_SWQuantileScaler32(window, quantile))
+
+    def transform(self, data, normalized, times):
+        return _dSalmon.SWQuantileScaler32_transform(self, data, normalized, times)
+    __swig_destroy__ = _dSalmon.delete_SWQuantileScaler32
+
+# Register SWQuantileScaler32 in _dSalmon:
+_dSalmon.SWQuantileScaler32_swigregister(SWQuantileScaler32)
+
+class SWQuantileScaler64(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, window, quantile):
+        _dSalmon.SWQuantileScaler64_swiginit(self, _dSalmon.new_SWQuantileScaler64(window, quantile))
+
+    def transform(self, data, normalized, times):
+        return _dSalmon.SWQuantileScaler64_transform(self, data, normalized, times)
+    __swig_destroy__ = _dSalmon.delete_SWQuantileScaler64
+
+# Register SWQuantileScaler64 in _dSalmon:
+_dSalmon.SWQuantileScaler64_swigregister(SWQuantileScaler64)
+
 
 

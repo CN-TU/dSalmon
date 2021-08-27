@@ -11,6 +11,7 @@
 #include "distance_wrappers.h"
 #include "MTree_wrapper.h"
 #include "outlier_wrapper.h"
+#include "preproc_wrapper.h"
 
 %}
 
@@ -172,3 +173,4 @@ import_array();
 %include "distance_wrappers.h"
 %include "MTree_wrapper.h"
 %include "outlier_wrapper.h"
+%include "preproc_wrapper.h"

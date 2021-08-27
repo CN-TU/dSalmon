@@ -20,6 +20,7 @@ numpy_include = numpy_path + '/core/include'
 CPP_SOURCES = [
 	'swig/MTree_wrapper.cpp',
 	'swig/outlier_wrapper.cpp',
+	'swig/preproc_wrapper.cpp',
 	'swig/dSalmon_wrap.cxx'
 ]
 

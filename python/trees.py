@@ -21,12 +21,12 @@ class _MTreeByIndexLookup(object):
 		sel, result_length = self.tree_obj._byIndexSelector(indices)
 				
 		# TODO: should do something if both sel and tree are empty
-		points = np.zeros((result_length, self.tree_obj.dimension), dtype=np.double)
+		points = np.empty((result_length, self.tree_obj.dimension), dtype=self.tree_obj.float_type)
 		self.tree_obj.cpp_tree.getPoints(sel, points)
 		return points
 		
 	def __setitem__(self, indices, data):
-		data = sanitizeData(data)
+		data = sanitizeData(data, self.tree_obj.float_type)
 		assert self.tree_obj.dimension == data.shape[1]
 		
 		if isinstance(indices, slice):
@@ -96,6 +96,7 @@ class MTree(object):
 		"""
 		assert float_type in [np.float32, np.float64]
 		assert min_node_size * 2 < max_node_size
+		self.float_type = float_type
 		distance_function = lookupDistance(metric, float_type)
 		insert_jobs = mp.cpu_count() if insert_jobs==-1 else insert_jobs
 		query_jobs = mp.cpu_count() if query_jobs==-1 else query_jobs
@@ -120,7 +121,7 @@ class MTree(object):
 		assert len(keys.shape) == 1
 		sel = self.selector_factory(self.cpp_tree, keys, False)
 		if not ignore_missing and not sel.allOk():
-			found = np.zeros(keys.shape[0], dtype=np.uint8)
+			found = np.empty(keys.shape[0], dtype=np.uint8)
 			sel.getFoundMask(found)
 			raise IndexError('Keys ' + str(keys[found==0].tolist()) + ' invalid')
 		return sel, len(keys)
@@ -141,7 +142,7 @@ class MTree(object):
 			result_length = len(indices)
 			sel = self.selector_factory(self.cpp_tree, indices, True)
 			if not ignore_missing and not sel.allOk():
-				found = np.zeros(len(indices), dtype=np.uint8)
+				found = np.empty(len(indices), dtype=np.uint8)
 				sel.getFoundMask(found)
 				raise IndexError('Indices ' + str(indices[found==0].tolist()) + ' invalid')
 		return sel, result_length
@@ -160,9 +161,9 @@ class MTree(object):
 		indices: ndarray, shape (n_samples,)
 			The indices assigned to the newly inserted data points.
 		"""
-		data = sanitizeData(data)
+		data = sanitizeData(data, self.float_type)
 		assert self.dimension in [-1, data.shape[1]]
-		indices = np.zeros(data.shape[0], dtype=np.int64)
+		indices = np.empty(data.shape[0], dtype=np.int64)
 		self.cpp_tree.insert(data, indices)
 		return indices
 		
@@ -182,7 +183,7 @@ class MTree(object):
 		sel, result_length = self._byKeySelector(keys, ignore_missing=True)
 		if self.dimension == -1:
 			return np.zeros(len(keys), dtype=bool)
-		found = np.zeros(len(keys), dtype=np.uint8)
+		found = np.empty(len(keys), dtype=np.uint8)
 		self.cpp_tree.remove(sel)
 		sel.getFoundMask(found)
 		return found != 0
@@ -212,13 +213,13 @@ class MTree(object):
 			The number of neighbors returned for each point, so that
 			sum(length) == n_total_neighbors.
 		"""
-		data = sanitizeData(data)
+		data = sanitizeData(data, self.float_type)
 		assert self.dimension == data.shape[1]
 		query = self.range_query_factory(self.cpp_tree, data, radius)
 		total_length = query.resultTotalLength()
-		keys = np.zeros(total_length, dtype=np.int64)
-		distances = np.zeros(total_length, dtype=np.double)
-		lengths = np.zeros(data.shape[0], dtype=np.int32)
+		keys = np.empty(total_length, dtype=np.int64)
+		distances = np.empty(total_length, dtype=self.float_type)
+		lengths = np.empty(data.shape[0], dtype=np.int32)
 		query.result(keys, distances)
 		query.resultLengths(lengths)
 		return keys, distances, lengths
@@ -265,15 +266,15 @@ class MTree(object):
 			The number of neighbors returned for each point, so that
 			sum(length) == n_total_neighbors.
 		"""
-		data = sanitizeData(data)
+		data = sanitizeData(data, self.float_type)
 		assert self.dimension == data.shape[1]
 		query = self.knn_query_factory(self.cpp_tree, data, int(k), sort,
 									   min_radius, max_radius, reverse,
 									   extend_for_ties)
 		total_length = query.resultTotalLength()
-		keys = np.zeros(total_length, dtype=np.int64)
-		distances = np.zeros(total_length, dtype=np.double)
-		lengths = np.zeros(data.shape[0], dtype=np.int32)
+		keys = np.empty(total_length, dtype=np.int64)
+		distances = np.empty(total_length, dtype=self.float_type)
+		lengths = np.empty(data.shape[0], dtype=np.int32)
 		query.result(keys, distances)
 		query.resultLengths(lengths)
 		return keys, distances, lengths
@@ -309,9 +310,9 @@ class MTree(object):
 		"""
 		sel, result_length = self._byKeySelector(keys, ignore_missing=True)
 		if self.dimension == -1:
-			return np.zeros((0,0), dtype=np.double), np.zeros(len(keys), dtype=bool)
-		points = np.zeros((len(keys), self.dimension), dtype=np.double)
-		found = np.zeros(len(keys), dtype=np.uint8)
+			return np.zeros((0,0), dtype=self.float_type), np.zeros(len(keys), dtype=bool)
+		points = np.empty((len(keys), self.dimension), dtype=self.float_type)
+		found = np.empty(len(keys), dtype=np.uint8)
 		self.cpp_tree.getPoints(sel, points)
 		sel.getFoundMask(found)
 		return points, found!=0
@@ -319,13 +320,13 @@ class MTree(object):
 	def __getitem__(self, keys):
 		sel, result_length = self._byKeySelector(keys)
 		# TODO: should handle dimension if both key and tree are empty
-		points = np.zeros((result_length, self.dimension), dtype=np.double)
+		points = np.empty((result_length, self.dimension), dtype=self.float_type)
 		self.cpp_tree.getPoints(sel, points)
 		return points
 		
 	def __setitem__(self, keys, data):
 		assert not isinstance(keys, slice), 'Slice access is not supported for this object. Use .ix[] instead.'
-		data = sanitizeData(data)
+		data = sanitizeData(data, self.float_type)
 		keys = np.array(keys, dtype=np.int64)
 		if len(keys.shape) == 0:
 			keys = keys[None]
@@ -357,7 +358,7 @@ class MTree(object):
 		if indices is None:
 			indices = slice(None)
 		sel, result_length = self._byIndexSelector(indices)
-		keys = np.zeros(result_length, dtype=np.int64)
+		keys = np.empty(result_length, dtype=np.int64)
 		self.cpp_tree.keys(sel, keys)
 		return keys
 		
@@ -376,7 +377,7 @@ class MTree(object):
 			The requested indices as numpy array.
 		"""
 		sel, result_length = self._byKeySelector(keys)
-		indices = np.zeros(result_length, dtype=np.int64)
+		indices = np.empty(result_length, dtype=np.int64)
 		self.cpp_tree.indices(sel, indices)
 		return indices
 		

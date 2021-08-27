@@ -7,10 +7,9 @@ import random
 import multiprocessing as mp
 
 from . import swig as dSalmon_cpp
-from .util import sanitizeData, lookupDistance
+from .util import sanitizeData, sanitizeTimes, lookupDistance
 
 class OutlierDetector(object):
-
 	def _init_model(self, p):
 		pass
 
@@ -31,15 +30,16 @@ class OutlierDetector(object):
 		return data
 
 	def _processTimes(self, data, times):
-		if times is None:
-			times = np.arange(self.last_time + 1, self.last_time + 1 + data.shape[0])
-		else:
-			times = np.array(times, dtype=self.params['float_type'])
-			assert len(times.shape) <= 1
-			if len(times.shape) == 0:
-				times = np.repeat(times[None], data.shape[0])
-			else:
-				assert times.shape[0] == data.shape[0]
+		times = sanitizeTimes(times, data.shape[0], self.last_time, self.params['float_type'])
+		# if times is None:
+		# 	times = np.arange(self.last_time + 1, self.last_time + 1 + data.shape[0])
+		# else:
+		# 	times = np.array(times, dtype=self.params['float_type'])
+		# 	assert len(times.shape) <= 1
+		# 	if len(times.shape) == 0:
+		# 		times = np.repeat(times[None], data.shape[0])
+		# 	else:
+		# 		assert times.shape[0] == data.shape[0]
 		self.last_time = times[-1]
 		return times
 
@@ -116,7 +116,7 @@ class SWDBOR(OutlierDetector):
 		"""
 		data = self._processData(data)
 		times = self._processTimes(data, times)
-		scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
+		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
 		
@@ -143,9 +143,9 @@ class SWDBOR(OutlierDetector):
 		if self.dimension == -1:
 			return np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=np.int32)
 		window_size = self.model.window_size()
-		data = np.zeros([window_size, self.dimension], dtype=self.params['float_type'])
-		times = np.zeros(window_size, dtype=self.params['float_type'])
-		neighbors = np.zeros(window_size, dtype=np.int32)
+		data = np.empty([window_size, self.dimension], dtype=self.params['float_type'])
+		times = np.empty(window_size, dtype=self.params['float_type'])
+		neighbors = np.empty(window_size, dtype=np.int32)
 		self.model.get_window(data, times, neighbors)
 		return data, times, neighbors
 
@@ -227,10 +227,10 @@ class SWKNN(OutlierDetector):
 		data = self._processData(data)
 		times = self._processTimes(data, times)
 		if self.params['k_is_max']:
-			scores = np.zeros([data.shape[0], self.params['k']], dtype=self.params['float_type'])
+			scores = np.empty([data.shape[0], self.params['k']], dtype=self.params['float_type'])
 			self.model.fit_predict_with_neighbors(data, scores, np.array(times, dtype=self.params['float_type']))
 		else:
-			scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
+			scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 			self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
 
@@ -253,8 +253,8 @@ class SWKNN(OutlierDetector):
 		if self.dimension == -1:
 			return np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=np.int32)
 		window_size = self.model.window_size()
-		data = np.zeros([window_size, self.dimension], dtype=self.params['float_type'])
-		times = np.zeros(window_size, dtype=self.params['float_type'])
+		data = np.empty([window_size, self.dimension], dtype=self.params['float_type'])
+		times = np.empty(window_size, dtype=self.params['float_type'])
 		self.model.get_window(data, times)
 		return data, times
 
@@ -356,7 +356,7 @@ class SWLOF(OutlierDetector):
 		"""
 		data = self._processData(data)
 		times = self._processTimes(data, times)
-		scores = np.zeros([data.shape[0], self.params['k']], dtype=self.params['float_type'])
+		scores = np.empty([data.shape[0], self.params['k']], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores if self.params['k_is_max'] else scores[:,-1]
 		
@@ -379,8 +379,8 @@ class SWLOF(OutlierDetector):
 		if self.dimension == -1:
 			return np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=np.int32)
 		window_size = self.model.window_size()
-		data = np.zeros([window_size, self.dimension], dtype=self.params['float_type'])
-		times = np.zeros(window_size, dtype=self.params['float_type'])
+		data = np.empty([window_size, self.dimension], dtype=self.params['float_type'])
+		times = np.empty(window_size, dtype=self.params['float_type'])
 		self.model.get_window(data, times)
 		return data, times
 
@@ -457,9 +457,9 @@ class SDOstream(OutlierDetector):
 		"""
 		data = self._processData(data)
 		times = self._processTimes(data, times)
-		scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
+		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		if self.params['return_sampling']:
-			sampling = np.zeros(data.shape[0], dtype=np.int32)
+			sampling = np.empty(data.shape[0], dtype=np.int32)
 			self.model.fit_predict_with_sampling(data, scores, np.array(times, dtype=self.params['float_type']), sampling)
 			return scores, sampling
 		else:
@@ -493,9 +493,9 @@ class SDOstream(OutlierDetector):
 		complex_type = np.complex64 if self.params['float_type'] == np.float32 else np.complex128
 		if observer_cnt == 0:
 			return np.zeros([0], dtype=self.params['float_type']), np.zeros([0,freq_bins], dtype=complex_type), np.zeros([0], dtype=self.params['float_type'])
-		data = np.zeros([observer_cnt, self.dimension], dtype=self.params['float_type'])
-		observations = np.zeros([observer_cnt, freq_bins], dtype=complex_type)
-		av_observations = np.zeros(observer_cnt, dtype=self.params['float_type'])
+		data = np.empty([observer_cnt, self.dimension], dtype=self.params['float_type'])
+		observations = np.empty([observer_cnt, freq_bins], dtype=complex_type)
+		av_observations = np.empty(observer_cnt, dtype=self.params['float_type'])
 		self.model.get_observers(data, observations, av_observations, self.params['float_type'](time))
 		return data, observations, av_observations
 
@@ -556,7 +556,7 @@ class SWRRCT(OutlierDetector):
 		"""
 		data = self._processData(data)
 		times = self._processTimes(data, times)
-		scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
+		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
 		
@@ -579,8 +579,8 @@ class SWRRCT(OutlierDetector):
 		if self.dimension == -1:
 			return np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type'])
 		window_size = self.model.window_size()
-		data = np.zeros([window_size, self.dimension], dtype=self.params['float_type'])
-		times = np.zeros(window_size, dtype=self.params['float_type'])
+		data = np.empty([window_size, self.dimension], dtype=self.params['float_type'])
+		times = np.empty(window_size, dtype=self.params['float_type'])
 		self.model.get_window(data, times)
 		return data, times
 
@@ -660,7 +660,7 @@ class RSHash(OutlierDetector):
 		"""
 		data = self._processData(data)
 		times = self._processTimes(data, times)
-		scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
+		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
 		
@@ -683,8 +683,8 @@ class RSHash(OutlierDetector):
 		if self.dimension == -1:
 			return np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type'])
 		window_size = self.model.window_size()
-		data = np.zeros([window_size, self.dimension], dtype=self.params['float_type'])
-		times = np.zeros(window_size, dtype=self.params['float_type'])
+		data = np.empty([window_size, self.dimension], dtype=self.params['float_type'])
+		times = np.empty(window_size, dtype=self.params['float_type'])
 		self.model.get_window(data, times)
 		return data, times
 
@@ -763,7 +763,7 @@ class LODA(OutlierDetector):
 				self._init_projections()
 			data = np.matmul(data, self.proj_matrix)
 		times = self._processTimes(data, times)
-		scores = np.zeros(data.shape[0], dtype=self.params['float_type'])
+		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
 		
@@ -787,7 +787,7 @@ class LODA(OutlierDetector):
 		if self.dimension == -1:
 			return np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type'])
 		window_size = self.model.window_size()
-		data = np.zeros([window_size, self.dimension], dtype=self.params['float_type'])
-		times = np.zeros(window_size, dtype=self.params['float_type'])
+		data = np.empty([window_size, self.dimension], dtype=self.params['float_type'])
+		times = np.empty(window_size, dtype=self.params['float_type'])
 		self.model.get_window(data, times)
 		return data, times

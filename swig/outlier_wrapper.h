@@ -5,8 +5,6 @@
 #ifndef DSALMON_OUTLIER_WRAPPER_H
 #define DSALMON_OUTLIER_WRAPPER_H
 
-#include <complex>
-
 #include "SDOstream.h"
 #include "slidingWindow.h"
 #include "rrct.h"
