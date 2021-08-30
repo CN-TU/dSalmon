@@ -108,9 +108,10 @@ DEFINE_FLOATINSTANTIATIONS(RSHash)
 template<typename FloatType>
 class SWHBOS_wrapper {
 	SWHBOS<FloatType> estimator;
+	unsigned n_jobs;
 
   public:
-	SWHBOS_wrapper(FloatType window, unsigned bins);
+	SWHBOS_wrapper(FloatType window, unsigned bins, unsigned n_jobs);
 	void fit(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times);
 	void fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times);
 	int window_size();

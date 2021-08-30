@@ -687,8 +687,8 @@ class SWHBOS32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, window, bins):
-        _dSalmon.SWHBOS32_swiginit(self, _dSalmon.new_SWHBOS32(window, bins))
+    def __init__(self, window, bins, n_jobs):
+        _dSalmon.SWHBOS32_swiginit(self, _dSalmon.new_SWHBOS32(window, bins, n_jobs))
 
     def fit(self, data, times):
         return _dSalmon.SWHBOS32_fit(self, data, times)
@@ -710,8 +710,8 @@ class SWHBOS64(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, window, bins):
-        _dSalmon.SWHBOS64_swiginit(self, _dSalmon.new_SWHBOS64(window, bins))
+    def __init__(self, window, bins, n_jobs):
+        _dSalmon.SWHBOS64_swiginit(self, _dSalmon.new_SWHBOS64(window, bins, n_jobs))
 
     def fit(self, data, times):
         return _dSalmon.SWHBOS64_fit(self, data, times)

@@ -4,8 +4,8 @@
 
 import numpy as np
 
-from . import swig as dSalmon_cpp
-from .util import sanitizeData, sanitizeTimes
+from dSalmon import swig as dSalmon_cpp
+from dSalmon.util import sanitizeData, sanitizeTimes
 
 class SWScaler(object):
     def __init__(self, float_type=np.float64):

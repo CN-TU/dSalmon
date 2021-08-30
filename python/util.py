@@ -3,7 +3,7 @@
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
 import numpy as np
-from . import swig
+from dSalmon import swig
 
 def sanitizeData(data, float_type=np.float64):
 	data = np.array(data, dtype=float_type)

@@ -354,10 +354,10 @@ void RSHash_wrapper<FloatType>::get_window(NumpyArray2<FloatType> data, NumpyArr
 
 
 template<typename FloatType>
-SWHBOS_wrapper<FloatType>::SWHBOS_wrapper(FloatType window, unsigned n_bins) :
-	estimator(window, n_bins)
-{
-}
+SWHBOS_wrapper<FloatType>::SWHBOS_wrapper(FloatType window, unsigned n_bins, unsigned n_jobs) :
+	estimator(window, n_bins),
+	n_jobs(n_jobs)
+{ }
 
 template<typename FloatType>
 void SWHBOS_wrapper<FloatType>::fit(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times) {
@@ -371,10 +371,14 @@ template<typename FloatType>
 void SWHBOS_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
 	assert (data.dim1 == times.dim1);
 	assert (data.dim1 == scores.dim1);
+	if (n_jobs > 1 && data.dim1 > 1)
+		estimator.initThreadPool(std::min<unsigned>(data.dim2, n_jobs));
 	for (int i = 0; i < data.dim1; i++) {
 		auto it = estimator.append(Vector<FloatType>(&data.data[i * data.dim2], data.dim2), times.data[i]);
 		scores.data[i] = estimator.outlierness(it);
 	}
+	if (n_jobs > 1)
+		estimator.releaseThreadPool();
 }
 
 template<typename FloatType>

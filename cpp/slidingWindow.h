@@ -13,6 +13,12 @@
 #include <boost/multi_index/identity.hpp>
 
 #include <map>
+#include <atomic>
+#include <memory>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
 
 // Distance based Outlier by Radius
 template<typename FloatType=double>
@@ -483,11 +489,6 @@ class SWHBOS {
 		}
 	};
 
-	// size of the sliding window
-	FloatType window;
-	// how many bins per histogram we use
-	std::size_t n_bins;
-
 	struct Point {
 		Vector<FloatType> data;
 		FloatType expire_time;
@@ -496,10 +497,88 @@ class SWHBOS {
 	// store processed points in the order of their arrival
 	typedef std::list<Point> PointList;
 	typedef typename PointList::iterator PointListIterator;
+
+	class ThreadPool {
+		SWHBOS<FloatType>& detector;
+		std::mutex mutex, done_mutex;
+		std::condition_variable cv;
+		bool stop;
+		std::size_t jobs_running;
+		std::vector<std::thread> workers;
+
+		PointListIterator score_item;
+		// std::size_t current_histogram;
+		std::atomic<unsigned> current_histogram;
+		FloatType outlierness_score;
+
+		void worker() {
+			std::unique_lock<std::mutex> lock(mutex);
+			for (;;) {
+				if (stop)
+					break;
+				if (score_item != detector.points.end()) {
+					unsigned i;
+					FloatType local_score = 0;
+					jobs_running++;
+					lock.unlock();
+					while ((i = current_histogram++) < detector.histograms.size()) {
+						FloatType bin_height = detector.histograms[i].getNormBinHeight(detector.n_bins, score_item->iterators[i]);
+						local_score -= std::log10(bin_height);
+					}
+					lock.lock();
+					outlierness_score += local_score;
+					if (!--jobs_running) {
+						score_item = detector.points.end();
+						done_mutex.unlock();
+					}
+				}
+				cv.wait(lock);
+			}
+		}
+
+	  public:
+		ThreadPool(SWHBOS<FloatType>& detector, std::size_t n_threads) :
+			detector(detector), 
+			stop(false),
+			jobs_running(0),
+			score_item(detector.points.end())
+		{
+			done_mutex.lock();
+			for (std::size_t i = 0; i < n_threads; i++)
+				workers.emplace_back(&ThreadPool::worker, &*this);
+		}
+
+		~ThreadPool() {
+			mutex.lock();
+			stop = true;
+			mutex.unlock();
+			cv.notify_all();
+			for (auto& thread : workers)
+				thread.join();
+		}
+
+		FloatType outlierness(PointListIterator pos) {
+			mutex.lock();
+			score_item = pos;
+			current_histogram = 0;
+			outlierness_score = 0;
+			mutex.unlock();
+			cv.notify_all();
+			done_mutex.lock();
+			return outlierness_score;
+		}
+	};
+
+	// size of the sliding window
+	FloatType window;
+	// how many bins per histogram we use
+	std::size_t n_bins;
+
 	PointList points;
 
 	// one histogram per data dimension
 	std::vector<Histogram> histograms;
+	std::unique_ptr<ThreadPool> thread_pool;
 
 	void eraseFromHistograms(Point& point) {
 		std::vector<typename Histogram::iterator>& iterators = point.iterators;
@@ -515,7 +594,18 @@ class SWHBOS {
 	}
 
   public:
-	SWHBOS(FloatType window, std::size_t n_bins) : window(window), n_bins(n_bins) {}
+	SWHBOS(FloatType window, std::size_t n_bins) :
+		window(window),
+		n_bins(n_bins)
+	{ }
+
+	void initThreadPool(std::size_t n_threads) {
+		thread_pool.reset(new ThreadPool(*this, n_threads));
+	}
+
+	void releaseThreadPool() {
+		thread_pool.reset();
+	}
 
 	std::size_t windowSize() { return points.size(); }
 
@@ -554,12 +644,17 @@ class SWHBOS {
 	
 	FloatType outlierness(iterator pos) {
 		// compute outlierness score according to HBOS paper
-		FloatType score = 0;
-		for (std::size_t i = 0; i < histograms.size(); i++) {
-			FloatType bin_height = histograms[i].getNormBinHeight(n_bins, pos->iterators[i]);
-			score -= std::log10(bin_height);
+		if (thread_pool) {
+			return thread_pool->outlierness(pos);
 		}
-		return score;
+		else {
+			FloatType score = 0;
+			for (std::size_t i = 0; i < histograms.size(); i++) {
+				FloatType bin_height = histograms[i].getNormBinHeight(n_bins, pos->iterators[i]);
+				score -= std::log10(bin_height);
+			}
+			return score;
+		}
 	}
 };
 

@@ -6,8 +6,8 @@ import numpy as np
 import math
 import multiprocessing as mp
 
-from . import swig as dSalmon_cpp
-from .util import sanitizeData, lookupDistance
+from dSalmon import swig as dSalmon_cpp
+from dSalmon.util import sanitizeData, lookupDistance
 
 
 class _MTreeByIndexLookup(object):

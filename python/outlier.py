@@ -6,8 +6,8 @@ import numpy as np
 import random
 import multiprocessing as mp
 
-from . import swig as dSalmon_cpp
-from .util import sanitizeData, sanitizeTimes, lookupDistance
+from dSalmon import swig as dSalmon_cpp
+from dSalmon.util import sanitizeData, sanitizeTimes, lookupDistance
 
 class OutlierDetector(object):
 	def _init_model(self, p):
@@ -618,7 +618,7 @@ class RSHash(OutlierDetector):
 			The floating point type to use for internal processing.
 			
 		seed: int
-			Random seed for tree construction.
+			Random seed to use.
 
 		n_jobs: int
 			Number of threads to use for processing trees.
@@ -698,8 +698,8 @@ class LODA(OutlierDetector):
 	otherwise behaviour corresponds to a sliding window adaptation of the
 	HBOS algorithm.
 	"""
-	
-	def __init__(self, window, n_projections=None, n_bins=10, float_type=np.float64):
+
+	def __init__(self, window, n_projections=None, n_bins=10, float_type=np.float64, seed=0, n_jobs=-1):
 		"""
 		Parameters
 		----------
@@ -715,17 +715,26 @@ class LODA(OutlierDetector):
 
 		float_type: np.float32 or np.float64
 			The floating point type to use for internal processing.
+
+		seed: int
+			Seed for random projections.
+
+		n_jobs: int
+			Number of threads to use for processing trees.
+			Pass -1 to use as many jobs as there are CPU cores.
 		"""
 		self.params = { k: v for k, v in locals().items() if k != 'self' }
 		self._init_model(self.params)
-
+	
 	def _init_projections(self):
+		rng = random.Random(self.params['seed'])
+		nprng = np.random.RandomState(self.params['seed'])
 		n_projections = self.params['n_projections']
 		self.proj_matrix = np.zeros((self.dimension,n_projections), dtype=self.params['float_type'])
 		proj_per_histogram = int(round(np.sqrt(self.dimension)))
 		for i in range(n_projections):
-			indices = random.sample(range(self.dimension), k=proj_per_histogram)
-			self.proj_matrix[indices,i] = np.random.normal(size=proj_per_histogram)
+			indices = rng.sample(range(self.dimension), k=proj_per_histogram)
+			self.proj_matrix[indices,i] = nprng.normal(size=proj_per_histogram)
 
 	def _init_model(self, p):
 		assert p['float_type'] in [np.float32, np.float64]
@@ -733,7 +742,7 @@ class LODA(OutlierDetector):
 		assert p['window'] > 0
 		assert p['n_projections'] is None or p['n_projections'] > 0
 		cpp_obj = {np.float32: dSalmon_cpp.SWHBOS32, np.float64: dSalmon_cpp.SWHBOS64}[p['float_type']]
-		self.model = cpp_obj(p['window'], p['n_bins'])
+		self.model = cpp_obj(p['window'], p['n_bins'], mp.cpu_count() if p['n_jobs']==-1 else p['n_jobs'])
 		self.last_time = 0
 		self.dimension = -1
 		self.proj_matrix = None

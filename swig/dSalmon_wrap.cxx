@@ -11310,14 +11310,17 @@ SWIGINTERN PyObject *_wrap_new_SWHBOS32(PyObject *SWIGUNUSEDPARM(self), PyObject
   PyObject *resultobj = 0;
   float arg1 ;
   unsigned int arg2 ;
+  unsigned int arg3 ;
   float val1 ;
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  PyObject *swig_obj[2] ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  PyObject *swig_obj[3] ;
   SWHBOS_wrapper< float > *result = 0 ;
   
-  if (!SWIG_Python_UnpackTuple(args, "new_SWHBOS32", 2, 2, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "new_SWHBOS32", 3, 3, swig_obj)) SWIG_fail;
   ecode1 = SWIG_AsVal_float(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_SWHBOS32" "', argument " "1"" of type '" "float""'");
@@ -11328,7 +11331,12 @@ SWIGINTERN PyObject *_wrap_new_SWHBOS32(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_SWHBOS32" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
-  result = (SWHBOS_wrapper< float > *)new SWHBOS_wrapper< float >(arg1,arg2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_SWHBOS32" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  result = (SWHBOS_wrapper< float > *)new SWHBOS_wrapper< float >(arg1,arg2,arg3);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SWHBOS_wrapperT_float_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
@@ -11597,14 +11605,17 @@ SWIGINTERN PyObject *_wrap_new_SWHBOS64(PyObject *SWIGUNUSEDPARM(self), PyObject
   PyObject *resultobj = 0;
   double arg1 ;
   unsigned int arg2 ;
+  unsigned int arg3 ;
   double val1 ;
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  PyObject *swig_obj[2] ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  PyObject *swig_obj[3] ;
   SWHBOS_wrapper< double > *result = 0 ;
   
-  if (!SWIG_Python_UnpackTuple(args, "new_SWHBOS64", 2, 2, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "new_SWHBOS64", 3, 3, swig_obj)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_SWHBOS64" "', argument " "1"" of type '" "double""'");
@@ -11615,7 +11626,12 @@ SWIGINTERN PyObject *_wrap_new_SWHBOS64(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_SWHBOS64" "', argument " "2"" of type '" "unsigned int""'");
   } 
   arg2 = static_cast< unsigned int >(val2);
-  result = (SWHBOS_wrapper< double > *)new SWHBOS_wrapper< double >(arg1,arg2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_SWHBOS64" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  result = (SWHBOS_wrapper< double > *)new SWHBOS_wrapper< double >(arg1,arg2,arg3);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SWHBOS_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
