@@ -7,8 +7,10 @@
 
 #include "SDOstream.h"
 #include "slidingWindow.h"
+#include "histogram.h"
 #include "rrct.h"
 #include "rshash.h"
+
 #include "array_types.h"
 #include "distance_wrappers.h"
 
