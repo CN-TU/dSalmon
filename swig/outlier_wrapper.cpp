@@ -397,6 +397,20 @@ void SWHBOS_wrapper<FloatType>::get_window(NumpyArray2<FloatType> data, NumpyArr
 	}
 }
 
+template<typename FloatType>
+HSTrees_wrapper<FloatType>::HSTrees_wrapper(FloatType window, unsigned tree_count, unsigned max_depth, unsigned size_limit, int seed) :
+	estimator(window, tree_count, max_depth, size_limit, seed)
+{ }
+
+template<typename FloatType>
+void HSTrees_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
+	assert (data.dim1 == times.dim1);
+	assert (data.dim1 == scores.dim1);
+	for (int i = 0; i < data.dim1; i++) {
+		scores.data[i] = estimator.fitPredict(Vector<FloatType>{&data.data[i * data.dim2], data.dim2}, times.data[i]);
+	}
+}
+
 template class SDOstream_wrapper<double>;
 template class SDOstream_wrapper<float>;
 template class DBOR_wrapper<double>;
@@ -411,3 +425,5 @@ template class RSHash_wrapper<double>;
 template class RSHash_wrapper<float>;
 template class SWHBOS_wrapper<double>;
 template class SWHBOS_wrapper<float>;
+template class HSTrees_wrapper<float>;
+template class HSTrees_wrapper<double>;

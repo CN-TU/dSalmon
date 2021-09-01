@@ -10,6 +10,7 @@
 #include "histogram.h"
 #include "rrct.h"
 #include "rshash.h"
+#include "hstrees.h"
 
 #include "array_types.h"
 #include "distance_wrappers.h"
@@ -120,5 +121,16 @@ class SWHBOS_wrapper {
 	void get_window(NumpyArray2<FloatType> data, NumpyArray1<FloatType> times);
 };
 DEFINE_FLOATINSTANTIATIONS(SWHBOS)
+
+
+template<typename FloatType>
+class HSTrees_wrapper {
+	HSTrees<FloatType> estimator;
+
+  public:
+	HSTrees_wrapper(FloatType window, unsigned tree_count, unsigned max_depth, unsigned size_limit, int seed);
+	void fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times);
+};
+DEFINE_FLOATINSTANTIATIONS(HSTrees)
 
 #endif

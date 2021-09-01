@@ -729,6 +729,34 @@ class SWHBOS64(object):
 # Register SWHBOS64 in _dSalmon:
 _dSalmon.SWHBOS64_swigregister(SWHBOS64)
 
+class HSTrees32(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, window, tree_count, max_depth, size_limit, seed):
+        _dSalmon.HSTrees32_swiginit(self, _dSalmon.new_HSTrees32(window, tree_count, max_depth, size_limit, seed))
+
+    def fit_predict(self, data, scores, times):
+        return _dSalmon.HSTrees32_fit_predict(self, data, scores, times)
+    __swig_destroy__ = _dSalmon.delete_HSTrees32
+
+# Register HSTrees32 in _dSalmon:
+_dSalmon.HSTrees32_swigregister(HSTrees32)
+
+class HSTrees64(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, window, tree_count, max_depth, size_limit, seed):
+        _dSalmon.HSTrees64_swiginit(self, _dSalmon.new_HSTrees64(window, tree_count, max_depth, size_limit, seed))
+
+    def fit_predict(self, data, scores, times):
+        return _dSalmon.HSTrees64_fit_predict(self, data, scores, times)
+    __swig_destroy__ = _dSalmon.delete_HSTrees64
+
+# Register HSTrees64 in _dSalmon:
+_dSalmon.HSTrees64_swigregister(HSTrees64)
+
 class SWZScoreScaler32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr

@@ -2697,37 +2697,39 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 #define SWIGTYPE_p_Distance_wrapperT_float_t swig_types[5]
 #define SWIGTYPE_p_EuclideanDist_wrapperT_double_t swig_types[6]
 #define SWIGTYPE_p_EuclideanDist_wrapperT_float_t swig_types[7]
-#define SWIGTYPE_p_MTreeKnnQuery_wrapperT_double_t swig_types[8]
-#define SWIGTYPE_p_MTreeKnnQuery_wrapperT_float_t swig_types[9]
-#define SWIGTYPE_p_MTreeRangeQuery_wrapperT_double_t swig_types[10]
-#define SWIGTYPE_p_MTreeRangeQuery_wrapperT_float_t swig_types[11]
-#define SWIGTYPE_p_MTreeSelector_wrapperT_double_t swig_types[12]
-#define SWIGTYPE_p_MTreeSelector_wrapperT_float_t swig_types[13]
-#define SWIGTYPE_p_MTree_wrapperT_double_t swig_types[14]
-#define SWIGTYPE_p_MTree_wrapperT_float_t swig_types[15]
-#define SWIGTYPE_p_ManhattanDist_wrapperT_double_t swig_types[16]
-#define SWIGTYPE_p_ManhattanDist_wrapperT_float_t swig_types[17]
-#define SWIGTYPE_p_MinkowskiDist_wrapperT_double_t swig_types[18]
-#define SWIGTYPE_p_MinkowskiDist_wrapperT_float_t swig_types[19]
-#define SWIGTYPE_p_RRCT_wrapperT_double_t swig_types[20]
-#define SWIGTYPE_p_RRCT_wrapperT_float_t swig_types[21]
-#define SWIGTYPE_p_RSHash_wrapperT_double_t swig_types[22]
-#define SWIGTYPE_p_RSHash_wrapperT_float_t swig_types[23]
-#define SWIGTYPE_p_SDOstream_wrapperT_double_t swig_types[24]
-#define SWIGTYPE_p_SDOstream_wrapperT_float_t swig_types[25]
-#define SWIGTYPE_p_SWHBOS_wrapperT_double_t swig_types[26]
-#define SWIGTYPE_p_SWHBOS_wrapperT_float_t swig_types[27]
-#define SWIGTYPE_p_SWKNN_wrapperT_double_t swig_types[28]
-#define SWIGTYPE_p_SWKNN_wrapperT_float_t swig_types[29]
-#define SWIGTYPE_p_SWLOF_wrapperT_double_t swig_types[30]
-#define SWIGTYPE_p_SWLOF_wrapperT_float_t swig_types[31]
-#define SWIGTYPE_p_SWQuantileScaler_wrapperT_double_t swig_types[32]
-#define SWIGTYPE_p_SWQuantileScaler_wrapperT_float_t swig_types[33]
-#define SWIGTYPE_p_SWZScoreScaler_wrapperT_double_t swig_types[34]
-#define SWIGTYPE_p_SWZScoreScaler_wrapperT_float_t swig_types[35]
-#define SWIGTYPE_p_char swig_types[36]
-static swig_type_info *swig_types[38];
-static swig_module_info swig_module = {swig_types, 37, 0, 0, 0, 0};
+#define SWIGTYPE_p_HSTrees_wrapperT_double_t swig_types[8]
+#define SWIGTYPE_p_HSTrees_wrapperT_float_t swig_types[9]
+#define SWIGTYPE_p_MTreeKnnQuery_wrapperT_double_t swig_types[10]
+#define SWIGTYPE_p_MTreeKnnQuery_wrapperT_float_t swig_types[11]
+#define SWIGTYPE_p_MTreeRangeQuery_wrapperT_double_t swig_types[12]
+#define SWIGTYPE_p_MTreeRangeQuery_wrapperT_float_t swig_types[13]
+#define SWIGTYPE_p_MTreeSelector_wrapperT_double_t swig_types[14]
+#define SWIGTYPE_p_MTreeSelector_wrapperT_float_t swig_types[15]
+#define SWIGTYPE_p_MTree_wrapperT_double_t swig_types[16]
+#define SWIGTYPE_p_MTree_wrapperT_float_t swig_types[17]
+#define SWIGTYPE_p_ManhattanDist_wrapperT_double_t swig_types[18]
+#define SWIGTYPE_p_ManhattanDist_wrapperT_float_t swig_types[19]
+#define SWIGTYPE_p_MinkowskiDist_wrapperT_double_t swig_types[20]
+#define SWIGTYPE_p_MinkowskiDist_wrapperT_float_t swig_types[21]
+#define SWIGTYPE_p_RRCT_wrapperT_double_t swig_types[22]
+#define SWIGTYPE_p_RRCT_wrapperT_float_t swig_types[23]
+#define SWIGTYPE_p_RSHash_wrapperT_double_t swig_types[24]
+#define SWIGTYPE_p_RSHash_wrapperT_float_t swig_types[25]
+#define SWIGTYPE_p_SDOstream_wrapperT_double_t swig_types[26]
+#define SWIGTYPE_p_SDOstream_wrapperT_float_t swig_types[27]
+#define SWIGTYPE_p_SWHBOS_wrapperT_double_t swig_types[28]
+#define SWIGTYPE_p_SWHBOS_wrapperT_float_t swig_types[29]
+#define SWIGTYPE_p_SWKNN_wrapperT_double_t swig_types[30]
+#define SWIGTYPE_p_SWKNN_wrapperT_float_t swig_types[31]
+#define SWIGTYPE_p_SWLOF_wrapperT_double_t swig_types[32]
+#define SWIGTYPE_p_SWLOF_wrapperT_float_t swig_types[33]
+#define SWIGTYPE_p_SWQuantileScaler_wrapperT_double_t swig_types[34]
+#define SWIGTYPE_p_SWQuantileScaler_wrapperT_float_t swig_types[35]
+#define SWIGTYPE_p_SWZScoreScaler_wrapperT_double_t swig_types[36]
+#define SWIGTYPE_p_SWZScoreScaler_wrapperT_float_t swig_types[37]
+#define SWIGTYPE_p_char swig_types[38]
+static swig_type_info *swig_types[40];
+static swig_module_info swig_module = {swig_types, 39, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -11896,6 +11898,350 @@ SWIGINTERN PyObject *SWHBOS64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject 
   return SWIG_Python_InitShadowInstance(args);
 }
 
+SWIGINTERN PyObject *_wrap_new_HSTrees32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  float arg1 ;
+  unsigned int arg2 ;
+  unsigned int arg3 ;
+  unsigned int arg4 ;
+  int arg5 ;
+  float val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned int val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  PyObject *swig_obj[5] ;
+  HSTrees_wrapper< float > *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_HSTrees32", 5, 5, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_float(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_HSTrees32" "', argument " "1"" of type '" "float""'");
+  } 
+  arg1 = static_cast< float >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_HSTrees32" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_HSTrees32" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_HSTrees32" "', argument " "4"" of type '" "unsigned int""'");
+  } 
+  arg4 = static_cast< unsigned int >(val4);
+  ecode5 = SWIG_AsVal_int(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_HSTrees32" "', argument " "5"" of type '" "int""'");
+  } 
+  arg5 = static_cast< int >(val5);
+  result = (HSTrees_wrapper< float > *)new HSTrees_wrapper< float >(arg1,arg2,arg3,arg4,arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_HSTrees_wrapperT_float_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HSTrees32_fit_predict(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HSTrees_wrapper< float > *arg1 = (HSTrees_wrapper< float > *) 0 ;
+  NumpyArray2< float > arg2 ;
+  NumpyArray1< float > arg3 ;
+  NumpyArray1< float > arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array3 = NULL ;
+  int i3 = 1 ;
+  PyArrayObject *array4 = NULL ;
+  int is_new_object4 = 0 ;
+  PyObject *swig_obj[4] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "HSTrees32_fit_predict", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_HSTrees_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HSTrees32_fit_predict" "', argument " "1"" of type '" "HSTrees_wrapper< float > *""'"); 
+  }
+  arg1 = reinterpret_cast< HSTrees_wrapper< float > * >(argp1);
+  {
+    npy_intp size[2] = {
+      -1, -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_FLOAT,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 2) ||
+      !require_size(array2, size, 2)) SWIG_fail;
+    (&arg2)->data = (float*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_FLOAT);
+    if (!array3 || !require_dimensions(array3,1) || !require_contiguous(array3)
+      || !require_native(array3)) SWIG_fail;
+    (&arg3)->data = (float*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
+      NPY_FLOAT,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 1) ||
+      !require_size(array4, size, 1)) SWIG_fail;
+    (&arg4)->data = (float*) array_data(array4);
+    (&arg4)->dim1 = (int) array_size(array4,0);
+  }
+  (arg1)->fit_predict(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_HSTrees32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HSTrees_wrapper< float > *arg1 = (HSTrees_wrapper< float > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_HSTrees_wrapperT_float_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_HSTrees32" "', argument " "1"" of type '" "HSTrees_wrapper< float > *""'"); 
+  }
+  arg1 = reinterpret_cast< HSTrees_wrapper< float > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *HSTrees32_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_HSTrees_wrapperT_float_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *HSTrees32_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
+SWIGINTERN PyObject *_wrap_new_HSTrees64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  unsigned int arg2 ;
+  unsigned int arg3 ;
+  unsigned int arg4 ;
+  int arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned int val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  PyObject *swig_obj[5] ;
+  HSTrees_wrapper< double > *result = 0 ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "new_HSTrees64", 5, 5, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_HSTrees64" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_HSTrees64" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_HSTrees64" "', argument " "3"" of type '" "unsigned int""'");
+  } 
+  arg3 = static_cast< unsigned int >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_int(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_HSTrees64" "', argument " "4"" of type '" "unsigned int""'");
+  } 
+  arg4 = static_cast< unsigned int >(val4);
+  ecode5 = SWIG_AsVal_int(swig_obj[4], &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_HSTrees64" "', argument " "5"" of type '" "int""'");
+  } 
+  arg5 = static_cast< int >(val5);
+  result = (HSTrees_wrapper< double > *)new HSTrees_wrapper< double >(arg1,arg2,arg3,arg4,arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_HSTrees_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HSTrees64_fit_predict(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HSTrees_wrapper< double > *arg1 = (HSTrees_wrapper< double > *) 0 ;
+  NumpyArray2< double > arg2 ;
+  NumpyArray1< double > arg3 ;
+  NumpyArray1< double > arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array3 = NULL ;
+  int i3 = 1 ;
+  PyArrayObject *array4 = NULL ;
+  int is_new_object4 = 0 ;
+  PyObject *swig_obj[4] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "HSTrees64_fit_predict", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_HSTrees_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HSTrees64_fit_predict" "', argument " "1"" of type '" "HSTrees_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< HSTrees_wrapper< double > * >(argp1);
+  {
+    npy_intp size[2] = {
+      -1, -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_DOUBLE,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 2) ||
+      !require_size(array2, size, 2)) SWIG_fail;
+    (&arg2)->data = (double*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_DOUBLE);
+    if (!array3 || !require_dimensions(array3,1) || !require_contiguous(array3)
+      || !require_native(array3)) SWIG_fail;
+    (&arg3)->data = (double*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
+      NPY_DOUBLE,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 1) ||
+      !require_size(array4, size, 1)) SWIG_fail;
+    (&arg4)->data = (double*) array_data(array4);
+    (&arg4)->dim1 = (int) array_size(array4,0);
+  }
+  (arg1)->fit_predict(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_HSTrees64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HSTrees_wrapper< double > *arg1 = (HSTrees_wrapper< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_HSTrees_wrapperT_double_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_HSTrees64" "', argument " "1"" of type '" "HSTrees_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< HSTrees_wrapper< double > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *HSTrees64_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_HSTrees_wrapperT_double_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *HSTrees64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 SWIGINTERN PyObject *_wrap_new_SWZScoreScaler32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   float arg1 ;
@@ -12704,6 +13050,16 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_SWHBOS64", _wrap_delete_SWHBOS64, METH_O, NULL},
 	 { "SWHBOS64_swigregister", SWHBOS64_swigregister, METH_O, NULL},
 	 { "SWHBOS64_swiginit", SWHBOS64_swiginit, METH_VARARGS, NULL},
+	 { "new_HSTrees32", _wrap_new_HSTrees32, METH_VARARGS, NULL},
+	 { "HSTrees32_fit_predict", _wrap_HSTrees32_fit_predict, METH_VARARGS, NULL},
+	 { "delete_HSTrees32", _wrap_delete_HSTrees32, METH_O, NULL},
+	 { "HSTrees32_swigregister", HSTrees32_swigregister, METH_O, NULL},
+	 { "HSTrees32_swiginit", HSTrees32_swiginit, METH_VARARGS, NULL},
+	 { "new_HSTrees64", _wrap_new_HSTrees64, METH_VARARGS, NULL},
+	 { "HSTrees64_fit_predict", _wrap_HSTrees64_fit_predict, METH_VARARGS, NULL},
+	 { "delete_HSTrees64", _wrap_delete_HSTrees64, METH_O, NULL},
+	 { "HSTrees64_swigregister", HSTrees64_swigregister, METH_O, NULL},
+	 { "HSTrees64_swiginit", HSTrees64_swiginit, METH_VARARGS, NULL},
 	 { "new_SWZScoreScaler32", _wrap_new_SWZScoreScaler32, METH_O, NULL},
 	 { "SWZScoreScaler32_transform", _wrap_SWZScoreScaler32_transform, METH_VARARGS, NULL},
 	 { "delete_SWZScoreScaler32", _wrap_delete_SWZScoreScaler32, METH_O, NULL},
@@ -12766,6 +13122,8 @@ static swig_type_info _swigt__p_Distance_wrapperT_double_t = {"_p_Distance_wrapp
 static swig_type_info _swigt__p_Distance_wrapperT_float_t = {"_p_Distance_wrapperT_float_t", "Distance_wrapper< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_EuclideanDist_wrapperT_double_t = {"_p_EuclideanDist_wrapperT_double_t", "EuclideanDist_wrapper< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_EuclideanDist_wrapperT_float_t = {"_p_EuclideanDist_wrapperT_float_t", "EuclideanDist_wrapper< float > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_HSTrees_wrapperT_double_t = {"_p_HSTrees_wrapperT_double_t", "HSTrees_wrapper< double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_HSTrees_wrapperT_float_t = {"_p_HSTrees_wrapperT_float_t", "HSTrees_wrapper< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_MTreeKnnQuery_wrapperT_double_t = {"_p_MTreeKnnQuery_wrapperT_double_t", "MTreeKnnQuery_wrapper< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_MTreeKnnQuery_wrapperT_float_t = {"_p_MTreeKnnQuery_wrapperT_float_t", "MTreeKnnQuery_wrapper< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_MTreeRangeQuery_wrapperT_double_t = {"_p_MTreeRangeQuery_wrapperT_double_t", "MTreeRangeQuery_wrapper< double > *", 0, 0, (void*)0, 0};
@@ -12805,6 +13163,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Distance_wrapperT_float_t,
   &_swigt__p_EuclideanDist_wrapperT_double_t,
   &_swigt__p_EuclideanDist_wrapperT_float_t,
+  &_swigt__p_HSTrees_wrapperT_double_t,
+  &_swigt__p_HSTrees_wrapperT_float_t,
   &_swigt__p_MTreeKnnQuery_wrapperT_double_t,
   &_swigt__p_MTreeKnnQuery_wrapperT_float_t,
   &_swigt__p_MTreeRangeQuery_wrapperT_double_t,
@@ -12844,6 +13204,8 @@ static swig_cast_info _swigc__p_Distance_wrapperT_double_t[] = {  {&_swigt__p_Di
 static swig_cast_info _swigc__p_Distance_wrapperT_float_t[] = {  {&_swigt__p_Distance_wrapperT_float_t, 0, 0, 0},  {&_swigt__p_EuclideanDist_wrapperT_float_t, _p_EuclideanDist_wrapperT_float_tTo_p_Distance_wrapperT_float_t, 0, 0},  {&_swigt__p_ManhattanDist_wrapperT_float_t, _p_ManhattanDist_wrapperT_float_tTo_p_Distance_wrapperT_float_t, 0, 0},  {&_swigt__p_ChebyshevDist_wrapperT_float_t, _p_ChebyshevDist_wrapperT_float_tTo_p_Distance_wrapperT_float_t, 0, 0},  {&_swigt__p_MinkowskiDist_wrapperT_float_t, _p_MinkowskiDist_wrapperT_float_tTo_p_Distance_wrapperT_float_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_EuclideanDist_wrapperT_double_t[] = {  {&_swigt__p_EuclideanDist_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_EuclideanDist_wrapperT_float_t[] = {  {&_swigt__p_EuclideanDist_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_HSTrees_wrapperT_double_t[] = {  {&_swigt__p_HSTrees_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_HSTrees_wrapperT_float_t[] = {  {&_swigt__p_HSTrees_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_MTreeKnnQuery_wrapperT_double_t[] = {  {&_swigt__p_MTreeKnnQuery_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_MTreeKnnQuery_wrapperT_float_t[] = {  {&_swigt__p_MTreeKnnQuery_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_MTreeRangeQuery_wrapperT_double_t[] = {  {&_swigt__p_MTreeRangeQuery_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -12883,6 +13245,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Distance_wrapperT_float_t,
   _swigc__p_EuclideanDist_wrapperT_double_t,
   _swigc__p_EuclideanDist_wrapperT_float_t,
+  _swigc__p_HSTrees_wrapperT_double_t,
+  _swigc__p_HSTrees_wrapperT_float_t,
   _swigc__p_MTreeKnnQuery_wrapperT_double_t,
   _swigc__p_MTreeKnnQuery_wrapperT_float_t,
   _swigc__p_MTreeRangeQuery_wrapperT_double_t,
