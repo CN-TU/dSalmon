@@ -808,7 +808,7 @@ class HSTrees(OutlierDetector):
 	"""
 
 	# TODO: size_limit=None is inconsistent when passing times to fit_predict()
-	def __init__(self, window, n_estimators, max_depth, size_limit=None, float_type=np.float64, seed=0):
+	def __init__(self, window, n_estimators, max_depth, size_limit=None, float_type=np.float64, seed=0, n_jobs=-1):
 		"""
 		Parameters
 		----------
@@ -830,6 +830,10 @@ class HSTrees(OutlierDetector):
 
 		seed: int
 			Random seed for tree construction.
+
+		n_jobs: int
+			Number of threads to use for processing trees.
+			Pass -1 to use as many jobs as there are CPU cores.
 		"""
 		self.params = { k: v for k, v in locals().items() if k != 'self' }
 		self._init_model(self.params)
@@ -840,7 +844,7 @@ class HSTrees(OutlierDetector):
 		assert p['max_depth'] > 0
 		assert p['size_limit'] is None or p['size_limit'] > 0
 		cpp_obj = {np.float32: dSalmon_cpp.HSTrees32, np.float64: dSalmon_cpp.HSTrees64}[p['float_type']]
-		self.model = cpp_obj(p['window'], p['n_estimators'], p['max_depth'], p['window']//10 if p['size_limit'] is None else p['size_limit'], p['seed'])
+		self.model = cpp_obj(p['window'], p['n_estimators'], p['max_depth'], p['window']//10 if p['size_limit'] is None else p['size_limit'], p['seed'], mp.cpu_count() if p['n_jobs']==-1 else p['n_jobs'])
 		self.last_time = 0
 		self.dimension = -1
 		

@@ -10,7 +10,7 @@
 #include "histogram.h"
 #include "rrct.h"
 #include "rshash.h"
-#include "hstrees.h"
+#include "hstree.h"
 
 #include "array_types.h"
 #include "distance_wrappers.h"
@@ -125,10 +125,11 @@ DEFINE_FLOATINSTANTIATIONS(SWHBOS)
 
 template<typename FloatType>
 class HSTrees_wrapper {
-	HSTrees<FloatType> estimator;
+	std::vector<HSTree<FloatType>> ensemble;
+	unsigned n_jobs;
 
   public:
-	HSTrees_wrapper(FloatType window, unsigned tree_count, unsigned max_depth, unsigned size_limit, int seed);
+	HSTrees_wrapper(FloatType window, unsigned tree_count, unsigned max_depth, unsigned size_limit, int seed, unsigned n_jobs);
 	void fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times);
 };
 DEFINE_FLOATINSTANTIATIONS(HSTrees)

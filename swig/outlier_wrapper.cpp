@@ -15,9 +15,7 @@ template<typename FloatType>
 SDOstream_wrapper<FloatType>::SDOstream_wrapper(int observer_cnt, FloatType T, FloatType idle_observers, int neighbour_cnt, int freq_bins, FloatType max_freq, Distance_wrapper<FloatType>* distance, int seed) :
 	dimension(-1),
 	freq_bins(1),
-	// freq_bins(freq_bins), // use freq_bins and max_freq parameters when implementing periodic SDOstream
 	sdo(observer_cnt, T, idle_observers, neighbour_cnt, distance->getFunction(), seed)
-	// sdo(observer_cnt, T, idle_observers, neighbour_cnt, freq_bins, max_freq, distance->getFunction(), seed)
 {
 }
 
@@ -61,9 +59,6 @@ void SDOstream_wrapper<FloatType>::get_observers(NumpyArray2<FloatType> data, Nu
 		Vector<FloatType> vec_data = observer.getData();
 		std::copy(vec_data.begin(), vec_data.end(), &data.data[i * data.dim2]);
 		observations.data[i] = observer.getObservations(time);
-		//TODO: use complex ft when implementing periodic SDOstream
-		//std::vector<std::complex<FloatType>> observations_ft = observer.getObservations(time);
-		//std::copy(observations_ft.begin(), observations_ft.end(), &observations.data[i * observations.dim2]);
 		av_observations.data[i] = observer.getAvObservations(time);
 		i++;
 	}
@@ -297,8 +292,6 @@ RSHash_wrapper<FloatType>::RSHash_wrapper(unsigned ensemble_size, FloatType wind
 {
 	ensemble.reserve(ensemble_size);
 	std::mt19937 rng(seed);
-	// Vector<FloatType> min_estimates_vec{min_estimates.data, min_estimates.dim1};
-	// Vector<FloatType> max_estimates_vec{max_estimates.data, max_estimates.dim1};
 	for (unsigned i = 0; i < ensemble_size; i++)
 		ensemble.emplace_back(window, s_param, cms_w_param, cms_d_param, rng());
 }
@@ -306,9 +299,10 @@ RSHash_wrapper<FloatType>::RSHash_wrapper(unsigned ensemble_size, FloatType wind
 
 template<typename FloatType>
 void RSHash_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
-	assert (data.dim1 == times.dim1);
-	assert ((scores.data == nullptr && scores.dim1 == 0) || data.dim1 == scores.dim1);
 	bool fit_only = scores.data == nullptr;
+	assert (data.dim1 == times.dim1);
+	assert ((fit_only && scores.dim1 == 0) || data.dim1 == scores.dim1);
+	
 	std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
 	if (!fit_only)
 		std::fill(scores.data, scores.data + data.dim1, 0);
@@ -398,17 +392,36 @@ void SWHBOS_wrapper<FloatType>::get_window(NumpyArray2<FloatType> data, NumpyArr
 }
 
 template<typename FloatType>
-HSTrees_wrapper<FloatType>::HSTrees_wrapper(FloatType window, unsigned tree_count, unsigned max_depth, unsigned size_limit, int seed) :
-	estimator(window, tree_count, max_depth, size_limit, seed)
-{ }
+HSTrees_wrapper<FloatType>::HSTrees_wrapper(FloatType window, unsigned tree_count, unsigned max_depth, unsigned size_limit, int seed, unsigned n_jobs) :
+	n_jobs(n_jobs)
+{
+	ensemble.reserve(tree_count);
+	std::mt19937 rng(seed);
+	for (unsigned i = 0; i < tree_count; i++)
+		ensemble.emplace_back(window, max_depth, size_limit, rng());
+}
 
 template<typename FloatType>
 void HSTrees_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
+	bool fit_only = scores.data == nullptr;
 	assert (data.dim1 == times.dim1);
-	assert (data.dim1 == scores.dim1);
-	for (int i = 0; i < data.dim1; i++) {
-		scores.data[i] = estimator.fitPredict(Vector<FloatType>{&data.data[i * data.dim2], data.dim2}, times.data[i]);
-	}
+	assert ((fit_only && scores.dim1 == 0) || data.dim1 == scores.dim1);
+	
+	std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
+	if (!fit_only)
+		std::fill(scores.data, scores.data + data.dim1, 0);
+	auto worker = [&](const std::vector<std::shared_ptr<Vector<FloatType>>>& vecs, int ensemble_index) {
+		auto& detector = ensemble[ensemble_index];
+		for (std::size_t i = 0; i < vecs.size(); i++) {
+			FloatType score = detector.fitPredict(*vecs[i], times.data[i]);
+			if (!fit_only) {
+				locks[i].lock();
+				scores.data[i] += score;
+				locks[i].unlock();
+			}
+		}
+	};
+	fit_predict_ensemble<FloatType>(data, ensemble.size(), n_jobs, worker);
 }
 
 template class SDOstream_wrapper<double>;

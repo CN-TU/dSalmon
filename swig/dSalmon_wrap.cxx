@@ -11905,6 +11905,7 @@ SWIGINTERN PyObject *_wrap_new_HSTrees32(PyObject *SWIGUNUSEDPARM(self), PyObjec
   unsigned int arg3 ;
   unsigned int arg4 ;
   int arg5 ;
+  unsigned int arg6 ;
   float val1 ;
   int ecode1 = 0 ;
   unsigned int val2 ;
@@ -11915,10 +11916,12 @@ SWIGINTERN PyObject *_wrap_new_HSTrees32(PyObject *SWIGUNUSEDPARM(self), PyObjec
   int ecode4 = 0 ;
   int val5 ;
   int ecode5 = 0 ;
-  PyObject *swig_obj[5] ;
+  unsigned int val6 ;
+  int ecode6 = 0 ;
+  PyObject *swig_obj[6] ;
   HSTrees_wrapper< float > *result = 0 ;
   
-  if (!SWIG_Python_UnpackTuple(args, "new_HSTrees32", 5, 5, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "new_HSTrees32", 6, 6, swig_obj)) SWIG_fail;
   ecode1 = SWIG_AsVal_float(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_HSTrees32" "', argument " "1"" of type '" "float""'");
@@ -11944,7 +11947,12 @@ SWIGINTERN PyObject *_wrap_new_HSTrees32(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_HSTrees32" "', argument " "5"" of type '" "int""'");
   } 
   arg5 = static_cast< int >(val5);
-  result = (HSTrees_wrapper< float > *)new HSTrees_wrapper< float >(arg1,arg2,arg3,arg4,arg5);
+  ecode6 = SWIG_AsVal_unsigned_SS_int(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_HSTrees32" "', argument " "6"" of type '" "unsigned int""'");
+  } 
+  arg6 = static_cast< unsigned int >(val6);
+  result = (HSTrees_wrapper< float > *)new HSTrees_wrapper< float >(arg1,arg2,arg3,arg4,arg5,arg6);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_HSTrees_wrapperT_float_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
@@ -12077,6 +12085,7 @@ SWIGINTERN PyObject *_wrap_new_HSTrees64(PyObject *SWIGUNUSEDPARM(self), PyObjec
   unsigned int arg3 ;
   unsigned int arg4 ;
   int arg5 ;
+  unsigned int arg6 ;
   double val1 ;
   int ecode1 = 0 ;
   unsigned int val2 ;
@@ -12087,10 +12096,12 @@ SWIGINTERN PyObject *_wrap_new_HSTrees64(PyObject *SWIGUNUSEDPARM(self), PyObjec
   int ecode4 = 0 ;
   int val5 ;
   int ecode5 = 0 ;
-  PyObject *swig_obj[5] ;
+  unsigned int val6 ;
+  int ecode6 = 0 ;
+  PyObject *swig_obj[6] ;
   HSTrees_wrapper< double > *result = 0 ;
   
-  if (!SWIG_Python_UnpackTuple(args, "new_HSTrees64", 5, 5, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "new_HSTrees64", 6, 6, swig_obj)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_HSTrees64" "', argument " "1"" of type '" "double""'");
@@ -12116,7 +12127,12 @@ SWIGINTERN PyObject *_wrap_new_HSTrees64(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_HSTrees64" "', argument " "5"" of type '" "int""'");
   } 
   arg5 = static_cast< int >(val5);
-  result = (HSTrees_wrapper< double > *)new HSTrees_wrapper< double >(arg1,arg2,arg3,arg4,arg5);
+  ecode6 = SWIG_AsVal_unsigned_SS_int(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_HSTrees64" "', argument " "6"" of type '" "unsigned int""'");
+  } 
+  arg6 = static_cast< unsigned int >(val6);
+  result = (HSTrees_wrapper< double > *)new HSTrees_wrapper< double >(arg1,arg2,arg3,arg4,arg5,arg6);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_HSTrees_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:

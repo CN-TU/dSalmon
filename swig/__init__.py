@@ -733,8 +733,8 @@ class HSTrees32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, window, tree_count, max_depth, size_limit, seed):
-        _dSalmon.HSTrees32_swiginit(self, _dSalmon.new_HSTrees32(window, tree_count, max_depth, size_limit, seed))
+    def __init__(self, window, tree_count, max_depth, size_limit, seed, n_jobs):
+        _dSalmon.HSTrees32_swiginit(self, _dSalmon.new_HSTrees32(window, tree_count, max_depth, size_limit, seed, n_jobs))
 
     def fit_predict(self, data, scores, times):
         return _dSalmon.HSTrees32_fit_predict(self, data, scores, times)
@@ -747,8 +747,8 @@ class HSTrees64(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, window, tree_count, max_depth, size_limit, seed):
-        _dSalmon.HSTrees64_swiginit(self, _dSalmon.new_HSTrees64(window, tree_count, max_depth, size_limit, seed))
+    def __init__(self, window, tree_count, max_depth, size_limit, seed, n_jobs):
+        _dSalmon.HSTrees64_swiginit(self, _dSalmon.new_HSTrees64(window, tree_count, max_depth, size_limit, seed, n_jobs))
 
     def fit_predict(self, data, scores, times):
         return _dSalmon.HSTrees64_fit_predict(self, data, scores, times)
