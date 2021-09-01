@@ -23,23 +23,14 @@ class OutlierDetector(object):
 			p[key] = params[key]
 		self._init_model(p)
 
-	def _processData(self, data):
+	def _process_data(self, data):
 		data = sanitizeData(data, self.params['float_type'])
 		assert self.dimension == -1 or data.shape[1] == self.dimension
 		self.dimension = data.shape[1]
 		return data
 
-	def _processTimes(self, data, times):
+	def _process_times(self, data, times):
 		times = sanitizeTimes(times, data.shape[0], self.last_time, self.params['float_type'])
-		# if times is None:
-		# 	times = np.arange(self.last_time + 1, self.last_time + 1 + data.shape[0])
-		# else:
-		# 	times = np.array(times, dtype=self.params['float_type'])
-		# 	assert len(times.shape) <= 1
-		# 	if len(times.shape) == 0:
-		# 		times = np.repeat(times[None], data.shape[0])
-		# 	else:
-		# 		assert times.shape[0] == data.shape[0]
 		self.last_time = times[-1]
 		return times
 
@@ -114,8 +105,8 @@ class SWDBOR(OutlierDetector):
 		y: ndarray, shape (n_samples,)
 			Outlier scores for provided input data.
 		"""
-		data = self._processData(data)
-		times = self._processTimes(data, times)
+		data = self._process_data(data)
+		times = self._process_times(data, times)
 		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
@@ -224,8 +215,8 @@ class SWKNN(OutlierDetector):
 		y: ndarray, shape (n_samples,) or (n_samples,k)
 			Outlier scores for provided input data.
 		"""
-		data = self._processData(data)
-		times = self._processTimes(data, times)
+		data = self._process_data(data)
+		times = self._process_times(data, times)
 		if self.params['k_is_max']:
 			scores = np.empty([data.shape[0], self.params['k']], dtype=self.params['float_type'])
 			self.model.fit_predict_with_neighbors(data, scores, np.array(times, dtype=self.params['float_type']))
@@ -331,8 +322,8 @@ class SWLOF(OutlierDetector):
 			timestamps are linearly increased for
 			each sample. 
 		"""
-		data = self._processData(data)
-		times = self._processTimes(data, times)
+		data = self._process_data(data)
+		times = self._process_times(data, times)
 		self.model.fit(data, np.array(times, dtype=self.params['float_type']))
 		
 	def fit_predict(self, data, times=None):
@@ -354,8 +345,8 @@ class SWLOF(OutlierDetector):
 		y: ndarray, shape (n_samples,) or (n_samples,k)
 			Outlier scores for provided input data.
 		"""
-		data = self._processData(data)
-		times = self._processTimes(data, times)
+		data = self._process_data(data)
+		times = self._process_times(data, times)
 		scores = np.empty([data.shape[0], self.params['k']], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores if self.params['k_is_max'] else scores[:,-1]
@@ -455,8 +446,8 @@ class SDOstream(OutlierDetector):
 		y: ndarray, shape (n_samples,)
 			Outlier scores for provided input data.
 		"""
-		data = self._processData(data)
-		times = self._processTimes(data, times)
+		data = self._process_data(data)
+		times = self._process_times(data, times)
 		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		if self.params['return_sampling']:
 			sampling = np.empty(data.shape[0], dtype=np.int32)
@@ -554,8 +545,8 @@ class SWRRCT(OutlierDetector):
 		y: ndarray, shape (n_samples,)
 			Outlier scores for provided input data.
 		"""
-		data = self._processData(data)
-		times = self._processTimes(data, times)
+		data = self._process_data(data)
+		times = self._process_times(data, times)
 		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
@@ -658,8 +649,8 @@ class RSHash(OutlierDetector):
 		y: ndarray, shape (n_samples,)
 			Outlier scores for provided input data.
 		"""
-		data = self._processData(data)
-		times = self._processTimes(data, times)
+		data = self._process_data(data)
+		times = self._process_times(data, times)
 		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
@@ -766,12 +757,12 @@ class LODA(OutlierDetector):
 		y: ndarray, shape (n_samples,)
 			Outlier scores for provided input data.
 		"""
-		data = self._processData(data)
+		data = self._process_data(data)
 		if self.params['n_projections'] is not None:
 			if self.proj_matrix is None:
 				self._init_projections()
 			data = np.matmul(data, self.proj_matrix)
-		times = self._processTimes(data, times)
+		times = self._process_times(data, times)
 		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
@@ -867,8 +858,8 @@ class HSTrees(OutlierDetector):
 		y: ndarray, shape (n_samples,)
 			Outlier scores for provided input data.
 		"""
-		data = self._processData(data)
-		times = self._processTimes(data, times)
+		data = self._process_data(data)
+		times = self._process_times(data, times)
 		scores = np.empty(data.shape[0], dtype=self.params['float_type'])
 		self.model.fit_predict(data, scores, np.array(times, dtype=self.params['float_type']))
 		return scores
