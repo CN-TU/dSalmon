@@ -951,7 +951,7 @@ class xStream(OutlierDetector):
         h[mask1] = -1
         h[~mask1 & ~mask2] = 0
         h[mask2] = 1
-        return (3/self.params['n_estimators'])**0.5 * h
+        return (3/self.params['n_projections'])**0.5 * h
 
     def _streamhash_project(self, data, features=None):
         if features is None:
