@@ -38,7 +38,7 @@ class RSHash {
 	typedef typename SlidingWindow::iterator SlidingWindowIterator;
 	SlidingWindow sliding_window;
 
-	void select_dimensions(int dimensions_to_draw) {
+	void selectDimensions(int dimensions_to_draw) {
 		dimension_selected.clear();
 		if (dimensions_to_draw == dimension) {
 			dimension_selected.resize(dimension, true);
@@ -57,7 +57,7 @@ class RSHash {
 		}
 	}
 
-	std::vector<int> compute_cms_bins(const Vector<FloatType>& data) {
+	std::vector<int> computeCmsBins(const Vector<FloatType>& data) {
 		std::int64_t transformed_sample[dimension];
 		for (int i = 0; i < dimension; i++) {
 			if (dimension_selected[i]) {
@@ -87,8 +87,8 @@ class RSHash {
 		return bins;
 	}
 
-	void remove_from_cms(const Vector<FloatType>& data) {
-		std::vector<int> cms_bins = compute_cms_bins(data);
+	void removeFromCms(const Vector<FloatType>& data) {
+		std::vector<int> cms_bins = computeCmsBins(data);
 		for (int i = 0; i < cms_w_param; i++) {
 			cms_table[cms_bins[i] + i*cms_d_param]--;
 		}
@@ -96,12 +96,10 @@ class RSHash {
 
 	void pruneExpired(FloatType now) {
 		while (!sliding_window.empty() && sliding_window.front().expire_time <= now) {
-			remove_from_cms(*(sliding_window.front().data));
+			removeFromCms(*(sliding_window.front().data));
 			sliding_window.pop_front();
 		}
 	}
-	
-	bool is_initialized;
 
 	void initialize(int dimension) {
 		this->dimension = dimension;
@@ -118,7 +116,7 @@ class RSHash {
 		int dimensions_to_draw = std::uniform_int_distribution<int>{r_min,r_max}(rng);
 		if (dimensions_to_draw > dimension)
 			dimensions_to_draw = dimension;
-		select_dimensions(dimensions_to_draw);
+		selectDimensions(dimensions_to_draw);
 	}
 
   public:
@@ -144,7 +142,7 @@ class RSHash {
 		}
 		pruneExpired(now);
 
-		std::vector<int> cms_bins = compute_cms_bins(*data);
+		std::vector<int> cms_bins = computeCmsBins(*data);
 		std::uint64_t event_count = std::numeric_limits<std::uint64_t>::max();
 		for (int i = 0; i < cms_w_param; i++) {
 			std::uint64_t& cms_entry = cms_table[cms_bins[i] + i*cms_d_param];
