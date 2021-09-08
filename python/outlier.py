@@ -5,6 +5,8 @@
 import numpy as np
 import random
 import multiprocessing as mp
+import struct
+import zlib
 
 from dSalmon import swig as dSalmon_cpp
 from dSalmon.util import sanitizeData, sanitizeTimes, lookupDistance
@@ -928,9 +930,10 @@ class xStream(OutlierDetector):
             The initial sample.
             
         features: list, optional
-            Feature names used for StreamHash. List elements do not have to be
-            strings, but must be hashable. If None, `range(n_features)` is
-            used as feature names.
+            Feature names used for StreamHash. The `repr()` of list elements
+            is used as basis for hashing, hence elements do not necessarily 
+            have to be strings. If None, `range(n_features)` is used as
+            feature names.
         """
         assert not self.initial_sample_was_set and not self.initial_sample.size, 'The initial sample must be set before processing any data point.'
         data = sanitizeData(data, self.params['float_type'])
@@ -940,7 +943,9 @@ class xStream(OutlierDetector):
         self.initial_sample = None
 
     def _streamhash_vec(self, feature):
-        h = np.array([ hash((feature,self.params['seed'],i)) % 6 for i in range(self.params['n_projections']) ], dtype=self.params['float_type'])
+        hash_base = zlib.crc32(struct.pack('<Is', self.params['seed'], repr(feature).encode()))
+        h = [ zlib.crc32(struct.pack('<I',i), hash_base) % 6 for i in range(self.params['n_projections']) ]
+        h = np.array(h, dtype=self.params['float_type'])
         mask1 = h < 1
         mask2 = h >= 5
         h[mask1] = -1
@@ -964,9 +969,10 @@ class xStream(OutlierDetector):
             The input data.
             
         features: list, optional
-            Feature names used for StreamHash. List elements do not have to be
-            strings, but must be hashable. If None, `range(n_features)` is
-            used as feature names.
+            Feature names used for StreamHash. The `repr()` of list elements
+            is used as basis for hashing, hence elements do not necessarily 
+            have to be strings. If None, `range(n_features)` is used as
+            feature names.
         
         Returns    
         -------
