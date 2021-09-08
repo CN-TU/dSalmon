@@ -128,8 +128,7 @@ class RRCT {
         }
     }
 
-    // TODO: adapt to naming conventions
-    std::tuple<int,bool,FloatType> insert_point_cut(const VectorType& point, const BboxRef& bbox) {
+    std::tuple<int,bool,FloatType> insertPointCut(const VectorType& point, const BboxRef& bbox) {
         FloatType ranges[dimension]; // TODO: allocate on heap?
         FloatType tot_sum = 0;
         for (int i = 0; i < dimension; i++) {
@@ -139,17 +138,14 @@ class RRCT {
             tot_sum += ranges[i];
         }
         if (tot_sum == 0) {
-            // std::cout << "duplicate" << std::endl;
             return std::make_tuple(0, true, point[0]);
         }
-        // std::cout << tot_sum << std::endl;
         FloatType r = std::uniform_real_distribution<FloatType>{0,tot_sum}(rng);
         FloatType partial_sum = ranges[0];
         int cut_dim;
         for (cut_dim = 0; cut_dim < dimension-1 && partial_sum <= r; cut_dim++)
             partial_sum += ranges[cut_dim+1];
         assert(ranges[cut_dim] > 0);
-        // std::cout << (r-partial_sum) << std::endl;
         return std::make_tuple(
             cut_dim, // cut dimension
             false, // point is not identical
@@ -233,7 +229,7 @@ class RRCT {
             if(dynamic_cast<Branch*>(node) != nullptr) {
                 assert(bbox.lower != bbox.upper);
             }
-            std::tie(cut_dimension, identical, cut_value) = insert_point_cut(*value.first, bbox);
+            std::tie(cut_dimension, identical, cut_value) = insertPointCut(*value.first, bbox);
             if (!identical && !isCutPossible(point, bbox, cut_dimension, cut_value)) {
                 // This might be triggered for points that are almost 
                 // identical due to numerical issues.
