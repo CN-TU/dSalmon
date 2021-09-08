@@ -1,4 +1,7 @@
 # dSalmon
+
+[![License](https://img.shields.io/github/license/CN-TU/dSalmon.svg)](https://github.com/CN-TU/dSalmon/blob/master/LICENSE)
+
 dSalmon (Data Stream Analysis Algorithms for the Impatient) is a framework for analyzing data streams. Implementation of the core algorithms is done in C++, focusing on superior processing speed and allowing even vast amounts of data to be processed. Python bindings are provided to allow seamless integration in data science development.
 
 ## Installation
