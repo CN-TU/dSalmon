@@ -28,7 +28,7 @@ dSalmon_cpp = Extension(
     'dSalmon.swig._dSalmon',
     CPP_SOURCES,
     include_dirs=['cpp', numpy_include, 'contrib/boost'],
-        extra_compile_args=['-g0'] # Strip .so file to an acceptable size
+    extra_compile_args=['-g0'] # Strip .so file to an acceptable size
 )
 
 setup(
@@ -36,7 +36,7 @@ setup(
     version='0.1',
     author='Alexander Hartl',
     author_email='alexander.hartl@tuwien.ac.at',
-    url='none',
+    url='https://github.com/CN-TU/dSalmon',
     packages=['dSalmon', 'dSalmon.swig'],
     package_dir={'dSalmon': 'python', 'dSalmon.swig': 'swig'},
     ext_modules = [ dSalmon_cpp ],
