@@ -27,8 +27,6 @@ class RSHash {
 	std::mt19937 rng;
 
 	std::vector<bool> dimension_selected;
-	// Vector<FloatType> min_estimates;
-	// Vector<FloatType> max_estimates;
 
 	// represents one stored data point in the sliding window
 	struct Sample {
@@ -63,7 +61,6 @@ class RSHash {
 		std::int64_t transformed_sample[dimension];
 		for (int i = 0; i < dimension; i++) {
 			if (dimension_selected[i]) {
-				// FloatType normalized = (data[i] - min_estimates[i]) / (max_estimates[i]-min_estimates[i]);
 				if (!std::isinf(data[i])) {
 					transformed_sample[i] = (data[i] + alpha[i])/f_param;
 				}
@@ -132,12 +129,8 @@ class RSHash {
 		cms_w_param(cms_w_param),
 		cms_d_param(cms_d_param),
 		rng(seed)
-		// min_estimates(min_estimates),
-		// max_estimates(max_estimates)
 	{
-		// assert (min_estimates.size() == max_estimates.size());
 		assert (s_param >= 4);
-		// dimension = min_estimates.size();
 		FloatType sqrt_s = std::sqrt(s_param);
 		f_param = std::uniform_real_distribution<FloatType>{1/sqrt_s,1-1/sqrt_s}(rng);
 		cms_table.resize(cms_w_param * cms_d_param);
