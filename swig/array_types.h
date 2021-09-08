@@ -7,15 +7,15 @@
 // automatically converted from compatible Python types.
 template<typename DataType>
 struct NumpyArray1 {
-	DataType* data;
-	int dim1;
+    DataType* data;
+    int dim1;
 };
 
 template<typename DataType>
 struct NumpyArray2 {
-	DataType* data;
-	int dim1;
-	int dim2;
+    DataType* data;
+    int dim1;
+    int dim2;
 };
 
 // This is a SWIG macro which is used for instantiating

@@ -757,6 +757,46 @@ class HSTrees64(object):
 # Register HSTrees64 in _dSalmon:
 _dSalmon.HSTrees64_swigregister(HSTrees64)
 
+class HSChains32(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, window, ensemble_size, depth, cms_w_param, cms_d_param, seed, n_jobs):
+        _dSalmon.HSChains32_swiginit(self, _dSalmon.new_HSChains32(window, ensemble_size, depth, cms_w_param, cms_d_param, seed, n_jobs))
+
+    def fit(self, data):
+        return _dSalmon.HSChains32_fit(self, data)
+
+    def fit_predict(self, data, scores):
+        return _dSalmon.HSChains32_fit_predict(self, data, scores)
+
+    def set_initial_minmax(self, mins, maxs):
+        return _dSalmon.HSChains32_set_initial_minmax(self, mins, maxs)
+    __swig_destroy__ = _dSalmon.delete_HSChains32
+
+# Register HSChains32 in _dSalmon:
+_dSalmon.HSChains32_swigregister(HSChains32)
+
+class HSChains64(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, window, ensemble_size, depth, cms_w_param, cms_d_param, seed, n_jobs):
+        _dSalmon.HSChains64_swiginit(self, _dSalmon.new_HSChains64(window, ensemble_size, depth, cms_w_param, cms_d_param, seed, n_jobs))
+
+    def fit(self, data):
+        return _dSalmon.HSChains64_fit(self, data)
+
+    def fit_predict(self, data, scores):
+        return _dSalmon.HSChains64_fit_predict(self, data, scores)
+
+    def set_initial_minmax(self, mins, maxs):
+        return _dSalmon.HSChains64_set_initial_minmax(self, mins, maxs)
+    __swig_destroy__ = _dSalmon.delete_HSChains64
+
+# Register HSChains64 in _dSalmon:
+_dSalmon.HSChains64_swigregister(HSChains64)
+
 class SWZScoreScaler32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr

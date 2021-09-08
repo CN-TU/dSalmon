@@ -9,22 +9,22 @@
 
 template<typename FloatType>
 class SWZScoreScaler_wrapper {
-	SWZScoreScaler<FloatType> scaler;
+    SWZScoreScaler<FloatType> scaler;
 
 public:
-	SWZScoreScaler_wrapper(FloatType window);
-	void transform(const NumpyArray2<FloatType> data, NumpyArray2<FloatType> normalized, const NumpyArray1<FloatType> times);
+    SWZScoreScaler_wrapper(FloatType window);
+    void transform(const NumpyArray2<FloatType> data, NumpyArray2<FloatType> normalized, const NumpyArray1<FloatType> times);
 };
 DEFINE_FLOATINSTANTIATIONS(SWZScoreScaler)
 
 
 template<typename FloatType>
 class SWQuantileScaler_wrapper {
-	SWQuantileScaler<FloatType> scaler;
+    SWQuantileScaler<FloatType> scaler;
 
 public:
-	SWQuantileScaler_wrapper(FloatType window, FloatType quantile);
-	void transform(const NumpyArray2<FloatType> data, NumpyArray2<FloatType> normalized, const NumpyArray1<FloatType> times);
+    SWQuantileScaler_wrapper(FloatType window, FloatType quantile);
+    void transform(const NumpyArray2<FloatType> data, NumpyArray2<FloatType> normalized, const NumpyArray1<FloatType> times);
 };
 DEFINE_FLOATINSTANTIATIONS(SWQuantileScaler)
 
