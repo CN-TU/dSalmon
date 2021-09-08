@@ -45,7 +45,7 @@ class HSTree {
         }
     }
 
-    void initTreeNode(Node& node, int depth, const std::vector<FloatType> mins, const std::vector<FloatType> maxs) {
+    void initTreeNode(Node& node, int depth, const std::vector<FloatType>& mins, const std::vector<FloatType>& maxs) {
         if (depth == max_depth) {
             node.l = node.r = 0;
         }
