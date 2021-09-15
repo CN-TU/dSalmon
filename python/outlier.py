@@ -835,7 +835,7 @@ class HSTrees(OutlierDetector):
         assert p['float_type'] in [np.float32, np.float64]
         assert p['n_estimators'] > 0
         assert p['max_depth'] > 0
-        assert p['size_limit'] is None or p['size_limit'] > 0
+        assert p['size_limit'] is None or p['size_limit'] >= 0
         cpp_obj = {np.float32: dSalmon_cpp.HSTrees32, np.float64: dSalmon_cpp.HSTrees64}[p['float_type']]
         self.model = cpp_obj(p['window'], p['n_estimators'], p['max_depth'], p['window']//10 if p['size_limit'] is None else p['size_limit'], p['seed'], mp.cpu_count() if p['n_jobs']==-1 else p['n_jobs'])
         self.last_time = 0
