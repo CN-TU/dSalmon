@@ -106,7 +106,7 @@ class HSTree {
                 break;
             node = (data[node->q] < node->p) ? &getLeftChild(*node, depth) : &getRightChild(*node, depth);
         }
-        return initial_model_completed ? score : std::numeric_limits<FloatType>::quiet_NaN();
+        return initial_model_completed ? -score : std::numeric_limits<FloatType>::quiet_NaN();
     }
 };
 
