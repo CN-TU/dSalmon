@@ -164,6 +164,8 @@ class SWKNN(OutlierDetector):
     k_is_max: bool (default=False)
         Whether scores should be returned for all neighbor values
         up to the provided k.
+        Grid search for the optimal k can be performed by setting
+        k_is_max=True.
 
     metric: string
         Which distance metric to use. Currently supported metrics
@@ -260,7 +262,7 @@ class SWKNN(OutlierDetector):
         
 class SWLOF(OutlierDetector):
     """
-    Sliding Window Local Outlier Factor.
+    Local Outlier Factor :cite:p:`Breunig2000` within a sliding window.
 
     Parameters
     ----------
@@ -277,6 +279,8 @@ class SWLOF(OutlierDetector):
     k_is_max: bool (default=False)
         Whether scores should be returned for all neighbor values
         up to the provided k.
+        Grid search for the optimal k can be performed by setting
+        k_is_max=True.
 
     metric: string
         Which distance metric to use. Currently supported metrics
@@ -503,7 +507,7 @@ class SDOstream(OutlierDetector):
 
 class SWRRCT(OutlierDetector):
     """
-    Robust Random Cut Forest.
+    Robust Random Cut Forest :cite:p:`Guha16`.
     
     Parameters
     ----------
@@ -588,7 +592,7 @@ class SWRRCT(OutlierDetector):
 
 class RSHash(OutlierDetector):
     """
-    RS-Hash.
+    RS-Hash :cite:p:`Sathe2016`.
     
     This outlier detector assumes that features are normalized
     to a [0,1] range.
@@ -694,7 +698,7 @@ class RSHash(OutlierDetector):
 
 class LODA(OutlierDetector):
     """
-    LODA.
+    LODA :cite:p:`Pevny2016`.
     
     This detector performs outlier detection based on equi-depth histograms.
     If random projections are used, this corresponds to the LODA algorithm,
@@ -806,7 +810,7 @@ class LODA(OutlierDetector):
 
 class HSTrees(OutlierDetector):
     """
-    Streaming Half-Space Trees.
+    Streaming Half-Space Trees :cite:p:`Tan2011`.
 
     Parameters
     ----------
@@ -876,7 +880,7 @@ class HSTrees(OutlierDetector):
 
 class xStream(OutlierDetector):
     """
-    xStream.
+    xStream :cite:p:`Manzoor2018`.
 
     Parameters
     ----------
