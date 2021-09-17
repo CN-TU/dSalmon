@@ -57,43 +57,42 @@ class MTree(object):
     Keys can be arbitrary integers and are returned by the insert, knn and
     neighbors functions. Indices are integers in the range 0...len(tree), sorted
     according to the points' keys in ascending order.
+
+    Parameters
+    ----------
+    metric: string
+        Which distance metric to use. Currently supported metrics
+        include 'chebyshev', 'cityblock', 'euclidean' and
+        'minkowsi'.
+
+    float_type: np.float32 or np.float64
+        Which floating point type to use for internal processing.
+        
+    min_node_size: int
+        The minimum number of children in tree nodes. Different
+        parametrizations for min_node_size are guaranteed to
+        return identical results.
+        
+    max_node_size: int
+        The maximum number of children in tree nodes. Different
+        parametrizations for max_node_size are guaranteed to
+        return identical results.
+        
+    split_sampling: int
+        The number of combinations to try when splitting a node.
+        Different parametrizations for split_sampling are guaranteed
+        to return identical results.
+
+    insert_jobs: int
+        The number of additional threads to spawn for tree insertions.
+        Since insertions can only partially be parallelized, using 
+        too many threads can harm performance.
+
+    query_jobs: int
+        The number of threads to use for range- and knn-queries.
     """
     
     def __init__(self, metric='euclidean', float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20, insert_jobs=2, query_jobs=-1, **kwargs):
-        """
-        Parameters
-        ----------
-        metric: string
-            Which distance metric to use. Currently supported metrics
-            include 'chebyshev', 'cityblock', 'euclidean' and
-            'minkowsi'.
-
-        float_type: np.float32 or np.float64
-            Which floating point type to use for internal processing.
-            
-        min_node_size: int
-            The minimum number of children in tree nodes. Different
-            parametrizations for min_node_size are guaranteed to
-            return identical results.
-            
-        max_node_size: int
-            The maximum number of children in tree nodes. Different
-            parametrizations for max_node_size are guaranteed to
-            return identical results.
-            
-        split_sampling: int
-            The number of combinations to try when splitting a node.
-            Different parametrizations for split_sampling are guaranteed
-            to return identical results.
-
-        insert_jobs: int
-            The number of additional threads to spawn for tree insertions.
-            Since insertions can only partially be parallelized, using 
-            too many threads can harm performance.
-
-        query_jobs: int
-            The number of threads to use for range- and knn-queries.
-        """
         assert float_type in [np.float32, np.float64]
         assert min_node_size * 2 < max_node_size
         self.float_type = float_type

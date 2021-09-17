@@ -2,6 +2,10 @@
 # Released under the GNU Lesser General Public License version 3,
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
+"""
+Streaming outlier detection models.
+"""
+
 import numpy as np
 import random
 import multiprocessing as mp
@@ -38,39 +42,40 @@ class OutlierDetector(object):
 
 
 class SWDBOR(OutlierDetector):
-    """Distance based outlier detection by radius."""
+    """
+    Distance based outlier detection by radius.
+    
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+        
+    radius: float
+        Radius for classification as neighbor.
+
+    metric: string
+        Which distance metric to use. Currently supported metrics
+        include 'chebyshev', 'cityblock', 'euclidean' and
+        'minkowsi'.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+        
+    min_node_size: int, optional (default=5)
+        Smallest possible size for M-Tree nodes. min_node_size
+        is guaranteed to leave results unaffected.
+        
+    max_node_size: int, optional (default=20)
+        Largest possible size for M-Tree nodes. max_node_size
+        is guaranteed to leave results unaffected.
+        
+    split_sampling: int, optional (default=5)
+        The number of key combinations to try when splitting M-Tree 
+        routing nodes. split_sampling is guaranteed to leave results
+        unaffected.
+    """
     
     def __init__(self, window, radius, metric='euclidean', float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20):
-        """
-        Parameters
-        ----------
-        window: float
-            Window length after which samples will be pruned.
-            
-        radius: float
-            Radius for classification as neighbor.
-
-        metric: string
-            Which distance metric to use. Currently supported metrics
-            include 'chebyshev', 'cityblock', 'euclidean' and
-            'minkowsi'.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-            
-        min_node_size: int, optional (default=5)
-            Smallest possible size for M-Tree nodes. min_node_size
-            is guaranteed to leave results unaffected.
-            
-        max_node_size: int, optional (default=20)
-            Largest possible size for M-Tree nodes. max_node_size
-            is guaranteed to leave results unaffected.
-            
-        split_sampling: int, optional (default=5)
-            The number of key combinations to try when splitting M-Tree 
-            routing nodes. split_sampling is guaranteed to leave results
-            unaffected.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -144,44 +149,45 @@ class SWDBOR(OutlierDetector):
 
 
 class SWKNN(OutlierDetector):
-    """Distance based outlier detection by k nearest neighbors."""
+    """
+    Distance based outlier detection by k nearest neighbors.
+    
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+        
+    k: int
+        Number of nearest neighbors to consider for outlier
+        scoring.
+        
+    k_is_max: bool (default=False)
+        Whether scores should be returned for all neighbor values
+        up to the provided k.
+
+    metric: string
+        Which distance metric to use. Currently supported metrics
+        include 'chebyshev', 'cityblock', 'euclidean' and
+        'minkowsi'.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+        
+    min_node_size: int, optional (default=5)
+        Smallest possible size for M-Tree nodes. min_node_size
+        is guaranteed to leave results unaffected.
+        
+    max_node_size: int, optional (default=20)
+        Largest possible size for M-Tree nodes. max_node_size
+        is guaranteed to leave results unaffected.
+
+    split_sampling: int, optional (default=5)
+        The number of key combinations to try when splitting M-Tree 
+        routing nodes. split_sampling is guaranteed to leave results
+        unaffected.
+    """
     
     def __init__(self, window, k, k_is_max=False, metric='euclidean', float_type=np.float64, min_node_size = 5, max_node_size = 100, split_sampling = 20):
-        """
-        Parameters
-        ----------
-        window: float
-            Window length after which samples will be pruned.
-            
-        k: int
-            Number of nearest neighbors to consider for outlier
-            scoring.
-            
-        k_is_max: bool (default=False)
-            Whether scores should be returned for all neighbor values
-            up to the provided k.
-
-        metric: string
-            Which distance metric to use. Currently supported metrics
-            include 'chebyshev', 'cityblock', 'euclidean' and
-            'minkowsi'.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-            
-        min_node_size: int, optional (default=5)
-            Smallest possible size for M-Tree nodes. min_node_size
-            is guaranteed to leave results unaffected.
-            
-        max_node_size: int, optional (default=20)
-            Largest possible size for M-Tree nodes. max_node_size
-            is guaranteed to leave results unaffected.
-
-        split_sampling: int, optional (default=5)
-            The number of key combinations to try when splitting M-Tree 
-            routing nodes. split_sampling is guaranteed to leave results
-            unaffected.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -253,47 +259,48 @@ class SWKNN(OutlierDetector):
 
         
 class SWLOF(OutlierDetector):
-    """Sliding Window Local Outlier Factor."""
+    """
+    Sliding Window Local Outlier Factor.
+
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+        
+    k: int
+        Number of nearest neighbors to consider for outlier
+        scoring.
+        
+    simplified: bool (default=False)
+        Whether to use simplified LOF.
+        
+    k_is_max: bool (default=False)
+        Whether scores should be returned for all neighbor values
+        up to the provided k.
+
+    metric: string
+        Which distance metric to use. Currently supported metrics
+        include 'chebyshev', 'cityblock', 'euclidean' and
+        'minkowsi'.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+        
+    min_node_size: int, optional (default=5)
+        Smallest possible size for M-Tree nodes. min_node_size
+        is guaranteed to leave results unaffected.
+        
+    max_node_size: int, optional (default=20)
+        Largest possible size for M-Tree nodes. max_node_size
+        is guaranteed to leave results unaffected.
+        
+    split_sampling: int, optional (default=5)
+        The number of key combinations to try when splitting M-Tree 
+        routing nodes. split_sampling is guaranteed to leave results
+        unaffected.
+    """
     
     def __init__(self, window, k, simplified=False, k_is_max=False, metric='euclidean', float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20):
-        """
-        Parameters
-        ----------
-        window: float
-            Window length after which samples will be pruned.
-            
-        k: int
-            Number of nearest neighbors to consider for outlier
-            scoring.
-            
-        simplified: bool (default=False)
-            Whether to use simplified LOF.
-            
-        k_is_max: bool (default=False)
-            Whether scores should be returned for all neighbor values
-            up to the provided k.
-
-        metric: string
-            Which distance metric to use. Currently supported metrics
-            include 'chebyshev', 'cityblock', 'euclidean' and
-            'minkowsi'.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-            
-        min_node_size: int, optional (default=5)
-            Smallest possible size for M-Tree nodes. min_node_size
-            is guaranteed to leave results unaffected.
-            
-        max_node_size: int, optional (default=20)
-            Largest possible size for M-Tree nodes. max_node_size
-            is guaranteed to leave results unaffected.
-            
-        split_sampling: int, optional (default=5)
-            The number of key combinations to try when splitting M-Tree 
-            routing nodes. split_sampling is guaranteed to leave results
-            unaffected.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -379,41 +386,42 @@ class SWLOF(OutlierDetector):
 
         
 class SDOstream(OutlierDetector):
-    """Streaming outlier detection based on Sparse Data Observers."""
+    """
+    Streaming outlier detection based on Sparse Data Observers.
+    
+    Parameters
+    ----------
+    k: int
+        Number of observers to use.
+        
+    T: int
+        Characteristic time for the model.
+        Increasing T makes the model adjust slower, decreasing T
+        makes it adjust quicker.
+        
+    qv: float, optional (default=0.3)
+        Ratio of unused observers due to model cleaning.
+        
+    x: int (default=6)
+        Number of nearest observers to consider for outlier scoring
+        and model cleaning.
+
+    metric: string
+        Which distance metric to use. Currently supported metrics
+        include 'chebyshev', 'cityblock', 'euclidean' and
+        'minkowsi'.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+
+    seed: int (default=0)
+        Random seed to use.
+        
+    return_sampling: bool (default=False)
+        Also return whether a data point was adopted as observer.
+    """
 
     def __init__(self, k, T, qv=0.3, x=6, freq_bins=10, max_freq = 6.283, metric='euclidean', float_type=np.float64, seed=0, return_sampling=False):
-        """
-        Parameters
-        ----------
-        k: int
-            Number of observers to use.
-            
-        T: int
-            Characteristic time for the model.
-            Increasing T makes the model adjust slower, decreasing T
-            makes it adjust quicker.
-            
-        qv: float, optional (default=0.3)
-            Ratio of unused observers due to model cleaning.
-            
-        x: int (default=6)
-            Number of nearest observers to consider for outlier scoring
-            and model cleaning.
-
-        metric: string
-            Which distance metric to use. Currently supported metrics
-            include 'chebyshev', 'cityblock', 'euclidean' and
-            'minkowsi'.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-
-        seed: int (default=0)
-            Random seed to use.
-            
-        return_sampling: bool (default=False)
-            Also return whether a data point was adopted as observer.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -494,28 +502,29 @@ class SDOstream(OutlierDetector):
 
 
 class SWRRCT(OutlierDetector):
-    """Robust Random Cut Forest."""
+    """
+    Robust Random Cut Forest.
+    
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+
+    n_estimators: int
+        Number of trees in the ensemble.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+        
+    seed: int
+        Random seed for tree construction.
+
+    n_jobs: int
+        Number of threads to use for processing trees.
+        Pass -1 to use as many jobs as there are CPU cores.
+    """
     
     def __init__(self, window, n_estimators = 10, float_type=np.float64, seed=0, n_jobs=-1):
-        """
-        Parameters
-        ----------
-        window: float
-            Window length after which samples will be pruned.
-
-        n_estimators: int
-            Number of trees in the ensemble.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-            
-        seed: int
-            Random seed for tree construction.
-
-        n_jobs: int
-            Number of threads to use for processing trees.
-            Pass -1 to use as many jobs as there are CPU cores.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -578,45 +587,46 @@ class SWRRCT(OutlierDetector):
         return data, times
 
 class RSHash(OutlierDetector):
-    """RS-Hash."""
+    """
+    RS-Hash.
+    
+    This outlier detector assumes that features are normalized
+    to a [0,1] range.
+
+    Parameters
+    ----------
+    n_estimators: int
+        Number of estimators in the ensemble.
+
+    window: float
+        Window length after which samples will be pruned.
+
+    cms_w: int
+        Number of hash functions per estimator for the 
+        count-min sketch.
+
+    cms_d: int
+        Number of bins for the count-min sketch.
+
+    s_param: int, optional
+        The s parameter of RS-Hash, which should be an estimate
+        of the number of samples in a sliding window.
+        If None, the value of window will be used for s_param,
+        assuming that samples arrive with an inter-arrival
+        time of 1.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+        
+    seed: int
+        Random seed to use.
+
+    n_jobs: int
+        Number of threads to use for processing trees.
+        Pass -1 to use as many jobs as there are CPU cores.
+    """
     
     def __init__(self, n_estimators, window, cms_w, cms_d, s_param=None, float_type=np.float64, seed=0, n_jobs=-1):
-        """
-        This outlier detector assumes that features are normalized
-        to a [0,1] range.
-
-        Parameters
-        ----------
-        n_estimators: int
-            Number of estimators in the ensemble.
-
-        window: float
-            Window length after which samples will be pruned.
-
-        cms_w: int
-            Number of hash functions per estimator for the 
-            count-min sketch.
-
-        cms_d: int
-            Number of bins for the count-min sketch.
-
-        s_param: int, optional
-            The s parameter of RS-Hash, which should be an estimate
-            of the number of samples in a sliding window.
-            If None, the value of window will be used for s_param,
-            assuming that samples arrive with an inter-arrival
-            time of 1.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-            
-        seed: int
-            Random seed to use.
-
-        n_jobs: int
-            Number of threads to use for processing trees.
-            Pass -1 to use as many jobs as there are CPU cores.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -690,32 +700,31 @@ class LODA(OutlierDetector):
     If random projections are used, this corresponds to the LODA algorithm,
     otherwise behaviour corresponds to a sliding window adaptation of the
     HBOS algorithm.
+
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+
+    n_projections: int, optional
+        The number of random projections to use. If None,
+        random projections are skipped.
+
+    n_bins: int
+        The number of histogram bins.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+
+    seed: int
+        Seed for random projections.
+
+    n_jobs: int
+        Number of threads to use for processing trees.
+        Pass -1 to use as many jobs as there are CPU cores.
     """
 
     def __init__(self, window, n_projections=None, n_bins=10, float_type=np.float64, seed=0, n_jobs=-1):
-        """
-        Parameters
-        ----------
-        window: float
-            Window length after which samples will be pruned.
-
-        n_projections: int, optional
-            The number of random projections to use. If None,
-            random projections are skipped.
-
-        n_bins: int
-            The number of histogram bins.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-
-        seed: int
-            Seed for random projections.
-
-        n_jobs: int
-            Number of threads to use for processing trees.
-            Pass -1 to use as many jobs as there are CPU cores.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
     
@@ -797,37 +806,36 @@ class LODA(OutlierDetector):
 
 class HSTrees(OutlierDetector):
     """
-    Streaming Half-Space-Trees.
+    Streaming Half-Space Trees.
+
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+
+    n_estimators: int
+        The number of trees in the ensemble.
+
+    max_depth: int
+        The depth of each individual tree.
+
+    size_limit: int, optional
+        The maximum size of nodes to consider for outlier scoring. If None,
+        defaults to 0.1*window, as described in the corresponding paper.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+
+    seed: int
+        Random seed for tree construction.
+
+    n_jobs: int
+        Number of threads to use for processing trees.
+        Pass -1 to use as many jobs as there are CPU cores.
     """
 
     # TODO: size_limit=None is inconsistent when passing times to fit_predict()
     def __init__(self, window, n_estimators, max_depth, size_limit=None, float_type=np.float64, seed=0, n_jobs=-1):
-        """
-        Parameters
-        ----------
-        window: float
-            Window length after which samples will be pruned.
-
-        n_estimators: int
-            The number of trees in the ensemble.
-
-        max_depth: int
-            The depth of each individual tree.
-
-        size_limit: int, optional
-            The maximum size of nodes to consider for outlier scoring. If None,
-            defaults to 0.1*window, as described in the corresponding paper.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-
-        seed: int
-            Random seed for tree construction.
-
-        n_jobs: int
-            Number of threads to use for processing trees.
-            Pass -1 to use as many jobs as there are CPU cores.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
     
@@ -869,41 +877,40 @@ class HSTrees(OutlierDetector):
 class xStream(OutlierDetector):
     """
     xStream.
+
+    Parameters
+    ----------
+    window: int
+        Window length after which the current window will be switch to
+        the reference window.
+
+    n_estimators: int
+        The number of chains in the ensemble.
+
+    n_projections: int
+        The number of StreamHash projections to use.
+
+    depth: int
+        The length of each half-space chain.
+
+    cms_w: int
+        Number of hash functions for the count-min sketches.
+
+    cms_d: int
+        Number of bins for the count-min sketches.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+
+    seed: int
+        Random seed for tree construction.
+
+    n_jobs: int
+        Number of threads to use for processing trees.
+        Pass -1 to use as many jobs as there are CPU cores.
     """
 
     def __init__(self, window, n_estimators, n_projections, depth, cms_w=5, cms_d=1000, float_type=np.float64, seed=0, n_jobs=-1):
-        """
-        Parameters
-        ----------
-        window: int
-            Window length after which the current window will be switch to
-            the reference window.
-
-        n_estimators: int
-            The number of chains in the ensemble.
-
-        n_projections: int
-            The number of StreamHash projections to use.
-
-        depth: int
-            The length of each half-space chain.
-
-        cms_w: int
-            Number of hash functions for the count-min sketches.
-
-        cms_d: int
-            Number of bins for the count-min sketches.
-
-        float_type: np.float32 or np.float64
-            The floating point type to use for internal processing.
-
-        seed: int
-            Random seed for tree construction.
-
-        n_jobs: int
-            Number of threads to use for processing trees.
-            Pass -1 to use as many jobs as there are CPU cores.
-        """
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
     
