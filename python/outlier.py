@@ -16,13 +16,39 @@ from dSalmon import swig as dSalmon_cpp
 from dSalmon.util import sanitizeData, sanitizeTimes, lookupDistance
 
 class OutlierDetector(object):
+    """
+    Base class for outlier detectors.
+    """
+    
     def _init_model(self, p):
         pass
 
     def get_params(self, deep=True):
+        """
+        Return the used algorithm parameters as dictionary.
+
+        Parameters
+        ----------
+        deep: bool, default=True
+            Ignored. Only for compatibility with scikit-learn.
+
+        Returns
+        -------
+        params: dict
+            Dictionary of parameters.
+        """
         return self.params
 
     def set_params(self, **params):
+        """
+        Reset the model and set the parameters in accordance to the
+        supplied dictionary.
+
+        Parameters
+        ----------
+        **params: dict
+            Dictionary of parameters.
+        """
         p = self.params.copy()
         for key in params:
             assert key in p, 'Unknown parameter: %s' % key
@@ -44,6 +70,11 @@ class OutlierDetector(object):
 class SWDBOR(OutlierDetector):
     """
     Distance based outlier detection by radius.
+
+    When setting a threshold for the returned outlier scores to tranform
+    outlier scores into binary labels, results coincide with 
+    ExactStorm :cite:p:`Angiulli2007`, AbstractC :cite:p:`Yang2009`
+    or the COD family :cite:p:`Kontaki2011`.
     
     Parameters
     ----------
@@ -151,7 +182,12 @@ class SWDBOR(OutlierDetector):
 class SWKNN(OutlierDetector):
     """
     Distance based outlier detection by k nearest neighbors.
-    
+
+    When setting a threshold for the returned outlier scores to tranform
+    outlier scores into binary labels, results coincide with 
+    ExactStorm :cite:p:`Angiulli2007`, AbstractC :cite:p:`Yang2009`
+    or the COD family :cite:p:`Kontaki2011`.
+
     Parameters
     ----------
     window: float
@@ -703,7 +739,7 @@ class LODA(OutlierDetector):
     This detector performs outlier detection based on equi-depth histograms.
     If random projections are used, this corresponds to the LODA algorithm,
     otherwise behaviour corresponds to a sliding window adaptation of the
-    HBOS algorithm.
+    HBOS :cite:p:`Goldstein2012` algorithm.
 
     Parameters
     ----------

@@ -2,6 +2,10 @@
 # Released under the GNU Lesser General Public License version 3,
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
+"""
+Indexing structures for fast nearest neighbor queries.
+"""
+
 import numpy as np
 import math
 import multiprocessing as mp

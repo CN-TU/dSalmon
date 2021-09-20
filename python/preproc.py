@@ -2,6 +2,10 @@
 # Released under the GNU Lesser General Public License version 3,
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
+"""
+Tools for preprocessing.
+"""
+
 import numpy as np
 
 from dSalmon import swig as dSalmon_cpp
