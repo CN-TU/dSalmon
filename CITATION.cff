@@ -1,8 +1,9 @@
-cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
-authors:
+cff-version: "1.1.0"
+title: dSalmon
+authors: 
   - family-names: Hartl
     given-names: Alexander
-    orcid: https://orcid.org/0000-0003-4376-9605
-title: dSalmon
-version: 0.1
+    affiliation: "TU Wien"
+    orcid: "https://orcid.org/0000-0003-4376-9605"
+message: "If you use this software, please cite it using these metadata."
+repository-code: "https://github.com/CN-TU/dSalmon"
