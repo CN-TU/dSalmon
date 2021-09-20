@@ -9,7 +9,9 @@ dSalmon (Data Stream Analysis Algorithms for the Impatient) is a framework for a
 
 Installation
 ------------
-dSalmon can be installed using `pip` by running::
+dSalmon can be installed using `pip` by running
+
+.. code-block:: sh
 
     pip3 install git+https://github.com/CN-TU/dSalmon
 
@@ -17,7 +19,9 @@ dSalmon can be installed using `pip` by running::
 Outlier Detectors
 -----------------
 
-dSalmon provides several algorithms for detecting outliers in data streams. Usage is easiest using the Python interface, which provides an interface similar to the algorithms from scikit-learn. The following example performs k-nearest neighbor outlier detection with a window size of 100 samples::
+dSalmon provides several algorithms for detecting outliers in data streams. Usage is easiest using the Python interface, which provides an interface similar to the algorithms from scikit-learn. The following example performs k-nearest neighbor outlier detection with a window size of 100 samples.
+
+.. code-block:: python
 
     from dSalmon import outlier
     import pandas
@@ -26,8 +30,9 @@ dSalmon provides several algorithms for detecting outliers in data streams. Usag
     outlier_scores = detector.fit_predict(X)
     print ('Outlier scores: ', outlier_scores)
 
-Individual rows of the passed data are processed sequentially. Hence, while being substantially faster, the above code provides similar results as the following example::
+Individual rows of the passed data are processed sequentially. Hence, while being substantially faster, the above code provides similar results as the following example.
 
+.. code-block:: python
     from dSalmon import outlier
     import pandas
     X = pandas.read_csv('my_dataset.csv')
@@ -46,7 +51,9 @@ A point within a tree can be accessed either via `tree[k]` using the point's key
 
 Knn queries can be performed using the `knn()` function and range queries can be performed using the `neighbors()` function.
 
-The following example shows how to modify points within a tree and how to find nearest neighbors.::
+The following example shows how to modify points within a tree and how to find nearest neighbors.
+
+.. code-block:: python
 
     from dSalmon.trees import MTree
     import numpy as np
@@ -94,7 +101,9 @@ Finally, the `python` folder contains the Python interface invoking the Python i
 Rebuilding
 ^^^^^^^^^^
 
-When adding new algorithms or modifying the interface, the `swig` wrappers have to be rebuilt. To this end, `swig` has to be installed and a `pip` package can be created and installed  using::
+When adding new algorithms or modifying the interface, the `swig` wrappers have to be rebuilt. To this end, `swig` has to be installed and a `pip` package can be created and installed  using
+
+.. code-block:: sh
 
     make && pip3 install dSalmon.tar.xz
 
