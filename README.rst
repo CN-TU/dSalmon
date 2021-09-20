@@ -5,7 +5,7 @@ dSalmon
    :target: https://github.com/CN-TU/dSalmon/blob/master/LICENSE
    :alt: License
 
-dSalmon (Data Stream Analysis Algorithms for the Impatient) is a framework for analyzing data streams. Implementation of the core algorithms is done in C++, focusing on superior processing speed and allowing even vast amounts of data to be processed. Python bindings are provided to allow seamless integration in data science development.
+dSalmon (**D**\ ata **S**\ tream **A**\ nalysis A\ **l**\ gorith\ **m**\ s f\ **o**\ r the Impatie\ **n**\ t) is a framework for analyzing data streams. Implementation of the core algorithms is done in C++, focusing on superior processing speed and allowing even vast amounts of data to be processed. Python bindings are provided to allow seamless integration in data science development.
 
 Installation
 ------------
