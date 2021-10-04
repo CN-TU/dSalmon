@@ -6,7 +6,8 @@ import numpy as np
 from dSalmon import swig
 
 def sanitizeData(data, float_type=np.float64):
-    data = np.array(data, dtype=float_type)
+    if not (isinstance(data, np.ndarray) and data.dtype==float_type):
+        data = np.array(data, dtype=float_type)
     if len(data.shape) == 1:
         data = data[None,:]
     assert len(data.shape) == 2
