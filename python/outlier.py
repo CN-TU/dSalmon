@@ -146,7 +146,7 @@ class SWDBOR(OutlierDetector):
         X = self._process_data(X)
         times = self._process_times(X, times)
         scores = np.empty(X.shape[0], dtype=self.params['float_type'])
-        self.model.fit_predict(X, scores, np.array(times, dtype=self.params['float_type']))
+        self.model.fit_predict(X, scores, times)
         return scores
         
     def window_size(self):
@@ -265,10 +265,10 @@ class SWKNN(OutlierDetector):
         times = self._process_times(X, times)
         if self.params['k_is_max']:
             scores = np.empty([X.shape[0], self.params['k']], dtype=self.params['float_type'])
-            self.model.fit_predict_with_neighbors(X, scores, np.array(times, dtype=self.params['float_type']))
+            self.model.fit_predict_with_neighbors(X, scores, times)
         else:
             scores = np.empty(X.shape[0], dtype=self.params['float_type'])
-            self.model.fit_predict(X, scores, np.array(times, dtype=self.params['float_type']))
+            self.model.fit_predict(X, scores, times)
         return scores
 
     def window_size(self):
@@ -373,7 +373,7 @@ class SWLOF(OutlierDetector):
         """
         data = self._process_data(data)
         times = self._process_times(data, times)
-        self.model.fit(data, np.array(times, dtype=self.params['float_type']))
+        self.model.fit(data, times)
         
     def fit_predict(self, X, times=None):
         """
@@ -397,7 +397,7 @@ class SWLOF(OutlierDetector):
         X = self._process_data(X)
         times = self._process_times(X, times)
         scores = np.empty([X.shape[0], self.params['k']], dtype=self.params['float_type'])
-        self.model.fit_predict(X, scores, np.array(times, dtype=self.params['float_type']))
+        self.model.fit_predict(X, scores, times)
         return scores if self.params['k_is_max'] else scores[:,-1]
         
     def window_size(self):
@@ -501,10 +501,10 @@ class SDOstream(OutlierDetector):
         scores = np.empty(X.shape[0], dtype=self.params['float_type'])
         if self.params['return_sampling']:
             sampling = np.empty(X.shape[0], dtype=np.int32)
-            self.model.fit_predict_with_sampling(X, scores, np.array(times, dtype=self.params['float_type']), sampling)
+            self.model.fit_predict_with_sampling(X, scores, times, sampling)
             return scores, sampling
         else:
-            self.model.fit_predict(X, scores, np.array(times, dtype=self.params['float_type']))
+            self.model.fit_predict(X, scores, times)
             return scores
         
     def observer_count(self):
@@ -599,7 +599,7 @@ class SWRRCT(OutlierDetector):
         X = self._process_data(X)
         times = self._process_times(X, times)
         scores = np.empty(X.shape[0], dtype=self.params['float_type'])
-        self.model.fit_predict(X, scores, np.array(times, dtype=self.params['float_type']))
+        self.model.fit_predict(X, scores, times)
         return scores
         
     def window_size(self):
@@ -704,7 +704,7 @@ class RSHash(OutlierDetector):
         X = self._process_data(X)
         times = self._process_times(X, times)
         scores = np.empty(X.shape[0], dtype=self.params['float_type'])
-        self.model.fit_predict(X, scores, np.array(times, dtype=self.params['float_type']))
+        self.model.fit_predict(X, scores, times)
         return scores
         
     def window_size(self):
@@ -815,7 +815,7 @@ class LODA(OutlierDetector):
             X = np.matmul(X, self.proj_matrix)
         times = self._process_times(X, times)
         scores = np.empty(X.shape[0], dtype=self.params['float_type'])
-        self.model.fit_predict(X, scores, np.array(times, dtype=self.params['float_type']))
+        self.model.fit_predict(X, scores, times)
         return scores
         
     def window_size(self):
@@ -911,7 +911,7 @@ class HSTrees(OutlierDetector):
         X = self._process_data(X)
         times = self._process_times(X, times)
         scores = np.empty(X.shape[0], dtype=self.params['float_type'])
-        self.model.fit_predict(X, scores, np.array(times, dtype=self.params['float_type']))
+        self.model.fit_predict(X, scores, times)
         return scores
 
 class xStream(OutlierDetector):

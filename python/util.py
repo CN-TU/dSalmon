@@ -11,14 +11,19 @@ def sanitizeData(data, float_type=np.float64):
     if len(data.shape) == 1:
         data = data[None,:]
     assert len(data.shape) == 2
-    assert not np.isnan(data).any(), 'NaN values are not allowed'
+    # Avoid occupying twice the memory due to element-wise comparison
+    # when large chunks are passed.
+    flattened = data.reshape(-1)
+    for i in range(0,flattened.size,100000):
+        assert not np.isnan(flattened[i:i+100000]).any(), 'NaN values are not allowed'
     return data
 
 def sanitizeTimes(times, data_len, last_time, float_type=np.float64):
     if times is None:
         times = np.arange(last_time + 1, last_time + 1 + data_len, dtype=float_type)
     else:
-        times = np.array(times, dtype=float_type)
+        if not (isinstance(times, np.ndarray) and times.dtype==float_type):
+            times = np.array(times, dtype=float_type)
         assert len(times.shape) <= 1
         if len(times.shape) == 0:
             times = np.repeat(times[None], data_len)
