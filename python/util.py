@@ -6,8 +6,8 @@ import numpy as np
 from dSalmon import swig
 
 def sanitizeData(data, float_type=np.float64):
-    if not (isinstance(data, np.ndarray) and data.dtype==float_type):
-        data = np.array(data, dtype=float_type)
+    if not (isinstance(data, np.ndarray) and data.dtype==float_type and data.flags['C_CONTIGUOUS']):
+        data = np.array(data, dtype=float_type, order='C')
     if len(data.shape) == 1:
         data = data[None,:]
     assert len(data.shape) == 2
@@ -22,8 +22,8 @@ def sanitizeTimes(times, data_len, last_time, float_type=np.float64):
     if times is None:
         times = np.arange(last_time + 1, last_time + 1 + data_len, dtype=float_type)
     else:
-        if not (isinstance(times, np.ndarray) and times.dtype==float_type):
-            times = np.array(times, dtype=float_type)
+        if not (isinstance(times, np.ndarray) and times.dtype==float_type and times.flags['C_CONTIGUOUS']):
+            times = np.array(times, dtype=float_type, order='C')
         assert len(times.shape) <= 1
         if len(times.shape) == 0:
             times = np.repeat(times[None], data_len)
