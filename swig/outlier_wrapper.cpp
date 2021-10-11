@@ -11,6 +11,28 @@
 
 #include "outlier_wrapper.h"
 
+
+template<typename FloatType>
+static void fit_predict_ensemble(unsigned ensemble_size, int n_jobs, std::function<void(int)> worker) {
+    std::atomic<unsigned> global_i(0);
+    auto thread_worker = [&]() {
+        for (unsigned tree_index = global_i++; tree_index < ensemble_size; tree_index = global_i++) {
+            worker(tree_index);
+        }
+    };
+    if (n_jobs < 2) {
+        thread_worker();
+    }
+    else {
+        std::thread threads[n_jobs];
+        for (int i = 0; i < n_jobs; i++)
+            threads[i] = std::thread{thread_worker};
+        for (int i = 0; i < n_jobs; i++)
+            threads[i].join();
+    }
+}
+
+
 template<typename FloatType>
 SDOstream_wrapper<FloatType>::SDOstream_wrapper(int observer_cnt, FloatType T, FloatType idle_observers, int neighbour_cnt, int freq_bins, FloatType max_freq, Distance_wrapper<FloatType>* distance, int seed) :
     dimension(-1),
@@ -217,38 +239,18 @@ void RRCT_wrapper<FloatType>::fit(const NumpyArray2<FloatType> data, const Numpy
 }
 
 template<typename FloatType>
-static void fit_predict_ensemble(const NumpyArray2<FloatType>& data, unsigned ensemble_size, int n_jobs, std::function<void(const std::vector<std::shared_ptr<Vector<FloatType>>>&,int)> worker) {
-    std::vector<std::shared_ptr<Vector<FloatType>>> vecs;
-    vecs.reserve(data.dim1);
-    for (int i = 0; i < data.dim1; i++)
-        vecs.emplace_back(new Vector<FloatType>(&data.data[i * data.dim2], data.dim2));
-    std::atomic<unsigned> global_i(0);
-    auto thread_worker = [&]() {
-        for (unsigned tree_index = global_i++; tree_index < ensemble_size; tree_index = global_i++) {
-            worker(vecs, tree_index);
-        }
-    };
-    if (n_jobs < 2) {
-        thread_worker();
-    }
-    else {
-        std::thread threads[n_jobs];
-        for (int i = 0; i < n_jobs; i++)
-            threads[i] = std::thread{thread_worker};
-        for (int i = 0; i < n_jobs; i++)
-            threads[i].join();
-    }
-}
-
-template<typename FloatType>
 void RRCT_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
     assert (data.dim1 == times.dim1);
     assert ((scores.data == nullptr && scores.dim1 == 0) || data.dim1 == scores.dim1);
     bool fit_only = scores.data == nullptr;
     std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
+    std::vector<std::shared_ptr<Vector<FloatType>>> vecs;
+    vecs.reserve(data.dim1);
+    for (int i = 0; i < data.dim1; i++)
+        vecs.emplace_back(new Vector<FloatType>(&data.data[i * data.dim2], data.dim2));
     if (!fit_only)
         std::fill(scores.data, scores.data + data.dim1, 0);
-    auto worker = [&](const std::vector<std::shared_ptr<Vector<FloatType>>>& vecs, int tree_index) {
+    auto worker = [&](int tree_index) {
         auto& tree = rrct[tree_index];
         for (std::size_t i = 0; i < vecs.size(); i++) {
             pruneExpired(tree, times.data[i]);
@@ -261,9 +263,8 @@ void RRCT_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, Num
             }
         }
     };
-    fit_predict_ensemble<FloatType>(data, rrct.size(), n_jobs, worker);
+    fit_predict_ensemble<FloatType>(rrct.size(), n_jobs, worker);
     if (!fit_only) {
-        // TODO: check if this is really average
         for (int i = 0; i < data.dim1; i++)
             scores.data[i] /= rrct.size();
     }
@@ -304,9 +305,13 @@ void RSHash_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, N
     assert ((fit_only && scores.dim1 == 0) || data.dim1 == scores.dim1);
     
     std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
+    std::vector<std::shared_ptr<Vector<FloatType>>> vecs;
+    vecs.reserve(data.dim1);
+    for (int i = 0; i < data.dim1; i++)
+        vecs.emplace_back(new Vector<FloatType>(&data.data[i * data.dim2], data.dim2));
     if (!fit_only)
         std::fill(scores.data, scores.data + data.dim1, 0);
-    auto worker = [&](const std::vector<std::shared_ptr<Vector<FloatType>>>& vecs, int ensemble_index) {
+    auto worker = [&](int ensemble_index) {
         auto& detector = ensemble[ensemble_index];
         for (std::size_t i = 0; i < vecs.size(); i++) {
             FloatType score = detector.fitPredict(vecs[i], times.data[i]);
@@ -317,7 +322,7 @@ void RSHash_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, N
             }
         }
     };
-    fit_predict_ensemble<FloatType>(data, ensemble.size(), n_jobs, worker);
+    fit_predict_ensemble<FloatType>(ensemble.size(), n_jobs, worker);
 }
 
 template<typename FloatType>
@@ -406,10 +411,10 @@ void HSTrees_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, 
     std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
     if (!fit_only)
         std::fill(scores.data, scores.data + data.dim1, 0);
-    auto worker = [&](const std::vector<std::shared_ptr<Vector<FloatType>>>& vecs, int ensemble_index) {
+    auto worker = [&](int ensemble_index) {
         auto& detector = ensemble[ensemble_index];
-        for (std::size_t i = 0; i < vecs.size(); i++) {
-            FloatType score = detector.fitPredict(*vecs[i], times.data[i]);
+        for (std::size_t i = 0; i < data.dim1; i++) {
+            FloatType score = detector.fitPredict(Vector<FloatType>(&data.data[i * data.dim2], data.dim2), times.data[i]);
             if (!fit_only) {
                 locks[i].lock();
                 scores.data[i] += score / ensemble.size();
@@ -417,7 +422,7 @@ void HSTrees_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, 
             }
         }
     };
-    fit_predict_ensemble<FloatType>(data, ensemble.size(), n_jobs, worker);
+    fit_predict_ensemble<FloatType>(ensemble.size(), n_jobs, worker);
 }
 
 
@@ -445,10 +450,10 @@ void HSChains_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data,
     std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
     if (!fit_only)
         std::fill(scores.data, scores.data + data.dim1, 0);
-    auto worker = [&](const std::vector<std::shared_ptr<Vector<FloatType>>>& vecs, int ensemble_index) {
+    auto worker = [&](int ensemble_index) {
         auto& detector = ensemble[ensemble_index];
-        for (std::size_t i = 0; i < vecs.size(); i++) {
-            FloatType score = detector.fitPredict(*vecs[i]);
+        for (std::size_t i = 0; i < data.dim1; i++) {
+            FloatType score = detector.fitPredict(Vector<FloatType>(&data.data[i * data.dim2], data.dim2));
             if (!fit_only) {
                 locks[i].lock();
                 scores.data[i] += score;
@@ -456,7 +461,7 @@ void HSChains_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data,
             }
         }
     };
-    fit_predict_ensemble<FloatType>(data, ensemble.size(), n_jobs, worker);
+    fit_predict_ensemble<FloatType>(ensemble.size(), n_jobs, worker);
 }
 
 template<typename FloatType>
