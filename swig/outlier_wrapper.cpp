@@ -9,6 +9,8 @@
 #include <atomic>
 #include <thread>
 
+#include <boost/functional/hash.hpp>
+
 #include "outlier_wrapper.h"
 
 
@@ -408,17 +410,23 @@ void HSTrees_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, 
     assert (data.dim1 == times.dim1);
     assert ((fit_only && scores.dim1 == 0) || data.dim1 == scores.dim1);
     
-    std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
+    std::vector<std::mutex> locks(fit_only ? 0 : std::min<std::size_t>(data.dim1, 10000));
     if (!fit_only)
         std::fill(scores.data, scores.data + data.dim1, 0);
     auto worker = [&](int ensemble_index) {
         auto& detector = ensemble[ensemble_index];
         for (std::size_t i = 0; i < data.dim1; i++) {
             FloatType score = detector.fitPredict(Vector<FloatType>(&data.data[i * data.dim2], data.dim2), times.data[i]);
-            if (!fit_only) {
-                locks[i].lock();
+            if (fit_only) {
+            }
+            else if (n_jobs < 2) {
                 scores.data[i] += score / ensemble.size();
-                locks[i].unlock();
+            }
+            else {
+                std::size_t lock_index = (data.dim1 < 10000) ? i : (boost::hash_value(i) % 10000);
+                locks[lock_index].lock();
+                scores.data[i] += score / ensemble.size();
+                locks[lock_index].unlock();
             }
         }
     };
