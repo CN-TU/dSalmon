@@ -36,9 +36,8 @@ static void fit_predict_ensemble(unsigned ensemble_size, int n_jobs, std::functi
 
 
 template<typename FloatType>
-SDOstream_wrapper<FloatType>::SDOstream_wrapper(int observer_cnt, FloatType T, FloatType idle_observers, int neighbour_cnt, int freq_bins, FloatType max_freq, Distance_wrapper<FloatType>* distance, int seed) :
+SDOstream_wrapper<FloatType>::SDOstream_wrapper(int observer_cnt, FloatType T, FloatType idle_observers, int neighbour_cnt, Distance_wrapper<FloatType>* distance, int seed) :
     dimension(-1),
-    freq_bins(1),
     sdo(observer_cnt, T, idle_observers, neighbour_cnt, distance->getFunction(), seed)
 {
 }
@@ -71,12 +70,7 @@ int SDOstream_wrapper<FloatType>::observer_count() {
 }
 
 template<typename FloatType>
-int SDOstream_wrapper<FloatType>::frequency_bin_count() {
-    return freq_bins;
-}
-
-template<typename FloatType>
-void SDOstream_wrapper<FloatType>::get_observers(NumpyArray2<FloatType> data, NumpyArray2<std::complex<FloatType>> observations, NumpyArray1<FloatType> av_observations, FloatType time) {
+void SDOstream_wrapper<FloatType>::get_observers(NumpyArray2<FloatType> data, NumpyArray2<FloatType> observations, NumpyArray1<FloatType> av_observations, FloatType time) {
     // TODO: check dimensions
     int i = 0;
     for (auto observer : sdo) {
@@ -417,12 +411,10 @@ void HSTrees_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, 
         auto& detector = ensemble[ensemble_index];
         for (std::size_t i = 0; i < data.dim1; i++) {
             FloatType score = detector.fitPredict(Vector<FloatType>(&data.data[i * data.dim2], data.dim2), times.data[i]);
-            if (fit_only) {
-            }
-            else if (n_jobs < 2) {
+            if (!fit_only && n_jobs < 2) {
                 scores.data[i] += score / ensemble.size();
             }
-            else {
+            else if (!fit_only) {
                 std::size_t lock_index = (data.dim1 < 10000) ? i : (boost::hash_value(i) % 10000);
                 locks[lock_index].lock();
                 scores.data[i] += score / ensemble.size();
@@ -455,17 +447,21 @@ void HSChains_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data,
     assert (data.dim1 == times.dim1);
     assert ((fit_only && scores.dim1 == 0) || data.dim1 == scores.dim1);
     
-    std::vector<std::mutex> locks(fit_only ? 0 : data.dim1);
+    std::vector<std::mutex> locks(fit_only ? 0 : std::min<std::size_t>(data.dim1, 10000));
     if (!fit_only)
         std::fill(scores.data, scores.data + data.dim1, 0);
     auto worker = [&](int ensemble_index) {
         auto& detector = ensemble[ensemble_index];
         for (std::size_t i = 0; i < data.dim1; i++) {
             FloatType score = detector.fitPredict(Vector<FloatType>(&data.data[i * data.dim2], data.dim2));
-            if (!fit_only) {
-                locks[i].lock();
+            if (!fit_only && n_jobs < 2) {
                 scores.data[i] += score;
-                locks[i].unlock();
+            }
+            else if (!fit_only) {
+                std::size_t lock_index = (data.dim1 < 10000) ? i : (boost::hash_value(i) % 10000);
+                locks[lock_index].lock();
+                scores.data[i] += score;
+                locks[lock_index].unlock();
             }
         }
     };

@@ -23,13 +23,12 @@ class SDOstream_wrapper {
     SDOstream<FloatType> sdo;
     
   public:
-    SDOstream_wrapper(int observer_cnt, FloatType T, FloatType idle_observers, int neighbour_cnt, int freq_bins, FloatType max_freq, Distance_wrapper<FloatType>* distance, int seed);
+    SDOstream_wrapper(int observer_cnt, FloatType T, FloatType idle_observers, int neighbour_cnt, Distance_wrapper<FloatType>* distance, int seed);
     void fit(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times);
     void fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times);
     void fit_predict_with_sampling(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times, NumpyArray1<int> sampled);
     int observer_count();
-    int frequency_bin_count();
-    void get_observers(NumpyArray2<FloatType> data, NumpyArray2<std::complex<FloatType>> observations, NumpyArray1<FloatType> av_observations, FloatType time);
+    void get_observers(NumpyArray2<FloatType> data, NumpyArray2<FloatType> observations, NumpyArray1<FloatType> av_observations, FloatType time);
 };
 DEFINE_FLOATINSTANTIATIONS(SDOstream)
 

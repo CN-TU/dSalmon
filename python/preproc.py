@@ -19,16 +19,47 @@ class SWScaler(object):
         self.dimension = -1
 
     def transform(self, data, times=None):
-        data = sanitizeData(data, self.float_type)
-        assert self.dimension == -1 or data.shape[1] == self.dimension
-        self.dimension = data.shape[1]
-        times = sanitizeTimes(times, data.shape[0], self.last_time, self.float_type)
+        """
+        Process next chunk of data.
+        
+        Parameters
+        ----------
+        X: ndarray, shape (n_samples, n_features)
+            The input data.
+            
+        times: ndarray, shape (n_samples,), optional
+            Timestamps for input data. If None,
+            timestamps are linearly increased for
+            each sample. 
+        
+        Returns    
+        -------
+        X_tr: ndarray, shape (n_samples, n_features)
+            Transformed input data.
+        """
+        X = sanitizeData(X, self.float_type)
+        assert self.dimension == -1 or X.shape[1] == self.dimension
+        self.dimension = X.shape[1]
+        times = sanitizeTimes(times, X.shape[0], self.last_time, self.float_type)
         self.last_time = times[-1]
-        data_normalized = np.empty_like(data)
-        self.scaler.transform(data, data_normalized, times)
-        return data_normalized
+        X_tr = np.empty_like(X)
+        self.scaler.transform(X, X_tr, times)
+        return X_tr
 
 class SWZScoreScaler(SWScaler):
+    """
+    Performs z-score normalization of samples based on mean and standard
+    deviation observed in a sliding window of length `window`.
+
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+    """
+
     def __init__(self, window, float_type=np.float64):
         super().__init__(float_type)
         self.window = window
@@ -36,6 +67,25 @@ class SWZScoreScaler(SWScaler):
         self.scaler = cpp_obj(window)
 
 class SWQuantileScaler(SWScaler):
+    """
+    Performs normalization so that the p-quantile of the current sliding
+    window is mapped to 0 and the (1-p)-quantile is mapped to 1. If
+    `quantile==0`, performs minmax normalization. Note that due to its
+    lacking robustness, minmax normalization is likely to result in unstable
+    results for stream data.
+    
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+
+    quantile: float with 0 <= quantile < 0.5
+        The quantile value for computing reference values.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+    """
+
     def __init__(self, window, quantile, float_type=np.float64):
         super().__init__(float_type)
         self.window = window

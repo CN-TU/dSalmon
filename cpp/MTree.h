@@ -69,7 +69,7 @@ class MTree {
     
     // A BoundEstimator receives lower and upper bounds for distances of all descendants of a particular node
     // and uses them to narrow down the search radius. Together with custom NodeStats, this allows
-    // highly efficient filtering knn queries. An example can be found in the SDO implementation.
+    // highly efficient filtering knn queries.
     typedef std::function<void(Query&,const NodeStats*,NodeTagType,NodeTagType,DistanceType,DistanceType)> BoundEstimator;
     
   private:

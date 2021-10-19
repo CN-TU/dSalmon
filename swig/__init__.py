@@ -393,8 +393,8 @@ class SDOstream32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, observer_cnt, T, idle_observers, neighbour_cnt, freq_bins, max_freq, distance, seed):
-        _dSalmon.SDOstream32_swiginit(self, _dSalmon.new_SDOstream32(observer_cnt, T, idle_observers, neighbour_cnt, freq_bins, max_freq, distance, seed))
+    def __init__(self, observer_cnt, T, idle_observers, neighbour_cnt, distance, seed):
+        _dSalmon.SDOstream32_swiginit(self, _dSalmon.new_SDOstream32(observer_cnt, T, idle_observers, neighbour_cnt, distance, seed))
 
     def fit(self, data, times):
         return _dSalmon.SDOstream32_fit(self, data, times)
@@ -408,9 +408,6 @@ class SDOstream32(object):
     def observer_count(self):
         return _dSalmon.SDOstream32_observer_count(self)
 
-    def frequency_bin_count(self):
-        return _dSalmon.SDOstream32_frequency_bin_count(self)
-
     def get_observers(self, data, observations, av_observations, time):
         return _dSalmon.SDOstream32_get_observers(self, data, observations, av_observations, time)
     __swig_destroy__ = _dSalmon.delete_SDOstream32
@@ -422,8 +419,8 @@ class SDOstream64(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, observer_cnt, T, idle_observers, neighbour_cnt, freq_bins, max_freq, distance, seed):
-        _dSalmon.SDOstream64_swiginit(self, _dSalmon.new_SDOstream64(observer_cnt, T, idle_observers, neighbour_cnt, freq_bins, max_freq, distance, seed))
+    def __init__(self, observer_cnt, T, idle_observers, neighbour_cnt, distance, seed):
+        _dSalmon.SDOstream64_swiginit(self, _dSalmon.new_SDOstream64(observer_cnt, T, idle_observers, neighbour_cnt, distance, seed))
 
     def fit(self, data, times):
         return _dSalmon.SDOstream64_fit(self, data, times)
@@ -436,9 +433,6 @@ class SDOstream64(object):
 
     def observer_count(self):
         return _dSalmon.SDOstream64_observer_count(self)
-
-    def frequency_bin_count(self):
-        return _dSalmon.SDOstream64_frequency_bin_count(self)
 
     def get_observers(self, data, observations, av_observations, time):
         return _dSalmon.SDOstream64_get_observers(self, data, observations, av_observations, time)

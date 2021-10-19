@@ -6994,10 +6994,8 @@ SWIGINTERN PyObject *_wrap_new_SDOstream32(PyObject *SWIGUNUSEDPARM(self), PyObj
   float arg2 ;
   float arg3 ;
   int arg4 ;
-  int arg5 ;
-  float arg6 ;
-  Distance_wrapper< float > *arg7 = (Distance_wrapper< float > *) 0 ;
-  int arg8 ;
+  Distance_wrapper< float > *arg5 = (Distance_wrapper< float > *) 0 ;
+  int arg6 ;
   int val1 ;
   int ecode1 = 0 ;
   float val2 ;
@@ -7006,18 +7004,14 @@ SWIGINTERN PyObject *_wrap_new_SDOstream32(PyObject *SWIGUNUSEDPARM(self), PyObj
   int ecode3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
-  float val6 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  int val6 ;
   int ecode6 = 0 ;
-  void *argp7 = 0 ;
-  int res7 = 0 ;
-  int val8 ;
-  int ecode8 = 0 ;
-  PyObject *swig_obj[8] ;
+  PyObject *swig_obj[6] ;
   SDOstream_wrapper< float > *result = 0 ;
   
-  if (!SWIG_Python_UnpackTuple(args, "new_SDOstream32", 8, 8, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "new_SDOstream32", 6, 6, swig_obj)) SWIG_fail;
   ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_SDOstream32" "', argument " "1"" of type '" "int""'");
@@ -7038,27 +7032,17 @@ SWIGINTERN PyObject *_wrap_new_SDOstream32(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_SDOstream32" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  ecode5 = SWIG_AsVal_int(swig_obj[4], &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_SDOstream32" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
-  ecode6 = SWIG_AsVal_float(swig_obj[5], &val6);
-  if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_SDOstream32" "', argument " "6"" of type '" "float""'");
-  } 
-  arg6 = static_cast< float >(val6);
-  res7 = SWIG_ConvertPtr(swig_obj[6], &argp7,SWIGTYPE_p_Distance_wrapperT_float_t, 0 |  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "new_SDOstream32" "', argument " "7"" of type '" "Distance_wrapper< float > *""'"); 
+  res5 = SWIG_ConvertPtr(swig_obj[4], &argp5,SWIGTYPE_p_Distance_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "new_SDOstream32" "', argument " "5"" of type '" "Distance_wrapper< float > *""'"); 
   }
-  arg7 = reinterpret_cast< Distance_wrapper< float > * >(argp7);
-  ecode8 = SWIG_AsVal_int(swig_obj[7], &val8);
-  if (!SWIG_IsOK(ecode8)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_SDOstream32" "', argument " "8"" of type '" "int""'");
+  arg5 = reinterpret_cast< Distance_wrapper< float > * >(argp5);
+  ecode6 = SWIG_AsVal_int(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_SDOstream32" "', argument " "6"" of type '" "int""'");
   } 
-  arg8 = static_cast< int >(val8);
-  result = (SDOstream_wrapper< float > *)new SDOstream_wrapper< float >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
+  arg6 = static_cast< int >(val6);
+  result = (SDOstream_wrapper< float > *)new SDOstream_wrapper< float >(arg1,arg2,arg3,arg4,arg5,arg6);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SDOstream_wrapperT_float_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
@@ -7344,34 +7328,11 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SDOstream32_frequency_bin_count(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  SDOstream_wrapper< float > *arg1 = (SDOstream_wrapper< float > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  int result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SDOstream_wrapperT_float_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SDOstream32_frequency_bin_count" "', argument " "1"" of type '" "SDOstream_wrapper< float > *""'"); 
-  }
-  arg1 = reinterpret_cast< SDOstream_wrapper< float > * >(argp1);
-  result = (int)(arg1)->frequency_bin_count();
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_SDOstream32_get_observers(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   SDOstream_wrapper< float > *arg1 = (SDOstream_wrapper< float > *) 0 ;
   NumpyArray2< float > arg2 ;
-  NumpyArray2< std::complex< float > > arg3 ;
+  NumpyArray2< float > arg3 ;
   NumpyArray1< float > arg4 ;
   float arg5 ;
   void *argp1 = 0 ;
@@ -7399,10 +7360,10 @@ SWIGINTERN PyObject *_wrap_SDOstream32_get_observers(PyObject *SWIGUNUSEDPARM(se
     (&arg2)->dim2 = (int) array_size(array2,1);
   }
   {
-    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_CFLOAT);
+    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_FLOAT);
     if (!array3 || !require_dimensions(array3,2) || !require_contiguous(array3)
       || !require_native(array3)) SWIG_fail;
-    (&arg3)->data = (std::complex<float>*) array_data(array3);
+    (&arg3)->data = (float*) array_data(array3);
     (&arg3)->dim1 = (int) array_size(array3,0);
     (&arg3)->dim2 = (int) array_size(array3,1);
   }
@@ -7465,10 +7426,8 @@ SWIGINTERN PyObject *_wrap_new_SDOstream64(PyObject *SWIGUNUSEDPARM(self), PyObj
   double arg2 ;
   double arg3 ;
   int arg4 ;
-  int arg5 ;
-  double arg6 ;
-  Distance_wrapper< double > *arg7 = (Distance_wrapper< double > *) 0 ;
-  int arg8 ;
+  Distance_wrapper< double > *arg5 = (Distance_wrapper< double > *) 0 ;
+  int arg6 ;
   int val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -7477,18 +7436,14 @@ SWIGINTERN PyObject *_wrap_new_SDOstream64(PyObject *SWIGUNUSEDPARM(self), PyObj
   int ecode3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
-  double val6 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  int val6 ;
   int ecode6 = 0 ;
-  void *argp7 = 0 ;
-  int res7 = 0 ;
-  int val8 ;
-  int ecode8 = 0 ;
-  PyObject *swig_obj[8] ;
+  PyObject *swig_obj[6] ;
   SDOstream_wrapper< double > *result = 0 ;
   
-  if (!SWIG_Python_UnpackTuple(args, "new_SDOstream64", 8, 8, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "new_SDOstream64", 6, 6, swig_obj)) SWIG_fail;
   ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_SDOstream64" "', argument " "1"" of type '" "int""'");
@@ -7509,27 +7464,17 @@ SWIGINTERN PyObject *_wrap_new_SDOstream64(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_SDOstream64" "', argument " "4"" of type '" "int""'");
   } 
   arg4 = static_cast< int >(val4);
-  ecode5 = SWIG_AsVal_int(swig_obj[4], &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_SDOstream64" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
-  ecode6 = SWIG_AsVal_double(swig_obj[5], &val6);
-  if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_SDOstream64" "', argument " "6"" of type '" "double""'");
-  } 
-  arg6 = static_cast< double >(val6);
-  res7 = SWIG_ConvertPtr(swig_obj[6], &argp7,SWIGTYPE_p_Distance_wrapperT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "new_SDOstream64" "', argument " "7"" of type '" "Distance_wrapper< double > *""'"); 
+  res5 = SWIG_ConvertPtr(swig_obj[4], &argp5,SWIGTYPE_p_Distance_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "new_SDOstream64" "', argument " "5"" of type '" "Distance_wrapper< double > *""'"); 
   }
-  arg7 = reinterpret_cast< Distance_wrapper< double > * >(argp7);
-  ecode8 = SWIG_AsVal_int(swig_obj[7], &val8);
-  if (!SWIG_IsOK(ecode8)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_SDOstream64" "', argument " "8"" of type '" "int""'");
+  arg5 = reinterpret_cast< Distance_wrapper< double > * >(argp5);
+  ecode6 = SWIG_AsVal_int(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_SDOstream64" "', argument " "6"" of type '" "int""'");
   } 
-  arg8 = static_cast< int >(val8);
-  result = (SDOstream_wrapper< double > *)new SDOstream_wrapper< double >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
+  arg6 = static_cast< int >(val6);
+  result = (SDOstream_wrapper< double > *)new SDOstream_wrapper< double >(arg1,arg2,arg3,arg4,arg5,arg6);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SDOstream_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
@@ -7815,34 +7760,11 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SDOstream64_frequency_bin_count(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  SDOstream_wrapper< double > *arg1 = (SDOstream_wrapper< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  int result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SDOstream_wrapperT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SDOstream64_frequency_bin_count" "', argument " "1"" of type '" "SDOstream_wrapper< double > *""'"); 
-  }
-  arg1 = reinterpret_cast< SDOstream_wrapper< double > * >(argp1);
-  result = (int)(arg1)->frequency_bin_count();
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_SDOstream64_get_observers(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   SDOstream_wrapper< double > *arg1 = (SDOstream_wrapper< double > *) 0 ;
   NumpyArray2< double > arg2 ;
-  NumpyArray2< std::complex< double > > arg3 ;
+  NumpyArray2< double > arg3 ;
   NumpyArray1< double > arg4 ;
   double arg5 ;
   void *argp1 = 0 ;
@@ -7870,10 +7792,10 @@ SWIGINTERN PyObject *_wrap_SDOstream64_get_observers(PyObject *SWIGUNUSEDPARM(se
     (&arg2)->dim2 = (int) array_size(array2,1);
   }
   {
-    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_CDOUBLE);
+    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_DOUBLE);
     if (!array3 || !require_dimensions(array3,2) || !require_contiguous(array3)
       || !require_native(array3)) SWIG_fail;
-    (&arg3)->data = (std::complex<double>*) array_data(array3);
+    (&arg3)->data = (double*) array_data(array3);
     (&arg3)->dim1 = (int) array_size(array3,0);
     (&arg3)->dim2 = (int) array_size(array3,1);
   }
@@ -13523,7 +13445,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "SDOstream32_fit_predict", _wrap_SDOstream32_fit_predict, METH_VARARGS, NULL},
 	 { "SDOstream32_fit_predict_with_sampling", _wrap_SDOstream32_fit_predict_with_sampling, METH_VARARGS, NULL},
 	 { "SDOstream32_observer_count", _wrap_SDOstream32_observer_count, METH_O, NULL},
-	 { "SDOstream32_frequency_bin_count", _wrap_SDOstream32_frequency_bin_count, METH_O, NULL},
 	 { "SDOstream32_get_observers", _wrap_SDOstream32_get_observers, METH_VARARGS, NULL},
 	 { "delete_SDOstream32", _wrap_delete_SDOstream32, METH_O, NULL},
 	 { "SDOstream32_swigregister", SDOstream32_swigregister, METH_O, NULL},
@@ -13533,7 +13454,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "SDOstream64_fit_predict", _wrap_SDOstream64_fit_predict, METH_VARARGS, NULL},
 	 { "SDOstream64_fit_predict_with_sampling", _wrap_SDOstream64_fit_predict_with_sampling, METH_VARARGS, NULL},
 	 { "SDOstream64_observer_count", _wrap_SDOstream64_observer_count, METH_O, NULL},
-	 { "SDOstream64_frequency_bin_count", _wrap_SDOstream64_frequency_bin_count, METH_O, NULL},
 	 { "SDOstream64_get_observers", _wrap_SDOstream64_get_observers, METH_VARARGS, NULL},
 	 { "delete_SDOstream64", _wrap_delete_SDOstream64, METH_O, NULL},
 	 { "SDOstream64_swigregister", SDOstream64_swigregister, METH_O, NULL},

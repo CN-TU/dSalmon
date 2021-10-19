@@ -427,7 +427,7 @@ class SWLOF(OutlierDetector):
         
 class SDOstream(OutlierDetector):
     """
-    Streaming outlier detection based on Sparse Data Observers.
+    Streaming outlier detection based on Sparse Data Observers :cite:p:`Hartl2019`.
     
     Parameters
     ----------
@@ -461,7 +461,7 @@ class SDOstream(OutlierDetector):
         Also return whether a data point was adopted as observer.
     """
 
-    def __init__(self, k, T, qv=0.3, x=6, freq_bins=10, max_freq = 6.283, metric='euclidean', float_type=np.float64, seed=0, return_sampling=False):
+    def __init__(self, k, T, qv=0.3, x=6, metric='euclidean', float_type=np.float64, seed=0, return_sampling=False):
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -473,7 +473,7 @@ class SDOstream(OutlierDetector):
         assert p['T'] > 0, 'T must be > 0'
         distance_function = lookupDistance(p['metric'], p['float_type'])
         cpp_obj = {np.float32: dSalmon_cpp.SDOstream32, np.float64: dSalmon_cpp.SDOstream64}[p['float_type']]
-        self.model = cpp_obj(p['k'], p['T'], p['qv'], p['x'], p['freq_bins'], p['max_freq'], distance_function, p['seed'])
+        self.model = cpp_obj(p['k'], p['T'], p['qv'], p['x'], distance_function, p['seed'])
         self.last_time = 0
         self.dimension = -1
         
@@ -530,12 +530,10 @@ class SDOstream(OutlierDetector):
         if time is None:
             time = self.last_time
         observer_cnt = self.model.observer_count()
-        freq_bins = self.model.frequency_bin_count()
-        complex_type = np.complex64 if self.params['float_type'] == np.float32 else np.complex128
         if observer_cnt == 0:
-            return np.zeros([0], dtype=self.params['float_type']), np.zeros([0,freq_bins], dtype=complex_type), np.zeros([0], dtype=self.params['float_type'])
+            return np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type']), np.zeros([0], dtype=self.params['float_type'])
         data = np.empty([observer_cnt, self.dimension], dtype=self.params['float_type'])
-        observations = np.empty([observer_cnt, freq_bins], dtype=complex_type)
+        observations = np.empty(observer_cnt, dtype=self.params['float_type'])
         av_observations = np.empty(observer_cnt, dtype=self.params['float_type'])
         self.model.get_observers(data, observations, av_observations, self.params['float_type'](time))
         return data, observations, av_observations
