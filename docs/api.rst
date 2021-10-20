@@ -4,6 +4,6 @@ API Reference
 .. autosummary::
    :toctree: generated
 
-   outlier
-   preproc
-   trees
+   dSalmon.outlier
+   dSalmon.preproc
+   dSalmon.trees

@@ -12,13 +12,11 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../python'))
-
 
 # -- Project information -----------------------------------------------------
 
 project = 'dSalmon'
-copyright = '2021, CN-TU'
+copyright = '2021, CN group, TU-Wien'
 author = 'CN-TU'
 
 # The full version, including alpha/beta/rc tags
