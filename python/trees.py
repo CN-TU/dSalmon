@@ -69,6 +69,10 @@ class MTree(object):
         include 'chebyshev', 'cityblock', 'euclidean' and
         'minkowsi'.
 
+    metric_params: dict
+        Parameters passed to the metric. Minkowsi distance requires
+        setting an integer `p` parameter.
+
     float_type: np.float32 or np.float64
         Which floating point type to use for internal processing.
         
@@ -96,11 +100,11 @@ class MTree(object):
         The number of threads to use for range- and knn-queries.
     """
     
-    def __init__(self, metric='euclidean', float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20, insert_jobs=2, query_jobs=-1, **kwargs):
+    def __init__(self, metric='euclidean', metric_params=None, float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20, insert_jobs=2, query_jobs=-1, **kwargs):
         assert float_type in [np.float32, np.float64]
         assert min_node_size * 2 < max_node_size
         self.float_type = float_type
-        distance_function = lookupDistance(metric, float_type)
+        distance_function = lookupDistance(metric, float_type, **(metric_params or {}))
         insert_jobs = mp.cpu_count() if insert_jobs==-1 else insert_jobs
         query_jobs = mp.cpu_count() if query_jobs==-1 else query_jobs
         cpp_obj = {np.float32: dSalmon_cpp.MTree32, np.float64: dSalmon_cpp.MTree64}[float_type]

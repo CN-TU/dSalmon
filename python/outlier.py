@@ -89,6 +89,10 @@ class SWDBOR(OutlierDetector):
         include 'chebyshev', 'cityblock', 'euclidean' and
         'minkowsi'.
 
+    metric_params: dict
+        Parameters passed to the metric. Minkowsi distance requires
+        setting an integer `p` parameter.
+
     float_type: np.float32 or np.float64
         The floating point type to use for internal processing.
         
@@ -106,7 +110,7 @@ class SWDBOR(OutlierDetector):
         unaffected.
     """
     
-    def __init__(self, window, radius, metric='euclidean', float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20):
+    def __init__(self, window, radius, metric='euclidean', metric_params=None, float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20):
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -116,7 +120,7 @@ class SWDBOR(OutlierDetector):
         assert p['min_node_size'] > 0
         assert p['window'] > 0
         assert p['radius'] > 0
-        distance_function = lookupDistance(p['metric'], p['float_type'])
+        distance_function = lookupDistance(p['metric'], p['float_type'], **(p['metric_params'] or {}))
         cpp_obj = {np.float32: dSalmon_cpp.DBOR32, np.float64: dSalmon_cpp.DBOR64}[p['float_type']]
         self.model = cpp_obj(p['window'], p['radius'], distance_function, p['min_node_size'],
                              p['max_node_size'], p['split_sampling'])
@@ -208,6 +212,10 @@ class SWKNN(OutlierDetector):
         include 'chebyshev', 'cityblock', 'euclidean' and
         'minkowsi'.
 
+    metric_params: dict
+        Parameters passed to the metric. Minkowsi distance requires
+        setting an integer `p` parameter.
+
     float_type: np.float32 or np.float64
         The floating point type to use for internal processing.
         
@@ -225,7 +233,7 @@ class SWKNN(OutlierDetector):
         unaffected.
     """
     
-    def __init__(self, window, k, k_is_max=False, metric='euclidean', float_type=np.float64, min_node_size = 5, max_node_size = 100, split_sampling = 20):
+    def __init__(self, window, k, k_is_max=False, metric='euclidean', metric_params=None, float_type=np.float64, min_node_size = 5, max_node_size = 100, split_sampling = 20):
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -235,7 +243,7 @@ class SWKNN(OutlierDetector):
         assert p['min_node_size'] > 0
         assert p['window'] > 0
         assert p['k'] > 0
-        distance_function = lookupDistance(p['metric'], p['float_type'])
+        distance_function = lookupDistance(p['metric'], p['float_type'], **(p['metric_params'] or {}))
         cpp_obj = {np.float32: dSalmon_cpp.SWKNN32, np.float64: dSalmon_cpp.SWKNN64}[p['float_type']]
         self.model = cpp_obj(p['window'], p['k'], distance_function, p['min_node_size'],
                              p['max_node_size'], p['split_sampling'])
@@ -323,6 +331,10 @@ class SWLOF(OutlierDetector):
         include 'chebyshev', 'cityblock', 'euclidean' and
         'minkowsi'.
 
+    metric_params: dict
+        Parameters passed to the metric. Minkowsi distance requires
+        setting an integer `p` parameter.
+
     float_type: np.float32 or np.float64
         The floating point type to use for internal processing.
         
@@ -340,7 +352,7 @@ class SWLOF(OutlierDetector):
         unaffected.
     """
     
-    def __init__(self, window, k, simplified=False, k_is_max=False, metric='euclidean', float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20):
+    def __init__(self, window, k, simplified=False, k_is_max=False, metric='euclidean', metric_params=None, float_type=np.float64, min_node_size=5, max_node_size=100, split_sampling=20):
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -350,7 +362,7 @@ class SWLOF(OutlierDetector):
         assert p['min_node_size'] > 0
         assert p['window'] > 0
         assert p['k'] > 0
-        distance_function = lookupDistance(p['metric'], p['float_type'])
+        distance_function = lookupDistance(p['metric'], p['float_type'], **(p['metric_params'] or {}))
         cpp_obj = {np.float32: dSalmon_cpp.SWLOF32, np.float64: dSalmon_cpp.SWLOF64}[p['float_type']]
         self.model = cpp_obj(p['window'], p['k'], p['simplified'], distance_function,
                              p['min_node_size'], p['max_node_size'], p['split_sampling'])
@@ -451,6 +463,10 @@ class SDOstream(OutlierDetector):
         include 'chebyshev', 'cityblock', 'euclidean' and
         'minkowsi'.
 
+    metric_params: dict
+        Parameters passed to the metric. Minkowsi distance requires
+        setting an integer `p` parameter.
+
     float_type: np.float32 or np.float64
         The floating point type to use for internal processing.
 
@@ -461,7 +477,7 @@ class SDOstream(OutlierDetector):
         Also return whether a data point was adopted as observer.
     """
 
-    def __init__(self, k, T, qv=0.3, x=6, metric='euclidean', float_type=np.float64, seed=0, return_sampling=False):
+    def __init__(self, k, T, qv=0.3, x=6, metric='euclidean', metric_params=None, float_type=np.float64, seed=0, return_sampling=False):
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
 
@@ -471,7 +487,7 @@ class SDOstream(OutlierDetector):
         assert p['x'] > 0, 'x must be > 0'
         assert p['k'] > 0, 'k must be > 0'
         assert p['T'] > 0, 'T must be > 0'
-        distance_function = lookupDistance(p['metric'], p['float_type'])
+        distance_function = lookupDistance(p['metric'], p['float_type'], **(p['metric_params'] or {}))
         cpp_obj = {np.float32: dSalmon_cpp.SDOstream32, np.float64: dSalmon_cpp.SDOstream64}[p['float_type']]
         self.model = cpp_obj(p['k'], p['T'], p['qv'], p['x'], distance_function, p['seed'])
         self.last_time = 0

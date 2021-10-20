@@ -44,6 +44,6 @@ def lookupDistance(name, float_type, **kwargs):
     elif name == 'minkowski':
         if not 'p' in kwargs:
             raise TypeError('p is required for Minkowski distance')
-        return swig.__dict__['MinkowsiDist' + suffix](kwargs['p'])
+        return swig.__dict__['MinkowskiDist' + suffix](kwargs['p'])
     else:
         raise TypeError('Unknown metric')
