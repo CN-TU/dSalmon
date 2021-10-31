@@ -55,6 +55,25 @@ class OutlierDetector(object):
             p[key] = params[key]
         self._init_model(p)
 
+    def fit(self, X, times=None):
+        """
+        Process next chunk of data without returning outlier scores.
+        
+        Parameters
+        ----------
+        X: ndarray, shape (n_samples, n_features)
+            The input data.
+            
+        times: ndarray, shape (n_samples,), optional
+            Timestamps for input data. If None,
+            timestamps are linearly increased for
+            each sample. 
+        """
+        # In most cases, fitting isn't any faster than additionally
+        # performing outlier scoring. We override this method only
+        # when it yields faster processing.
+        self.fit_predict(X, times)
+
     def _process_data(self, data):
         data = sanitizeData(data, self.params['float_type'])
         assert self.dimension == -1 or data.shape[1] == self.dimension
@@ -249,7 +268,25 @@ class SWKNN(OutlierDetector):
                              p['max_node_size'], p['split_sampling'])
         self.last_time = 0
         self.dimension = -1
+
+    def fit(self, X, times=None):
+        """
+        Process next chunk of data without returning outlier scores.
         
+        Parameters
+        ----------
+        X: ndarray, shape (n_samples, n_features)
+            The input data.
+            
+        times: ndarray, shape (n_samples,), optional
+            Timestamps for input data. If None,
+            timestamps are linearly increased for
+            each sample. 
+        """
+        X = self._process_data(X)
+        times = self._process_times(X, times)
+        self.model.fit(X, times)
+
     def fit_predict(self, X, times=None):
         """
         Process next chunk of data.
@@ -371,7 +408,7 @@ class SWLOF(OutlierDetector):
         
     def fit(self, data, times=None):
         """
-        Process next chunk of data without returning scores.
+        Process next chunk of data without returning outlier scores.
         
         Parameters
         ----------
@@ -590,7 +627,25 @@ class SWRRCT(OutlierDetector):
         self.model = cpp_obj(p['n_estimators'], p['window'], p['seed'], mp.cpu_count() if p['n_jobs']==-1 else p['n_jobs'])
         self.last_time = 0
         self.dimension = -1
+
+    def fit(self, X, times=None):
+        """
+        Process next chunk of data without returning outlier scores.
         
+        Parameters
+        ----------
+        X: ndarray, shape (n_samples, n_features)
+            The input data.
+            
+        times: ndarray, shape (n_samples,), optional
+            Timestamps for input data. If None,
+            timestamps are linearly increased for
+            each sample. 
+        """
+        X = self._process_data(X)
+        times = self._process_times(X, times)
+        self.model.fit(X, times)
+
     def fit_predict(self, X, times=None):
         """
         Process next chunk of data.
@@ -639,6 +694,7 @@ class SWRRCT(OutlierDetector):
         times = np.empty(window_size, dtype=self.params['float_type'])
         self.model.get_window(data, times)
         return data, times
+
 
 class RSHash(OutlierDetector):
     """
@@ -792,6 +848,13 @@ class LODA(OutlierDetector):
             indices = rng.sample(range(self.dimension), k=proj_per_histogram)
             self.proj_matrix[indices,i] = nprng.normal(size=proj_per_histogram)
 
+    def _perform_projections(self, X):
+        if self.params['n_projections'] is not None:
+            if self.proj_matrix is None:
+                self._init_projections()
+            return np.matmul(X, self.proj_matrix)
+        return X
+
     def _init_model(self, p):
         assert p['float_type'] in [np.float32, np.float64]
         assert p['n_bins'] > 0
@@ -802,7 +865,25 @@ class LODA(OutlierDetector):
         self.last_time = 0
         self.dimension = -1
         self.proj_matrix = None
+
+    def fit(self, X, times=None):
+        """
+        Process next chunk of data without returning outlier scores.
         
+        Parameters
+        ----------
+        X: ndarray, shape (n_samples, n_features)
+            The input data.
+            
+        times: ndarray, shape (n_samples,), optional
+            Timestamps for input data. If None,
+            timestamps are linearly increased for
+            each sample. 
+        """
+        X = self._perform_projections(self._process_data(X))
+        times = self._process_times(X, times)
+        self.model.fit(X, times)
+
     def fit_predict(self, X, times = None):
         """
         Process next chunk of data.
@@ -822,11 +903,7 @@ class LODA(OutlierDetector):
         y: ndarray, shape (n_samples,)
             Outlier scores for provided input data.
         """
-        X = self._process_data(X)
-        if self.params['n_projections'] is not None:
-            if self.proj_matrix is None:
-                self._init_projections()
-            X = np.matmul(X, self.proj_matrix)
+        X = self._perform_projections(self._process_data(X))
         times = self._process_times(X, times)
         scores = np.empty(X.shape[0], dtype=self.params['float_type'])
         self.model.fit_predict(X, scores, times)
@@ -927,6 +1004,7 @@ class HSTrees(OutlierDetector):
         scores = np.empty(X.shape[0], dtype=self.params['float_type'])
         self.model.fit_predict(X, scores, times)
         return scores
+
 
 class xStream(OutlierDetector):
     """
