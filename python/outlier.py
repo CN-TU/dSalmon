@@ -7,12 +7,10 @@ Streaming outlier detection models.
 """
 
 import numpy as np
-import random
 import multiprocessing as mp
-import struct
-import zlib
 
 from dSalmon import swig as dSalmon_cpp
+from dSalmon import projection
 from dSalmon.util import sanitizeData, sanitizeTimes, lookupDistance
 
 class OutlierDetector(object):
@@ -837,22 +835,10 @@ class LODA(OutlierDetector):
     def __init__(self, window, n_projections=None, n_bins=10, float_type=np.float64, seed=0, n_jobs=-1):
         self.params = { k: v for k, v in locals().items() if k != 'self' }
         self._init_model(self.params)
-    
-    def _init_projections(self):
-        rng = random.Random(self.params['seed'])
-        nprng = np.random.RandomState(self.params['seed'])
-        n_projections = self.params['n_projections']
-        self.proj_matrix = np.zeros((self.dimension,n_projections), dtype=self.params['float_type'])
-        proj_per_histogram = int(round(np.sqrt(self.dimension)))
-        for i in range(n_projections):
-            indices = rng.sample(range(self.dimension), k=proj_per_histogram)
-            self.proj_matrix[indices,i] = nprng.normal(size=proj_per_histogram)
 
     def _perform_projections(self, X):
-        if self.params['n_projections'] is not None:
-            if self.proj_matrix is None:
-                self._init_projections()
-            return np.matmul(X, self.proj_matrix)
+        if self.projector is not None:
+            return self.projector.transform(X)
         return X
 
     def _init_model(self, p):
@@ -862,9 +848,12 @@ class LODA(OutlierDetector):
         assert p['n_projections'] is None or p['n_projections'] > 0
         cpp_obj = {np.float32: dSalmon_cpp.SWHBOS32, np.float64: dSalmon_cpp.SWHBOS64}[p['float_type']]
         self.model = cpp_obj(p['window'], p['n_bins'], mp.cpu_count() if p['n_jobs']==-1 else p['n_jobs'])
+        if p['n_projections'] is not None:
+            self.projector = projection.LODAProjector(p['n_projections'], float_type=p['float_type'], seed=p['seed'])
+        else:
+            self.projector = None
         self.last_time = 0
         self.dimension = -1
-        self.proj_matrix = None
 
     def fit(self, X, times=None):
         """
@@ -1052,6 +1041,7 @@ class xStream(OutlierDetector):
         assert p['depth'] > 0
         cpp_obj = {np.float32: dSalmon_cpp.HSChains32, np.float64: dSalmon_cpp.HSChains64}[p['float_type']]
         self.model = cpp_obj(p['window'], p['n_estimators'], p['depth'], p['cms_w'], p['cms_d'], p['seed'], mp.cpu_count() if p['n_jobs']==-1 else p['n_jobs'])
+        self.projector = projection.StreamHash(n_projections, float_type=p['float_type'], seed=p['seed'])
         self.initial_sample = np.empty((0, p['n_projections']), dtype=p['float_type'])
         self.initial_sample_was_set = False
 
@@ -1076,27 +1066,10 @@ class xStream(OutlierDetector):
         """
         assert not self.initial_sample_was_set and not self.initial_sample.size, 'The initial sample must be set before processing any data point.'
         data = sanitizeData(data, self.params['float_type'])
-        data_projected = self._streamhash_project(data, features)
+        data_projected = self.projector.transform(data, features)
         self.model.set_initial_minmax(np.min(data_projected, axis=0), np.max(data_projected, axis=0))
         self.initial_sample_was_set = True
         self.initial_sample = None
-
-    def _streamhash_vec(self, feature):
-        hash_base = zlib.crc32(struct.pack('<Is', self.params['seed'], repr(feature).encode()))
-        h = [ zlib.crc32(struct.pack('<I',i), hash_base) % 6 for i in range(self.params['n_projections']) ]
-        h = np.array(h, dtype=self.params['float_type'])
-        mask1 = h < 1
-        mask2 = h >= 5
-        h[mask1] = -1
-        h[~mask1 & ~mask2] = 0
-        h[mask2] = 1
-        return (3/self.params['n_projections'])**0.5 * h
-
-    def _streamhash_project(self, data, features=None):
-        if features is None:
-            features = range(data.shape[1])
-        projection_matrix = np.stack([ self._streamhash_vec(feature) for feature in features ])
-        return np.matmul(data, projection_matrix)
         
     def fit_predict(self, X, features=None):
         """
@@ -1119,7 +1092,7 @@ class xStream(OutlierDetector):
             Outlier scores for provided input data.
         """
         X = sanitizeData(X, self.params['float_type'])
-        X_projected = self._streamhash_project(X, features)
+        X_projected = self.projector.transform(X, features)
         returned_scores = np.empty(X.shape[0], dtype=self.params['float_type'])
         if not self.initial_sample_was_set:
             window = self.params['window']
