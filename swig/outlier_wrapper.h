@@ -40,7 +40,6 @@ class DBOR_wrapper {
     
   public:
     DBOR_wrapper(FloatType window, FloatType radius, Distance_wrapper<FloatType>* distance, int min_node_size, int max_node_size, int split_sampling);
-    void fit(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times);
     void fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times);
     int window_size();
     void get_window(NumpyArray2<FloatType> data, NumpyArray1<FloatType> times, NumpyArray1<int> neighbors);

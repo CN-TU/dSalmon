@@ -89,14 +89,6 @@ DBOR_wrapper<FloatType>::DBOR_wrapper(FloatType window, FloatType radius, Distan
 { }
 
 template<typename FloatType>
-void DBOR_wrapper<FloatType>::fit(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times) {
-    assert (data.dim1 == times.dim1);
-    for (int i = 0; i < data.dim1; i++) {
-        dbor.fit(Vector<FloatType>{&data.data[i * data.dim2], data.dim2}, times.data[i]);
-    }
-}
-
-template<typename FloatType>
 void DBOR_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, NumpyArray1<FloatType> scores, const NumpyArray1<FloatType> times) {
     assert (data.dim1 == times.dim1);
     assert (data.dim1 == scores.dim1);
