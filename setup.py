@@ -37,6 +37,20 @@ setup(
     author='Alexander Hartl',
     author_email='alexander.hartl@tuwien.ac.at',
     url='https://github.com/CN-TU/dSalmon',
+    project_urls={
+        'Source': 'https://github.com/CN-TU/dSalmon',
+        'Tracker': 'https://github.com/CN-TU/dSalmon/issues'
+    },
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+        'Programming Language :: C++',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Topic :: Scientific/Engineering'
+    ],
     packages=['dSalmon', 'dSalmon.swig'],
     package_dir={'dSalmon': 'python', 'dSalmon.swig': 'swig'},
     ext_modules = [ dSalmon_cpp ],
