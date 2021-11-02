@@ -788,6 +788,13 @@ _dSalmon.HSChains64_swigregister(HSChains64)
 class StatisticsTree32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
+    STAT_SUM = _dSalmon.StatisticsTree32_STAT_SUM
+    STAT_AVERAGE = _dSalmon.StatisticsTree32_STAT_AVERAGE
+    STAT_SQUARES_SUM = _dSalmon.StatisticsTree32_STAT_SQUARES_SUM
+    STAT_VARIANCE = _dSalmon.StatisticsTree32_STAT_VARIANCE
+    STAT_MIN = _dSalmon.StatisticsTree32_STAT_MIN
+    STAT_MAX = _dSalmon.StatisticsTree32_STAT_MAX
+    STAT_MEDIAN = _dSalmon.StatisticsTree32_STAT_MEDIAN
 
     def __init__(self, window):
         _dSalmon.StatisticsTree32_swiginit(self, _dSalmon.new_StatisticsTree32(window))
@@ -808,6 +815,13 @@ _dSalmon.StatisticsTree32_swigregister(StatisticsTree32)
 class StatisticsTree64(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
+    STAT_SUM = _dSalmon.StatisticsTree64_STAT_SUM
+    STAT_AVERAGE = _dSalmon.StatisticsTree64_STAT_AVERAGE
+    STAT_SQUARES_SUM = _dSalmon.StatisticsTree64_STAT_SQUARES_SUM
+    STAT_VARIANCE = _dSalmon.StatisticsTree64_STAT_VARIANCE
+    STAT_MIN = _dSalmon.StatisticsTree64_STAT_MIN
+    STAT_MAX = _dSalmon.StatisticsTree64_STAT_MAX
+    STAT_MEDIAN = _dSalmon.StatisticsTree64_STAT_MEDIAN
 
     def __init__(self, window):
         _dSalmon.StatisticsTree64_swiginit(self, _dSalmon.new_StatisticsTree64(window))

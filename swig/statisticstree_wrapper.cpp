@@ -20,7 +20,7 @@ void StatisticsTree_wrapper<FloatType>::pruneExpired(FloatType now) {
 }
 
 template<typename FloatType>
-void StatisticsTree_wrapper<FloatType>::process(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times, const NumpyArray1<unsigned> stats, const NumpyArray1<FloatType> quantiles, NumpyArray3<FloatType> result, NumpyArray1<unsigned> counts) {
+void StatisticsTree_wrapper<FloatType>::process(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times, const NumpyArray1<unsigned> stats, const NumpyArray1<FloatType> quantiles, NumpyArray3<FloatType> result, NumpyArray1<long long> counts) {
     bool need_sum = false, need_min = false, need_max = false, need_median = false;
     for (int k = 0; k < stats.dim1; k++) {
         switch (stats.data[k]) {

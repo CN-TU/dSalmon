@@ -12628,8 +12628,8 @@ SWIGINTERN PyObject *_wrap_StatisticsTree32_process(PyObject *SWIGUNUSEDPARM(sel
   NumpyArray1< float > arg3 ;
   NumpyArray1< unsigned int > arg4 ;
   NumpyArray1< float > arg5 ;
-  SwigValueWrapper< NumpyArray3< float > > arg6 ;
-  NumpyArray1< unsigned int > arg7 ;
+  NumpyArray3< float > arg6 ;
+  NumpyArray1< long long > arg7 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
@@ -12709,10 +12709,10 @@ SWIGINTERN PyObject *_wrap_StatisticsTree32_process(PyObject *SWIGUNUSEDPARM(sel
     (&arg6)->dim3 = (int) array_size(array6,2);
   }
   {
-    array7 = obj_to_array_no_conversion(swig_obj[6], NPY_UINT);
+    array7 = obj_to_array_no_conversion(swig_obj[6], NPY_LONGLONG);
     if (!array7 || !require_dimensions(array7,1) || !require_contiguous(array7)
       || !require_native(array7)) SWIG_fail;
-    (&arg7)->data = (unsigned int*) array_data(array7);
+    (&arg7)->data = (long long*) array_data(array7);
     (&arg7)->dim1 = (int) array_size(array7,0);
   }
   (arg1)->process(arg2,arg3,arg4,arg5,arg6,arg7);
@@ -12958,8 +12958,8 @@ SWIGINTERN PyObject *_wrap_StatisticsTree64_process(PyObject *SWIGUNUSEDPARM(sel
   NumpyArray1< double > arg3 ;
   NumpyArray1< unsigned int > arg4 ;
   NumpyArray1< double > arg5 ;
-  SwigValueWrapper< NumpyArray3< double > > arg6 ;
-  NumpyArray1< unsigned int > arg7 ;
+  NumpyArray3< double > arg6 ;
+  NumpyArray1< long long > arg7 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
@@ -13039,10 +13039,10 @@ SWIGINTERN PyObject *_wrap_StatisticsTree64_process(PyObject *SWIGUNUSEDPARM(sel
     (&arg6)->dim3 = (int) array_size(array6,2);
   }
   {
-    array7 = obj_to_array_no_conversion(swig_obj[6], NPY_UINT);
+    array7 = obj_to_array_no_conversion(swig_obj[6], NPY_LONGLONG);
     if (!array7 || !require_dimensions(array7,1) || !require_contiguous(array7)
       || !require_native(array7)) SWIG_fail;
-    (&arg7)->data = (unsigned int*) array_data(array7);
+    (&arg7)->data = (long long*) array_data(array7);
     (&arg7)->dim1 = (int) array_size(array7,0);
   }
   (arg1)->process(arg2,arg3,arg4,arg5,arg6,arg7);
@@ -14456,6 +14456,20 @@ SWIG_init(void) {
   
   import_array();
   
+  SWIG_Python_SetConstant(d, "StatisticsTree32_STAT_SUM",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< float >::STAT_SUM)));
+  SWIG_Python_SetConstant(d, "StatisticsTree32_STAT_AVERAGE",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< float >::STAT_AVERAGE)));
+  SWIG_Python_SetConstant(d, "StatisticsTree32_STAT_SQUARES_SUM",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< float >::STAT_SQUARES_SUM)));
+  SWIG_Python_SetConstant(d, "StatisticsTree32_STAT_VARIANCE",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< float >::STAT_VARIANCE)));
+  SWIG_Python_SetConstant(d, "StatisticsTree32_STAT_MIN",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< float >::STAT_MIN)));
+  SWIG_Python_SetConstant(d, "StatisticsTree32_STAT_MAX",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< float >::STAT_MAX)));
+  SWIG_Python_SetConstant(d, "StatisticsTree32_STAT_MEDIAN",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< float >::STAT_MEDIAN)));
+  SWIG_Python_SetConstant(d, "StatisticsTree64_STAT_SUM",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< double >::STAT_SUM)));
+  SWIG_Python_SetConstant(d, "StatisticsTree64_STAT_AVERAGE",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< double >::STAT_AVERAGE)));
+  SWIG_Python_SetConstant(d, "StatisticsTree64_STAT_SQUARES_SUM",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< double >::STAT_SQUARES_SUM)));
+  SWIG_Python_SetConstant(d, "StatisticsTree64_STAT_VARIANCE",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< double >::STAT_VARIANCE)));
+  SWIG_Python_SetConstant(d, "StatisticsTree64_STAT_MIN",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< double >::STAT_MIN)));
+  SWIG_Python_SetConstant(d, "StatisticsTree64_STAT_MAX",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< double >::STAT_MAX)));
+  SWIG_Python_SetConstant(d, "StatisticsTree64_STAT_MEDIAN",SWIG_From_int(static_cast< int >(StatisticsTree_wrapper< double >::STAT_MEDIAN)));
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else

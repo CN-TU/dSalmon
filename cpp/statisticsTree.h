@@ -15,6 +15,12 @@
 
 #include "Vector.h"
 
+// This tree implementation allows querying quantiles and sum and variance
+// statistics for a sliding window. Implementing sum and variance statistics
+// using simple counters would lead to accumulating numeric inaccuracies.
+// Hence, we use a tree-based approach for summing values.
+// We use an order statistic tree for computing quantiles.
+
 template<typename T, typename FloatType=double>
 class StatisticsTree {
 
@@ -35,9 +41,9 @@ class StatisticsTree {
 
     struct Block {
         PointListIterator first_point;
-        std::size_t contained_points;
         Vector<FloatType> sums;
         Vector<FloatType> squares_sums;
+        std::list<Block> children;
     };
 
     PointList points;
@@ -45,6 +51,10 @@ class StatisticsTree {
     std::list<Block> blocks;
 
     const std::size_t MAX_BLOCK = 100;
+
+    std::size_t last_block_points;
+    // use an unsigned here for defined overflow behavior
+    std::uint64_t processed_blocks;
   
     template<typename BaseIterator>
     class IteratorTempl : public BaseIterator {
@@ -55,9 +65,35 @@ class StatisticsTree {
         IteratorTempl(BaseIterator it) : BaseIterator(it) {}
     };
 
+    void coalesce_blocks() {
+        // Construct a binary tree structure for making queries for large
+        // windows more efficient.
+        std::uint64_t mask = processed_blocks;
+        std::uint64_t threshold = MAX_BLOCK * 2;
+        while (!(mask & 1) && points.size() >= threshold) {
+            // Due to the way we construct the tree, candidate1 and candidate2
+            // must be blocks of equal size here. We merge them into one parent.
+            typename std::list<Block>::iterator candidate2 = std::prev(blocks.end());
+            typename std::list<Block>::iterator candidate1 = std::prev(candidate2);
+            blocks.emplace_back();
+            Block& new_block = blocks.back();
+            new_block.sums = candidate1->sums + candidate2->sums;
+            new_block.squares_sums = candidate1->squares_sums + candidate2->squares_sums;
+            new_block.first_point = candidate1->first_point;
+            new_block.children.splice(new_block.children.begin(), blocks, candidate1, std::prev(blocks.end()));
+            mask >>= 1;
+            threshold <<= 1;
+        }
+    }
+
   public:
     typedef IteratorTempl<typename PointList::iterator> iterator;
     typedef IteratorTempl<typename PointList::const_iterator> const_iterator;
+
+    StatisticsTree() :
+        last_block_points(0),
+        processed_blocks(0)
+    { }
 
     iterator begin() { return iterator(points.begin()); }
     const_iterator cbegin() const { return const_iterator(points.cbegin()); }
@@ -87,29 +123,37 @@ class StatisticsTree {
             new_entry.tree_iterators[i] = inserted.first;
         }
 
-        if (blocks.empty() || blocks.back().contained_points >= MAX_BLOCK) {
+        if (blocks.empty() || last_block_points >= MAX_BLOCK) {
             blocks.emplace_back();
             Block& new_block = blocks.back();
-            new_block.contained_points = 0;
             new_block.first_point = std::prev(points.end());
             new_block.sums.resize(dimension);
             new_block.squares_sums.resize(dimension);
+            processed_blocks++;
+            last_block_points = 0;
         }
         Block& last_block = blocks.back();
-        last_block.contained_points++;
         last_block.sums += data;
         for (std::size_t i = 0; i < dimension; i++)
             last_block.squares_sums[i] += data[i] * data[i];
+        last_block_points++;
 
         new_entry.value = std::move(value);
+
+        if (last_block_points == MAX_BLOCK)
+            coalesce_blocks();
     }
 
     void pop_front() {
         auto& iterators = points.front().tree_iterators;
         for (std::size_t i = 0; i < iterators.size(); i++)
             trees[i].template get<0>().erase(iterators[i]);
-        if (!blocks.empty() && blocks.front().first_point == points.begin())
+        while (!blocks.empty() && blocks.front().first_point == points.begin()) {
+            std::list<Block>& children = blocks.front().children;
+            if (!children.empty())
+                blocks.splice(std::next(blocks.begin()), children);
             blocks.pop_front();
+        }
         points.pop_front();
     }
 

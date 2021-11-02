@@ -20,7 +20,7 @@ class StatisticsTree(object):
     window.
 
     This implementation relies on an order statistic tree provided by Boost
-    for achieving O(log(n)) time complexity for quantile computation.
+    for achieving O(log(window)) time complexity for quantile computation.
 
 
     Parameters
@@ -47,7 +47,7 @@ class StatisticsTree(object):
         }
         self.last_time = 0
 
-    def process(self, X, times, what=[], quantiles=[]):
+    def process(self, X, times=None, what=[], quantiles=[]):
         """
         Process next chunk of data.
 

@@ -15,6 +15,9 @@ class StatisticsTree_wrapper {
     StatisticsTree<FloatType,FloatType> tree;
     FloatType window;
 
+    void pruneExpired(FloatType now);
+
+  public:
     enum {
         STAT_SUM = 1,
         STAT_AVERAGE,
@@ -24,12 +27,8 @@ class StatisticsTree_wrapper {
         STAT_MAX,
         STAT_MEDIAN
     };
-
-    void pruneExpired(FloatType now);
-
-  public:
     StatisticsTree_wrapper(FloatType window);
-    void process(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times, const NumpyArray1<unsigned> stats, const NumpyArray1<FloatType> quantiles, NumpyArray3<FloatType> result, NumpyArray1<unsigned> counts);
+    void process(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times, const NumpyArray1<unsigned> stats, const NumpyArray1<FloatType> quantiles, NumpyArray3<FloatType> result, NumpyArray1<long long> counts);
     void transform_zscore(NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times);
     void transform_quantile(NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times, FloatType q);
 };

@@ -32,6 +32,8 @@
 %template() NumpyArray1<DATA_TYPE>;
 %feature("novaluewrapper") NumpyArray2<DATA_TYPE>;
 %template() NumpyArray2<DATA_TYPE>;
+%feature("novaluewrapper") NumpyArray3<DATA_TYPE>;
+%template() NumpyArray3<DATA_TYPE>;
 
 
 %typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY,
