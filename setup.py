@@ -5,7 +5,10 @@
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
 import glob
-from distutils.core import setup, Extension
+try:
+    from setuptools import setup, Extension
+except ImportError:
+    from distutils.core import setup, Extension
 
 import os
 
