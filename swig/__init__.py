@@ -448,9 +448,6 @@ class DBOR32(object):
     def __init__(self, window, radius, distance, min_node_size, max_node_size, split_sampling):
         _dSalmon.DBOR32_swiginit(self, _dSalmon.new_DBOR32(window, radius, distance, min_node_size, max_node_size, split_sampling))
 
-    def fit(self, data, times):
-        return _dSalmon.DBOR32_fit(self, data, times)
-
     def fit_predict(self, data, scores, times):
         return _dSalmon.DBOR32_fit_predict(self, data, scores, times)
 
@@ -470,9 +467,6 @@ class DBOR64(object):
 
     def __init__(self, window, radius, distance, min_node_size, max_node_size, split_sampling):
         _dSalmon.DBOR64_swiginit(self, _dSalmon.new_DBOR64(window, radius, distance, min_node_size, max_node_size, split_sampling))
-
-    def fit(self, data, times):
-        return _dSalmon.DBOR64_fit(self, data, times)
 
     def fit_predict(self, data, scores, times):
         return _dSalmon.DBOR64_fit_predict(self, data, scores, times)
@@ -791,61 +785,45 @@ class HSChains64(object):
 # Register HSChains64 in _dSalmon:
 _dSalmon.HSChains64_swigregister(HSChains64)
 
-class SWZScoreScaler32(object):
+class StatisticsTree32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
     def __init__(self, window):
-        _dSalmon.SWZScoreScaler32_swiginit(self, _dSalmon.new_SWZScoreScaler32(window))
+        _dSalmon.StatisticsTree32_swiginit(self, _dSalmon.new_StatisticsTree32(window))
 
-    def transform(self, data, normalized, times):
-        return _dSalmon.SWZScoreScaler32_transform(self, data, normalized, times)
-    __swig_destroy__ = _dSalmon.delete_SWZScoreScaler32
+    def process(self, data, times, stats, quantiles, result, counts):
+        return _dSalmon.StatisticsTree32_process(self, data, times, stats, quantiles, result, counts)
 
-# Register SWZScoreScaler32 in _dSalmon:
-_dSalmon.SWZScoreScaler32_swigregister(SWZScoreScaler32)
+    def transform_zscore(self, data, times):
+        return _dSalmon.StatisticsTree32_transform_zscore(self, data, times)
 
-class SWZScoreScaler64(object):
+    def transform_quantile(self, data, times, q):
+        return _dSalmon.StatisticsTree32_transform_quantile(self, data, times, q)
+    __swig_destroy__ = _dSalmon.delete_StatisticsTree32
+
+# Register StatisticsTree32 in _dSalmon:
+_dSalmon.StatisticsTree32_swigregister(StatisticsTree32)
+
+class StatisticsTree64(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
     def __init__(self, window):
-        _dSalmon.SWZScoreScaler64_swiginit(self, _dSalmon.new_SWZScoreScaler64(window))
+        _dSalmon.StatisticsTree64_swiginit(self, _dSalmon.new_StatisticsTree64(window))
 
-    def transform(self, data, normalized, times):
-        return _dSalmon.SWZScoreScaler64_transform(self, data, normalized, times)
-    __swig_destroy__ = _dSalmon.delete_SWZScoreScaler64
+    def process(self, data, times, stats, quantiles, result, counts):
+        return _dSalmon.StatisticsTree64_process(self, data, times, stats, quantiles, result, counts)
 
-# Register SWZScoreScaler64 in _dSalmon:
-_dSalmon.SWZScoreScaler64_swigregister(SWZScoreScaler64)
+    def transform_zscore(self, data, times):
+        return _dSalmon.StatisticsTree64_transform_zscore(self, data, times)
 
-class SWQuantileScaler32(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
+    def transform_quantile(self, data, times, q):
+        return _dSalmon.StatisticsTree64_transform_quantile(self, data, times, q)
+    __swig_destroy__ = _dSalmon.delete_StatisticsTree64
 
-    def __init__(self, window, quantile):
-        _dSalmon.SWQuantileScaler32_swiginit(self, _dSalmon.new_SWQuantileScaler32(window, quantile))
-
-    def transform(self, data, normalized, times):
-        return _dSalmon.SWQuantileScaler32_transform(self, data, normalized, times)
-    __swig_destroy__ = _dSalmon.delete_SWQuantileScaler32
-
-# Register SWQuantileScaler32 in _dSalmon:
-_dSalmon.SWQuantileScaler32_swigregister(SWQuantileScaler32)
-
-class SWQuantileScaler64(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self, window, quantile):
-        _dSalmon.SWQuantileScaler64_swiginit(self, _dSalmon.new_SWQuantileScaler64(window, quantile))
-
-    def transform(self, data, normalized, times):
-        return _dSalmon.SWQuantileScaler64_transform(self, data, normalized, times)
-    __swig_destroy__ = _dSalmon.delete_SWQuantileScaler64
-
-# Register SWQuantileScaler64 in _dSalmon:
-_dSalmon.SWQuantileScaler64_swigregister(SWQuantileScaler64)
+# Register StatisticsTree64 in _dSalmon:
+_dSalmon.StatisticsTree64_swigregister(StatisticsTree64)
 
 
 

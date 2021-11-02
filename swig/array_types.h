@@ -18,6 +18,14 @@ struct NumpyArray2 {
     int dim2;
 };
 
+template<typename DataType>
+struct NumpyArray3 {
+    DataType* data;
+    int dim1;
+    int dim2;
+    int dim3;
+};
+
 // This is a SWIG macro which is used for instantiating
 // float and double specializations of wrapper templates.
 // Since it is only used by SWIG, define it to nothing

@@ -11,7 +11,7 @@
 #include "distance_wrappers.h"
 #include "MTree_wrapper.h"
 #include "outlier_wrapper.h"
-#include "preproc_wrapper.h"
+#include "statisticstree_wrapper.h"
 
 %}
 
@@ -90,6 +90,33 @@
 }
 
 
+%typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY,
+           fragment="NumPy_Macros")
+  (const NumpyArray3<DATA_TYPE>)
+{
+  $1 = is_array($input) || PySequence_Check($input);
+}
+%typemap(in,
+         fragment="NumPy_Fragments")
+  (const NumpyArray3<DATA_TYPE>)
+  (PyArrayObject* array=NULL, int is_new_object=0)
+{
+  npy_intp size[3] = { -1, -1, -1 };
+  array = obj_to_array_contiguous_allow_conversion($input, DATA_TYPECODE,
+                                                   &is_new_object);
+  if (!array || !require_dimensions(array, 3) ||
+      !require_size(array, size, 3)) SWIG_fail;
+  $1.data = (DATA_TYPE*) array_data(array);
+  $1.dim1 = (DIM_TYPE) array_size(array,0);
+  $1.dim2 = (DIM_TYPE) array_size(array,1);
+  $1.dim3 = (DIM_TYPE) array_size(array,2);
+}
+%typemap(freearg)
+  (const NumpyArray2<DATA_TYPE>)
+{
+  if (is_new_object$argnum && array$argnum)
+    { Py_DECREF(array$argnum); }
+}
 
 
 
@@ -130,6 +157,27 @@
   $1.data = (DATA_TYPE*) array_data(array);
   $1.dim1 = (DIM_TYPE) array_size(array,0);
   $1.dim2 = (DIM_TYPE) array_size(array,1);
+}
+
+%typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY,
+           fragment="NumPy_Macros")
+  (NumpyArray3<DATA_TYPE>)
+{
+  $1 = is_array($input) && PyArray_EquivTypenums(array_type($input),
+                                                 DATA_TYPECODE);
+}
+%typemap(in,
+         fragment="NumPy_Fragments")
+  (NumpyArray3<DATA_TYPE>)
+  (PyArrayObject* array=NULL)
+{
+  array = obj_to_array_no_conversion($input, DATA_TYPECODE);
+  if (!array || !require_dimensions(array,3) || !require_contiguous(array)
+      || !require_native(array)) SWIG_fail;
+  $1.data = (DATA_TYPE*) array_data(array);
+  $1.dim1 = (DIM_TYPE) array_size(array,0);
+  $1.dim2 = (DIM_TYPE) array_size(array,1);
+  $1.dim3 = (DIM_TYPE) array_size(array,2);
 }
 
 %enddef
@@ -173,4 +221,4 @@ import_array();
 %include "distance_wrappers.h"
 %include "MTree_wrapper.h"
 %include "outlier_wrapper.h"
-%include "preproc_wrapper.h"
+%include "statisticstree_wrapper.h"

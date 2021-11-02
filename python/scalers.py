@@ -3,7 +3,7 @@
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
 """
-Tools for preprocessing.
+Scalers for streaming data.
 """
 
 import numpy as np
@@ -12,15 +12,21 @@ from dSalmon import swig as dSalmon_cpp
 from dSalmon.util import sanitizeData, sanitizeTimes
 
 class SWScaler(object):
+    """
+    Base class for sliding window scalers.
+    """
+    
     def __init__(self, float_type=np.float64):
         self.float_type = float_type
-        self.scaler = None
         self.last_time = 0
         self.dimension = -1
 
-    def transform(self, data, times=None):
+    def _transform(self, X, times):
+        raise NotImplementedError()
+
+    def transform(self, X, times=None):
         """
-        Process next chunk of data.
+        Transform the next chunk of data.
         
         Parameters
         ----------
@@ -37,14 +43,46 @@ class SWScaler(object):
         X_tr: ndarray, shape (n_samples, n_features)
             Transformed input data.
         """
-        X = sanitizeData(X, self.float_type)
+        X_tr = sanitizeData(X, self.float_type)
+        if X_tr is X:
+            X_tr = X.copy()
+        assert self.dimension == -1 or X_tr.shape[1] == self.dimension
+        self.dimension = X_tr.shape[1]
+        times = sanitizeTimes(times, X_tr.shape[0], self.last_time, self.float_type)
+        self.last_time = times[-1]
+        self._transform(X_tr, times)
+        return X_tr
+
+    def transform_inplace(self, X, times=None):
+        """
+        Transform the next chunk of data in-place. Requires
+        `X` to be a C-style contiguous `ndarray`.
+        
+        Parameters
+        ----------
+        X: ndarray, shape (n_samples, n_features)
+            The input data.
+            
+        times: ndarray, shape (n_samples,), optional
+            Timestamps for input data. If None,
+            timestamps are linearly increased for
+            each sample. 
+        
+        Returns    
+        -------
+        X_tr: ndarray, shape (n_samples, n_features)
+            Transformed input data. Equal to `X`.
+        """
+        assert isinstance(X, np.ndarray) and len(X.shape) in (0,1,2)
+        assert X.flags['C_CONTIGUOUS'] and X.flags['WRITEABLE']
+        if len(X.shape) < 2:
+            X = X.reshape((1,-1))
         assert self.dimension == -1 or X.shape[1] == self.dimension
         self.dimension = X.shape[1]
         times = sanitizeTimes(times, X.shape[0], self.last_time, self.float_type)
         self.last_time = times[-1]
-        X_tr = np.empty_like(X)
-        self.scaler.transform(X, X_tr, times)
-        return X_tr
+        self._transform(X, times)
+        return X
 
 class SWZScoreScaler(SWScaler):
     """
@@ -63,8 +101,11 @@ class SWZScoreScaler(SWScaler):
     def __init__(self, window, float_type=np.float64):
         super().__init__(float_type)
         self.window = window
-        cpp_obj = {np.float32: dSalmon_cpp.SWZScoreScaler32, np.float64: dSalmon_cpp.SWZScoreScaler64}[float_type]
-        self.scaler = cpp_obj(window)
+        cpp_obj = {np.float32: dSalmon_cpp.StatisticsTree32, np.float64: dSalmon_cpp.StatisticsTree64}[float_type]
+        self.tree = cpp_obj(window)
+
+    def _transform(self, X, times):
+        self.tree.transform_zscore(X, times)
 
 class SWQuantileScaler(SWScaler):
     """
@@ -90,5 +131,8 @@ class SWQuantileScaler(SWScaler):
         super().__init__(float_type)
         self.window = window
         self.quantile = quantile
-        cpp_obj = {np.float32: dSalmon_cpp.SWQuantileScaler32, np.float64: dSalmon_cpp.SWQuantileScaler64}[float_type]
-        self.scaler = cpp_obj(window, quantile)
+        cpp_obj = {np.float32: dSalmon_cpp.StatisticsTree32, np.float64: dSalmon_cpp.StatisticsTree64}[float_type]
+        self.tree = cpp_obj(window)
+
+    def _transform(self, X, times):
+        self.tree.transform_quantile(X, times, self.quantile)

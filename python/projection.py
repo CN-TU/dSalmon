@@ -2,6 +2,10 @@
 # Released under the GNU Lesser General Public License version 3,
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
+"""
+Feature projectors.
+"""
+
 import numpy as np
 import struct
 import random
@@ -29,7 +33,7 @@ class LODAProjector(object):
         self.proj_matrix = None
 
     def _init_projections(self, dimension):
-        rng = random.Random(self.seed])
+        rng = random.Random(self.seed)
         nprng = np.random.RandomState(self.seed)
         self.proj_matrix = np.zeros((dimension,self.n_projections), dtype=self.float_type)
         proj_per_histogram = int(round(np.sqrt(dimension)))

@@ -97,7 +97,7 @@ class HSChain {
             initialize(data.size());
         Vector<FloatType> data_normalized(data.size());
 
-        for (int i = 0; i < data.size(); i++) {
+        for (std::size_t i = 0; i < data.size(); i++) {
             min_values[i] = std::min(min_values[i], data[i]);
             max_values[i] = std::max(min_values[i], data[i]);
             // TODO: what if max_values_reference[i] == min_values_reference[i]

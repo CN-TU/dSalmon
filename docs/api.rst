@@ -5,5 +5,6 @@ API Reference
    :toctree: generated
 
    dSalmon.outlier
-   dSalmon.preproc
+   dSalmon.scalers
+   dSalmon.projection
    dSalmon.trees

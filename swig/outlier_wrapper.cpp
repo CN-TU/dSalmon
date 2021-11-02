@@ -401,7 +401,7 @@ void HSTrees_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data, 
         std::fill(scores.data, scores.data + data.dim1, 0);
     auto worker = [&](int ensemble_index) {
         auto& detector = ensemble[ensemble_index];
-        for (std::size_t i = 0; i < data.dim1; i++) {
+        for (int i = 0; i < data.dim1; i++) {
             FloatType score = detector.fitPredict(Vector<FloatType>(&data.data[i * data.dim2], data.dim2), times.data[i]);
             if (!fit_only && n_jobs < 2) {
                 scores.data[i] += score / ensemble.size();
@@ -444,7 +444,7 @@ void HSChains_wrapper<FloatType>::fit_predict(const NumpyArray2<FloatType> data,
         std::fill(scores.data, scores.data + data.dim1, 0);
     auto worker = [&](int ensemble_index) {
         auto& detector = ensemble[ensemble_index];
-        for (std::size_t i = 0; i < data.dim1; i++) {
+        for (int i = 0; i < data.dim1; i++) {
             FloatType score = detector.fitPredict(Vector<FloatType>(&data.data[i * data.dim2], data.dim2));
             if (!fit_only && n_jobs < 2) {
                 scores.data[i] += score;

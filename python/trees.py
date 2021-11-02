@@ -3,7 +3,7 @@
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
 """
-Indexing structures for fast nearest neighbor queries.
+Indexing structures for fast stream data processing.
 """
 
 import numpy as np
@@ -11,7 +11,88 @@ import math
 import multiprocessing as mp
 
 from dSalmon import swig as dSalmon_cpp
-from dSalmon.util import sanitizeData, lookupDistance
+from dSalmon.util import sanitizeData, sanitizeTimes, lookupDistance
+
+
+class StatisticsTree(object):
+    """
+    Indexing structure for computing per-dimension statistics in a sliding
+    window.
+
+    This implementation relies on an order statistic tree provided by Boost
+    for achieving O(log(n)) time complexity for quantile computation.
+
+
+    Parameters
+    ----------
+    window: float
+        Window length after which samples will be pruned.
+
+    float_type: np.float32 or np.float64
+        The floating point type to use for internal processing.
+    """
+    def __init__(self, window, float_type=np.float64):
+        self.window = window
+        self.float_type = float_type
+        cpp_obj = {np.float32: dSalmon_cpp.StatisticsTree32, np.float64: dSalmon_cpp.StatisticsTree64}[float_type]
+        self.cpp_tree = cpp_obj(window)
+        self.mapping = {
+            'sum': self.cpp_tree.STAT_SUM,
+            'average': self.cpp_tree.STAT_AVERAGE,
+            'squares_sum': self.cpp_tree.STAT_SQUARES_SUM,
+            'variance': self.cpp_tree.STAT_VARIANCE,
+            'min': self.cpp_tree.STAT_MIN,
+            'max': self.cpp_tree.STAT_MAX,
+            'median': self.cpp_tree.STAT_MEDIAN,
+        }
+        self.last_time = 0
+
+    def process(self, X, times, what=[], quantiles=[]):
+        """
+        Process next chunk of data.
+
+        Parameters
+        ----------
+        X: ndarray, shape (n_samples, n_features)
+            The input data.
+            
+        times: ndarray, shape (n_samples,), optional
+            Timestamps for input data. If None, timestamps are linearly
+            increased for each sample.
+
+        what: list of strings
+            Which statistics to compute. Elements of `what` can be one of
+            'sum', 'average', 'squares_sum', 'variance', 'min', 'max'
+            or 'median'.
+
+        quantiles: list of floats
+            Quantile values to compute in addition to statistics in `what`.
+            Elements should be floats in [0,1].
+
+        Returns
+        -------
+        statistics: ndarray, shape (n_samples, n_statistics, n_features)
+            The computed statistics. Statistics for row `i` are evaluated
+            after adding row `i` to the sliding window.
+            Here, `n_statistics` = `len(what)` + `len(quantiles)`.
+
+        counts: ndarray, shape (n_samples)
+            The lengths of the sliding window after processing each row
+            of `X`.
+        """
+        X = sanitizeData(X, self.float_type)
+        times = sanitizeTimes(times, X.shape[0], self.last_time, self.float_type)
+        if isinstance(what, str):
+            what = [ what ]
+        mapped_stats = [ self.mapping[x] for x in what ]
+        quantiles = np.array(quantiles, dtype=self.float_type)
+        assert (0 <= quantiles).all() and (quantiles <= 1).all()
+        result = np.empty((X.shape[0], len(mapped_stats) + len(quantiles), X.shape[1]), dtype=self.float_type)
+        counts = np.empty(X.shape[0], dtype=np.int64)
+        self.cpp_tree.process(X, times, mapped_stats, quantiles, result, counts)
+        self.last_time = times[-1]
+        return result, counts
+
 
 
 class _MTreeByIndexLookup(object):

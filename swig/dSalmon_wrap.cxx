@@ -2725,13 +2725,11 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 #define SWIGTYPE_p_SWKNN_wrapperT_float_t swig_types[33]
 #define SWIGTYPE_p_SWLOF_wrapperT_double_t swig_types[34]
 #define SWIGTYPE_p_SWLOF_wrapperT_float_t swig_types[35]
-#define SWIGTYPE_p_SWQuantileScaler_wrapperT_double_t swig_types[36]
-#define SWIGTYPE_p_SWQuantileScaler_wrapperT_float_t swig_types[37]
-#define SWIGTYPE_p_SWZScoreScaler_wrapperT_double_t swig_types[38]
-#define SWIGTYPE_p_SWZScoreScaler_wrapperT_float_t swig_types[39]
-#define SWIGTYPE_p_char swig_types[40]
-static swig_type_info *swig_types[42];
-static swig_module_info swig_module = {swig_types, 41, 0, 0, 0, 0};
+#define SWIGTYPE_p_StatisticsTree_wrapperT_double_t swig_types[36]
+#define SWIGTYPE_p_StatisticsTree_wrapperT_float_t swig_types[37]
+#define SWIGTYPE_p_char swig_types[38]
+static swig_type_info *swig_types[40];
+static swig_module_info swig_module = {swig_types, 39, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2841,7 +2839,7 @@ namespace swig {
 #include "distance_wrappers.h"
 #include "MTree_wrapper.h"
 #include "outlier_wrapper.h"
-#include "preproc_wrapper.h"
+#include "statisticstree_wrapper.h"
 
 
 
@@ -7914,81 +7912,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_DBOR32_fit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  DBOR_wrapper< float > *arg1 = (DBOR_wrapper< float > *) 0 ;
-  NumpyArray2< float > arg2 ;
-  NumpyArray1< float > arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyArrayObject *array2 = NULL ;
-  int is_new_object2 = 0 ;
-  PyArrayObject *array3 = NULL ;
-  int is_new_object3 = 0 ;
-  PyObject *swig_obj[3] ;
-  
-  if (!SWIG_Python_UnpackTuple(args, "DBOR32_fit", 3, 3, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_DBOR_wrapperT_float_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBOR32_fit" "', argument " "1"" of type '" "DBOR_wrapper< float > *""'"); 
-  }
-  arg1 = reinterpret_cast< DBOR_wrapper< float > * >(argp1);
-  {
-    npy_intp size[2] = {
-      -1, -1 
-    };
-    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_FLOAT,
-      &is_new_object2);
-    if (!array2 || !require_dimensions(array2, 2) ||
-      !require_size(array2, size, 2)) SWIG_fail;
-    (&arg2)->data = (float*) array_data(array2);
-    (&arg2)->dim1 = (int) array_size(array2,0);
-    (&arg2)->dim2 = (int) array_size(array2,1);
-  }
-  {
-    npy_intp size[1] = {
-      -1 
-    };
-    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
-      NPY_FLOAT,
-      &is_new_object3);
-    if (!array3 || !require_dimensions(array3, 1) ||
-      !require_size(array3, size, 1)) SWIG_fail;
-    (&arg3)->data = (float*) array_data(array3);
-    (&arg3)->dim1 = (int) array_size(array3,0);
-  }
-  (arg1)->fit(arg2,arg3);
-  resultobj = SWIG_Py_Void();
-  {
-    if (is_new_object2 && array2)
-    {
-      Py_DECREF(array2); 
-    }
-  }
-  {
-    if (is_new_object3 && array3)
-    {
-      Py_DECREF(array3); 
-    }
-  }
-  return resultobj;
-fail:
-  {
-    if (is_new_object2 && array2)
-    {
-      Py_DECREF(array2); 
-    }
-  }
-  {
-    if (is_new_object3 && array3)
-    {
-      Py_DECREF(array3); 
-    }
-  }
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_DBOR32_fit_predict(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   DBOR_wrapper< float > *arg1 = (DBOR_wrapper< float > *) 0 ;
@@ -8239,81 +8162,6 @@ SWIGINTERN PyObject *_wrap_new_DBOR64(PyObject *SWIGUNUSEDPARM(self), PyObject *
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_DBOR_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_DBOR64_fit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  DBOR_wrapper< double > *arg1 = (DBOR_wrapper< double > *) 0 ;
-  NumpyArray2< double > arg2 ;
-  NumpyArray1< double > arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyArrayObject *array2 = NULL ;
-  int is_new_object2 = 0 ;
-  PyArrayObject *array3 = NULL ;
-  int is_new_object3 = 0 ;
-  PyObject *swig_obj[3] ;
-  
-  if (!SWIG_Python_UnpackTuple(args, "DBOR64_fit", 3, 3, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_DBOR_wrapperT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBOR64_fit" "', argument " "1"" of type '" "DBOR_wrapper< double > *""'"); 
-  }
-  arg1 = reinterpret_cast< DBOR_wrapper< double > * >(argp1);
-  {
-    npy_intp size[2] = {
-      -1, -1 
-    };
-    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_DOUBLE,
-      &is_new_object2);
-    if (!array2 || !require_dimensions(array2, 2) ||
-      !require_size(array2, size, 2)) SWIG_fail;
-    (&arg2)->data = (double*) array_data(array2);
-    (&arg2)->dim1 = (int) array_size(array2,0);
-    (&arg2)->dim2 = (int) array_size(array2,1);
-  }
-  {
-    npy_intp size[1] = {
-      -1 
-    };
-    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
-      NPY_DOUBLE,
-      &is_new_object3);
-    if (!array3 || !require_dimensions(array3, 1) ||
-      !require_size(array3, size, 1)) SWIG_fail;
-    (&arg3)->data = (double*) array_data(array3);
-    (&arg3)->dim1 = (int) array_size(array3,0);
-  }
-  (arg1)->fit(arg2,arg3);
-  resultobj = SWIG_Py_Void();
-  {
-    if (is_new_object2 && array2)
-    {
-      Py_DECREF(array2); 
-    }
-  }
-  {
-    if (is_new_object3 && array3)
-    {
-      Py_DECREF(array3); 
-    }
-  }
-  return resultobj;
-fail:
-  {
-    if (is_new_object2 && array2)
-    {
-      Py_DECREF(array2); 
-    }
-  }
-  {
-    if (is_new_object3 && array3)
-    {
-      Py_DECREF(array3); 
-    }
-  }
   return NULL;
 }
 
@@ -12750,50 +12598,59 @@ SWIGINTERN PyObject *HSChains64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObjec
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_SWZScoreScaler32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_StatisticsTree32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   float arg1 ;
   float val1 ;
   int ecode1 = 0 ;
   PyObject *swig_obj[1] ;
-  SWZScoreScaler_wrapper< float > *result = 0 ;
+  StatisticsTree_wrapper< float > *result = 0 ;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   ecode1 = SWIG_AsVal_float(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_SWZScoreScaler32" "', argument " "1"" of type '" "float""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_StatisticsTree32" "', argument " "1"" of type '" "float""'");
   } 
   arg1 = static_cast< float >(val1);
-  result = (SWZScoreScaler_wrapper< float > *)new SWZScoreScaler_wrapper< float >(arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SWZScoreScaler_wrapperT_float_t, SWIG_POINTER_NEW |  0 );
+  result = (StatisticsTree_wrapper< float > *)new StatisticsTree_wrapper< float >(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_StatisticsTree_wrapperT_float_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_SWZScoreScaler32_transform(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_StatisticsTree32_process(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  SWZScoreScaler_wrapper< float > *arg1 = (SWZScoreScaler_wrapper< float > *) 0 ;
+  StatisticsTree_wrapper< float > *arg1 = (StatisticsTree_wrapper< float > *) 0 ;
   NumpyArray2< float > arg2 ;
-  NumpyArray2< float > arg3 ;
-  NumpyArray1< float > arg4 ;
+  NumpyArray1< float > arg3 ;
+  NumpyArray1< unsigned int > arg4 ;
+  NumpyArray1< float > arg5 ;
+  SwigValueWrapper< NumpyArray3< float > > arg6 ;
+  NumpyArray1< unsigned int > arg7 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
   PyArrayObject *array3 = NULL ;
+  int is_new_object3 = 0 ;
   PyArrayObject *array4 = NULL ;
   int is_new_object4 = 0 ;
-  PyObject *swig_obj[4] ;
+  PyArrayObject *array5 = NULL ;
+  int is_new_object5 = 0 ;
+  PyArrayObject *array6 = NULL ;
+  PyArrayObject *array7 = NULL ;
+  int i7 = 1 ;
+  PyObject *swig_obj[7] ;
   
-  if (!SWIG_Python_UnpackTuple(args, "SWZScoreScaler32_transform", 4, 4, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SWZScoreScaler_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree32_process", 7, 7, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SWZScoreScaler32_transform" "', argument " "1"" of type '" "SWZScoreScaler_wrapper< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree32_process" "', argument " "1"" of type '" "StatisticsTree_wrapper< float > *""'"); 
   }
-  arg1 = reinterpret_cast< SWZScoreScaler_wrapper< float > * >(argp1);
+  arg1 = reinterpret_cast< StatisticsTree_wrapper< float > * >(argp1);
   {
     npy_intp size[2] = {
       -1, -1 
@@ -12807,26 +12664,58 @@ SWIGINTERN PyObject *_wrap_SWZScoreScaler32_transform(PyObject *SWIGUNUSEDPARM(s
     (&arg2)->dim2 = (int) array_size(array2,1);
   }
   {
-    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_FLOAT);
-    if (!array3 || !require_dimensions(array3,2) || !require_contiguous(array3)
-      || !require_native(array3)) SWIG_fail;
+    npy_intp size[1] = {
+      -1 
+    };
+    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_FLOAT,
+      &is_new_object3);
+    if (!array3 || !require_dimensions(array3, 1) ||
+      !require_size(array3, size, 1)) SWIG_fail;
     (&arg3)->data = (float*) array_data(array3);
     (&arg3)->dim1 = (int) array_size(array3,0);
-    (&arg3)->dim2 = (int) array_size(array3,1);
   }
   {
     npy_intp size[1] = {
       -1 
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
+      NPY_UINT,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 1) ||
+      !require_size(array4, size, 1)) SWIG_fail;
+    (&arg4)->data = (unsigned int*) array_data(array4);
+    (&arg4)->dim1 = (int) array_size(array4,0);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array5 = obj_to_array_contiguous_allow_conversion(swig_obj[4],
       NPY_FLOAT,
-      &is_new_object4);
-    if (!array4 || !require_dimensions(array4, 1) ||
-      !require_size(array4, size, 1)) SWIG_fail;
-    (&arg4)->data = (float*) array_data(array4);
-    (&arg4)->dim1 = (int) array_size(array4,0);
+      &is_new_object5);
+    if (!array5 || !require_dimensions(array5, 1) ||
+      !require_size(array5, size, 1)) SWIG_fail;
+    (&arg5)->data = (float*) array_data(array5);
+    (&arg5)->dim1 = (int) array_size(array5,0);
   }
-  (arg1)->transform(arg2,arg3,arg4);
+  {
+    array6 = obj_to_array_no_conversion(swig_obj[5], NPY_FLOAT);
+    if (!array6 || !require_dimensions(array6,3) || !require_contiguous(array6)
+      || !require_native(array6)) SWIG_fail;
+    (&arg6)->data = (float*) array_data(array6);
+    (&arg6)->dim1 = (int) array_size(array6,0);
+    (&arg6)->dim2 = (int) array_size(array6,1);
+    (&arg6)->dim3 = (int) array_size(array6,2);
+  }
+  {
+    array7 = obj_to_array_no_conversion(swig_obj[6], NPY_UINT);
+    if (!array7 || !require_dimensions(array7,1) || !require_contiguous(array7)
+      || !require_native(array7)) SWIG_fail;
+    (&arg7)->data = (unsigned int*) array_data(array7);
+    (&arg7)->dim1 = (int) array_size(array7,0);
+  }
+  (arg1)->process(arg2,arg3,arg4,arg5,arg6,arg7);
   resultobj = SWIG_Py_Void();
   {
     if (is_new_object2 && array2)
@@ -12835,17 +12724,9 @@ SWIGINTERN PyObject *_wrap_SWZScoreScaler32_transform(PyObject *SWIGUNUSEDPARM(s
     }
   }
   {
-    if (is_new_object4 && array4)
+    if (is_new_object3 && array3)
     {
-      Py_DECREF(array4); 
-    }
-  }
-  return resultobj;
-fail:
-  {
-    if (is_new_object2 && array2)
-    {
-      Py_DECREF(array2); 
+      Py_DECREF(array3); 
     }
   }
   {
@@ -12854,131 +12735,10 @@ fail:
       Py_DECREF(array4); 
     }
   }
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_SWZScoreScaler32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  SWZScoreScaler_wrapper< float > *arg1 = (SWZScoreScaler_wrapper< float > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SWZScoreScaler_wrapperT_float_t, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SWZScoreScaler32" "', argument " "1"" of type '" "SWZScoreScaler_wrapper< float > *""'"); 
-  }
-  arg1 = reinterpret_cast< SWZScoreScaler_wrapper< float > * >(argp1);
-  delete arg1;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *SWZScoreScaler32_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_SWZScoreScaler_wrapperT_float_t, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *SWZScoreScaler32_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
-SWIGINTERN PyObject *_wrap_new_SWZScoreScaler64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  double arg1 ;
-  double val1 ;
-  int ecode1 = 0 ;
-  PyObject *swig_obj[1] ;
-  SWZScoreScaler_wrapper< double > *result = 0 ;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_SWZScoreScaler64" "', argument " "1"" of type '" "double""'");
-  } 
-  arg1 = static_cast< double >(val1);
-  result = (SWZScoreScaler_wrapper< double > *)new SWZScoreScaler_wrapper< double >(arg1);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SWZScoreScaler_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_SWZScoreScaler64_transform(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  SWZScoreScaler_wrapper< double > *arg1 = (SWZScoreScaler_wrapper< double > *) 0 ;
-  NumpyArray2< double > arg2 ;
-  NumpyArray2< double > arg3 ;
-  NumpyArray1< double > arg4 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyArrayObject *array2 = NULL ;
-  int is_new_object2 = 0 ;
-  PyArrayObject *array3 = NULL ;
-  PyArrayObject *array4 = NULL ;
-  int is_new_object4 = 0 ;
-  PyObject *swig_obj[4] ;
-  
-  if (!SWIG_Python_UnpackTuple(args, "SWZScoreScaler64_transform", 4, 4, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SWZScoreScaler_wrapperT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SWZScoreScaler64_transform" "', argument " "1"" of type '" "SWZScoreScaler_wrapper< double > *""'"); 
-  }
-  arg1 = reinterpret_cast< SWZScoreScaler_wrapper< double > * >(argp1);
   {
-    npy_intp size[2] = {
-      -1, -1 
-    };
-    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_DOUBLE,
-      &is_new_object2);
-    if (!array2 || !require_dimensions(array2, 2) ||
-      !require_size(array2, size, 2)) SWIG_fail;
-    (&arg2)->data = (double*) array_data(array2);
-    (&arg2)->dim1 = (int) array_size(array2,0);
-    (&arg2)->dim2 = (int) array_size(array2,1);
-  }
-  {
-    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_DOUBLE);
-    if (!array3 || !require_dimensions(array3,2) || !require_contiguous(array3)
-      || !require_native(array3)) SWIG_fail;
-    (&arg3)->data = (double*) array_data(array3);
-    (&arg3)->dim1 = (int) array_size(array3,0);
-    (&arg3)->dim2 = (int) array_size(array3,1);
-  }
-  {
-    npy_intp size[1] = {
-      -1 
-    };
-    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
-      NPY_DOUBLE,
-      &is_new_object4);
-    if (!array4 || !require_dimensions(array4, 1) ||
-      !require_size(array4, size, 1)) SWIG_fail;
-    (&arg4)->data = (double*) array_data(array4);
-    (&arg4)->dim1 = (int) array_size(array4,0);
-  }
-  (arg1)->transform(arg2,arg3,arg4);
-  resultobj = SWIG_Py_Void();
-  {
-    if (is_new_object2 && array2)
+    if (is_new_object5 && array5)
     {
-      Py_DECREF(array2); 
-    }
-  }
-  {
-    if (is_new_object4 && array4)
-    {
-      Py_DECREF(array4); 
+      Py_DECREF(array5); 
     }
   }
   return resultobj;
@@ -12990,177 +12750,165 @@ fail:
     }
   }
   {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  {
     if (is_new_object4 && array4)
     {
       Py_DECREF(array4); 
+    }
+  }
+  {
+    if (is_new_object5 && array5)
+    {
+      Py_DECREF(array5); 
     }
   }
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_SWZScoreScaler64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_StatisticsTree32_transform_zscore(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  SWZScoreScaler_wrapper< double > *arg1 = (SWZScoreScaler_wrapper< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SWZScoreScaler_wrapperT_double_t, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SWZScoreScaler64" "', argument " "1"" of type '" "SWZScoreScaler_wrapper< double > *""'"); 
-  }
-  arg1 = reinterpret_cast< SWZScoreScaler_wrapper< double > * >(argp1);
-  delete arg1;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *SWZScoreScaler64_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_SWZScoreScaler_wrapperT_double_t, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *SWZScoreScaler64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
-SWIGINTERN PyObject *_wrap_new_SWQuantileScaler32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  float arg1 ;
-  float arg2 ;
-  float val1 ;
-  int ecode1 = 0 ;
-  float val2 ;
-  int ecode2 = 0 ;
-  PyObject *swig_obj[2] ;
-  SWQuantileScaler_wrapper< float > *result = 0 ;
-  
-  if (!SWIG_Python_UnpackTuple(args, "new_SWQuantileScaler32", 2, 2, swig_obj)) SWIG_fail;
-  ecode1 = SWIG_AsVal_float(swig_obj[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_SWQuantileScaler32" "', argument " "1"" of type '" "float""'");
-  } 
-  arg1 = static_cast< float >(val1);
-  ecode2 = SWIG_AsVal_float(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_SWQuantileScaler32" "', argument " "2"" of type '" "float""'");
-  } 
-  arg2 = static_cast< float >(val2);
-  result = (SWQuantileScaler_wrapper< float > *)new SWQuantileScaler_wrapper< float >(arg1,arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SWQuantileScaler_wrapperT_float_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_SWQuantileScaler32_transform(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  SWQuantileScaler_wrapper< float > *arg1 = (SWQuantileScaler_wrapper< float > *) 0 ;
+  StatisticsTree_wrapper< float > *arg1 = (StatisticsTree_wrapper< float > *) 0 ;
   NumpyArray2< float > arg2 ;
-  NumpyArray2< float > arg3 ;
-  NumpyArray1< float > arg4 ;
+  NumpyArray1< float > arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
-  int is_new_object2 = 0 ;
   PyArrayObject *array3 = NULL ;
-  PyArrayObject *array4 = NULL ;
-  int is_new_object4 = 0 ;
-  PyObject *swig_obj[4] ;
+  int is_new_object3 = 0 ;
+  PyObject *swig_obj[3] ;
   
-  if (!SWIG_Python_UnpackTuple(args, "SWQuantileScaler32_transform", 4, 4, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SWQuantileScaler_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree32_transform_zscore", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SWQuantileScaler32_transform" "', argument " "1"" of type '" "SWQuantileScaler_wrapper< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree32_transform_zscore" "', argument " "1"" of type '" "StatisticsTree_wrapper< float > *""'"); 
   }
-  arg1 = reinterpret_cast< SWQuantileScaler_wrapper< float > * >(argp1);
+  arg1 = reinterpret_cast< StatisticsTree_wrapper< float > * >(argp1);
   {
-    npy_intp size[2] = {
-      -1, -1 
-    };
-    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_FLOAT,
-      &is_new_object2);
-    if (!array2 || !require_dimensions(array2, 2) ||
-      !require_size(array2, size, 2)) SWIG_fail;
+    array2 = obj_to_array_no_conversion(swig_obj[1], NPY_FLOAT);
+    if (!array2 || !require_dimensions(array2,2) || !require_contiguous(array2)
+      || !require_native(array2)) SWIG_fail;
     (&arg2)->data = (float*) array_data(array2);
     (&arg2)->dim1 = (int) array_size(array2,0);
     (&arg2)->dim2 = (int) array_size(array2,1);
   }
   {
-    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_FLOAT);
-    if (!array3 || !require_dimensions(array3,2) || !require_contiguous(array3)
-      || !require_native(array3)) SWIG_fail;
-    (&arg3)->data = (float*) array_data(array3);
-    (&arg3)->dim1 = (int) array_size(array3,0);
-    (&arg3)->dim2 = (int) array_size(array3,1);
-  }
-  {
     npy_intp size[1] = {
       -1 
     };
-    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
+    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_FLOAT,
-      &is_new_object4);
-    if (!array4 || !require_dimensions(array4, 1) ||
-      !require_size(array4, size, 1)) SWIG_fail;
-    (&arg4)->data = (float*) array_data(array4);
-    (&arg4)->dim1 = (int) array_size(array4,0);
+      &is_new_object3);
+    if (!array3 || !require_dimensions(array3, 1) ||
+      !require_size(array3, size, 1)) SWIG_fail;
+    (&arg3)->data = (float*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
   }
-  (arg1)->transform(arg2,arg3,arg4);
+  (arg1)->transform_zscore(arg2,arg3);
   resultobj = SWIG_Py_Void();
   {
-    if (is_new_object2 && array2)
+    if (is_new_object3 && array3)
     {
-      Py_DECREF(array2); 
-    }
-  }
-  {
-    if (is_new_object4 && array4)
-    {
-      Py_DECREF(array4); 
+      Py_DECREF(array3); 
     }
   }
   return resultobj;
 fail:
   {
-    if (is_new_object2 && array2)
+    if (is_new_object3 && array3)
     {
-      Py_DECREF(array2); 
-    }
-  }
-  {
-    if (is_new_object4 && array4)
-    {
-      Py_DECREF(array4); 
+      Py_DECREF(array3); 
     }
   }
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_SWQuantileScaler32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_StatisticsTree32_transform_quantile(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  SWQuantileScaler_wrapper< float > *arg1 = (SWQuantileScaler_wrapper< float > *) 0 ;
+  StatisticsTree_wrapper< float > *arg1 = (StatisticsTree_wrapper< float > *) 0 ;
+  NumpyArray2< float > arg2 ;
+  NumpyArray1< float > arg3 ;
+  float arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  PyArrayObject *array3 = NULL ;
+  int is_new_object3 = 0 ;
+  float val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree32_transform_quantile", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree32_transform_quantile" "', argument " "1"" of type '" "StatisticsTree_wrapper< float > *""'"); 
+  }
+  arg1 = reinterpret_cast< StatisticsTree_wrapper< float > * >(argp1);
+  {
+    array2 = obj_to_array_no_conversion(swig_obj[1], NPY_FLOAT);
+    if (!array2 || !require_dimensions(array2,2) || !require_contiguous(array2)
+      || !require_native(array2)) SWIG_fail;
+    (&arg2)->data = (float*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_FLOAT,
+      &is_new_object3);
+    if (!array3 || !require_dimensions(array3, 1) ||
+      !require_size(array3, size, 1)) SWIG_fail;
+    (&arg3)->data = (float*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  ecode4 = SWIG_AsVal_float(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "StatisticsTree32_transform_quantile" "', argument " "4"" of type '" "float""'");
+  } 
+  arg4 = static_cast< float >(val4);
+  (arg1)->transform_quantile(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_StatisticsTree32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  StatisticsTree_wrapper< float > *arg1 = (StatisticsTree_wrapper< float > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SWQuantileScaler_wrapperT_float_t, SWIG_POINTER_DISOWN |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SWQuantileScaler32" "', argument " "1"" of type '" "SWQuantileScaler_wrapper< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_StatisticsTree32" "', argument " "1"" of type '" "StatisticsTree_wrapper< float > *""'"); 
   }
-  arg1 = reinterpret_cast< SWQuantileScaler_wrapper< float > * >(argp1);
+  arg1 = reinterpret_cast< StatisticsTree_wrapper< float > * >(argp1);
   delete arg1;
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -13169,68 +12917,70 @@ fail:
 }
 
 
-SWIGINTERN PyObject *SWQuantileScaler32_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *StatisticsTree32_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_SWQuantileScaler_wrapperT_float_t, SWIG_NewClientData(obj));
+  SWIG_TypeNewClientData(SWIGTYPE_p_StatisticsTree_wrapperT_float_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *SWQuantileScaler32_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *StatisticsTree32_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_SWQuantileScaler64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_StatisticsTree64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
-  double arg2 ;
   double val1 ;
   int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  PyObject *swig_obj[2] ;
-  SWQuantileScaler_wrapper< double > *result = 0 ;
+  PyObject *swig_obj[1] ;
+  StatisticsTree_wrapper< double > *result = 0 ;
   
-  if (!SWIG_Python_UnpackTuple(args, "new_SWQuantileScaler64", 2, 2, swig_obj)) SWIG_fail;
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
   ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_SWQuantileScaler64" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_StatisticsTree64" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast< double >(val1);
-  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_SWQuantileScaler64" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  result = (SWQuantileScaler_wrapper< double > *)new SWQuantileScaler_wrapper< double >(arg1,arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_SWQuantileScaler_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
+  result = (StatisticsTree_wrapper< double > *)new StatisticsTree_wrapper< double >(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_StatisticsTree_wrapperT_double_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_SWQuantileScaler64_transform(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_StatisticsTree64_process(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  SWQuantileScaler_wrapper< double > *arg1 = (SWQuantileScaler_wrapper< double > *) 0 ;
+  StatisticsTree_wrapper< double > *arg1 = (StatisticsTree_wrapper< double > *) 0 ;
   NumpyArray2< double > arg2 ;
-  NumpyArray2< double > arg3 ;
-  NumpyArray1< double > arg4 ;
+  NumpyArray1< double > arg3 ;
+  NumpyArray1< unsigned int > arg4 ;
+  NumpyArray1< double > arg5 ;
+  SwigValueWrapper< NumpyArray3< double > > arg6 ;
+  NumpyArray1< unsigned int > arg7 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
   PyArrayObject *array3 = NULL ;
+  int is_new_object3 = 0 ;
   PyArrayObject *array4 = NULL ;
   int is_new_object4 = 0 ;
-  PyObject *swig_obj[4] ;
+  PyArrayObject *array5 = NULL ;
+  int is_new_object5 = 0 ;
+  PyArrayObject *array6 = NULL ;
+  PyArrayObject *array7 = NULL ;
+  int i7 = 1 ;
+  PyObject *swig_obj[7] ;
   
-  if (!SWIG_Python_UnpackTuple(args, "SWQuantileScaler64_transform", 4, 4, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SWQuantileScaler_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree64_process", 7, 7, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SWQuantileScaler64_transform" "', argument " "1"" of type '" "SWQuantileScaler_wrapper< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree64_process" "', argument " "1"" of type '" "StatisticsTree_wrapper< double > *""'"); 
   }
-  arg1 = reinterpret_cast< SWQuantileScaler_wrapper< double > * >(argp1);
+  arg1 = reinterpret_cast< StatisticsTree_wrapper< double > * >(argp1);
   {
     npy_intp size[2] = {
       -1, -1 
@@ -13244,26 +12994,58 @@ SWIGINTERN PyObject *_wrap_SWQuantileScaler64_transform(PyObject *SWIGUNUSEDPARM
     (&arg2)->dim2 = (int) array_size(array2,1);
   }
   {
-    array3 = obj_to_array_no_conversion(swig_obj[2], NPY_DOUBLE);
-    if (!array3 || !require_dimensions(array3,2) || !require_contiguous(array3)
-      || !require_native(array3)) SWIG_fail;
+    npy_intp size[1] = {
+      -1 
+    };
+    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_DOUBLE,
+      &is_new_object3);
+    if (!array3 || !require_dimensions(array3, 1) ||
+      !require_size(array3, size, 1)) SWIG_fail;
     (&arg3)->data = (double*) array_data(array3);
     (&arg3)->dim1 = (int) array_size(array3,0);
-    (&arg3)->dim2 = (int) array_size(array3,1);
   }
   {
     npy_intp size[1] = {
       -1 
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
-      NPY_DOUBLE,
+      NPY_UINT,
       &is_new_object4);
     if (!array4 || !require_dimensions(array4, 1) ||
       !require_size(array4, size, 1)) SWIG_fail;
-    (&arg4)->data = (double*) array_data(array4);
+    (&arg4)->data = (unsigned int*) array_data(array4);
     (&arg4)->dim1 = (int) array_size(array4,0);
   }
-  (arg1)->transform(arg2,arg3,arg4);
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array5 = obj_to_array_contiguous_allow_conversion(swig_obj[4],
+      NPY_DOUBLE,
+      &is_new_object5);
+    if (!array5 || !require_dimensions(array5, 1) ||
+      !require_size(array5, size, 1)) SWIG_fail;
+    (&arg5)->data = (double*) array_data(array5);
+    (&arg5)->dim1 = (int) array_size(array5,0);
+  }
+  {
+    array6 = obj_to_array_no_conversion(swig_obj[5], NPY_DOUBLE);
+    if (!array6 || !require_dimensions(array6,3) || !require_contiguous(array6)
+      || !require_native(array6)) SWIG_fail;
+    (&arg6)->data = (double*) array_data(array6);
+    (&arg6)->dim1 = (int) array_size(array6,0);
+    (&arg6)->dim2 = (int) array_size(array6,1);
+    (&arg6)->dim3 = (int) array_size(array6,2);
+  }
+  {
+    array7 = obj_to_array_no_conversion(swig_obj[6], NPY_UINT);
+    if (!array7 || !require_dimensions(array7,1) || !require_contiguous(array7)
+      || !require_native(array7)) SWIG_fail;
+    (&arg7)->data = (unsigned int*) array_data(array7);
+    (&arg7)->dim1 = (int) array_size(array7,0);
+  }
+  (arg1)->process(arg2,arg3,arg4,arg5,arg6,arg7);
   resultobj = SWIG_Py_Void();
   {
     if (is_new_object2 && array2)
@@ -13272,9 +13054,21 @@ SWIGINTERN PyObject *_wrap_SWQuantileScaler64_transform(PyObject *SWIGUNUSEDPARM
     }
   }
   {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  {
     if (is_new_object4 && array4)
     {
       Py_DECREF(array4); 
+    }
+  }
+  {
+    if (is_new_object5 && array5)
+    {
+      Py_DECREF(array5); 
     }
   }
   return resultobj;
@@ -13286,29 +13080,165 @@ fail:
     }
   }
   {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  {
     if (is_new_object4 && array4)
     {
       Py_DECREF(array4); 
+    }
+  }
+  {
+    if (is_new_object5 && array5)
+    {
+      Py_DECREF(array5); 
     }
   }
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_delete_SWQuantileScaler64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_StatisticsTree64_transform_zscore(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  SWQuantileScaler_wrapper< double > *arg1 = (SWQuantileScaler_wrapper< double > *) 0 ;
+  StatisticsTree_wrapper< double > *arg1 = (StatisticsTree_wrapper< double > *) 0 ;
+  NumpyArray2< double > arg2 ;
+  NumpyArray1< double > arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  PyArrayObject *array3 = NULL ;
+  int is_new_object3 = 0 ;
+  PyObject *swig_obj[3] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree64_transform_zscore", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree64_transform_zscore" "', argument " "1"" of type '" "StatisticsTree_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< StatisticsTree_wrapper< double > * >(argp1);
+  {
+    array2 = obj_to_array_no_conversion(swig_obj[1], NPY_DOUBLE);
+    if (!array2 || !require_dimensions(array2,2) || !require_contiguous(array2)
+      || !require_native(array2)) SWIG_fail;
+    (&arg2)->data = (double*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_DOUBLE,
+      &is_new_object3);
+    if (!array3 || !require_dimensions(array3, 1) ||
+      !require_size(array3, size, 1)) SWIG_fail;
+    (&arg3)->data = (double*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  (arg1)->transform_zscore(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_StatisticsTree64_transform_quantile(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  StatisticsTree_wrapper< double > *arg1 = (StatisticsTree_wrapper< double > *) 0 ;
+  NumpyArray2< double > arg2 ;
+  NumpyArray1< double > arg3 ;
+  double arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  PyArrayObject *array3 = NULL ;
+  int is_new_object3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
+  
+  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree64_transform_quantile", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree64_transform_quantile" "', argument " "1"" of type '" "StatisticsTree_wrapper< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< StatisticsTree_wrapper< double > * >(argp1);
+  {
+    array2 = obj_to_array_no_conversion(swig_obj[1], NPY_DOUBLE);
+    if (!array2 || !require_dimensions(array2,2) || !require_contiguous(array2)
+      || !require_native(array2)) SWIG_fail;
+    (&arg2)->data = (double*) array_data(array2);
+    (&arg2)->dim1 = (int) array_size(array2,0);
+    (&arg2)->dim2 = (int) array_size(array2,1);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array3 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_DOUBLE,
+      &is_new_object3);
+    if (!array3 || !require_dimensions(array3, 1) ||
+      !require_size(array3, size, 1)) SWIG_fail;
+    (&arg3)->data = (double*) array_data(array3);
+    (&arg3)->dim1 = (int) array_size(array3,0);
+  }
+  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "StatisticsTree64_transform_quantile" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  (arg1)->transform_quantile(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object3 && array3)
+    {
+      Py_DECREF(array3); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_StatisticsTree64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  StatisticsTree_wrapper< double > *arg1 = (StatisticsTree_wrapper< double > *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_SWQuantileScaler_wrapperT_double_t, SWIG_POINTER_DISOWN |  0 );
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SWQuantileScaler64" "', argument " "1"" of type '" "SWQuantileScaler_wrapper< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_StatisticsTree64" "', argument " "1"" of type '" "StatisticsTree_wrapper< double > *""'"); 
   }
-  arg1 = reinterpret_cast< SWQuantileScaler_wrapper< double > * >(argp1);
+  arg1 = reinterpret_cast< StatisticsTree_wrapper< double > * >(argp1);
   delete arg1;
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -13317,14 +13247,14 @@ fail:
 }
 
 
-SWIGINTERN PyObject *SWQuantileScaler64_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *StatisticsTree64_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_SWQuantileScaler_wrapperT_double_t, SWIG_NewClientData(obj));
+  SWIG_TypeNewClientData(SWIGTYPE_p_StatisticsTree_wrapperT_double_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *SWQuantileScaler64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *StatisticsTree64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   return SWIG_Python_InitShadowInstance(args);
 }
 
@@ -13459,7 +13389,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "SDOstream64_swigregister", SDOstream64_swigregister, METH_O, NULL},
 	 { "SDOstream64_swiginit", SDOstream64_swiginit, METH_VARARGS, NULL},
 	 { "new_DBOR32", _wrap_new_DBOR32, METH_VARARGS, NULL},
-	 { "DBOR32_fit", _wrap_DBOR32_fit, METH_VARARGS, NULL},
 	 { "DBOR32_fit_predict", _wrap_DBOR32_fit_predict, METH_VARARGS, NULL},
 	 { "DBOR32_window_size", _wrap_DBOR32_window_size, METH_O, NULL},
 	 { "DBOR32_get_window", _wrap_DBOR32_get_window, METH_VARARGS, NULL},
@@ -13467,7 +13396,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "DBOR32_swigregister", DBOR32_swigregister, METH_O, NULL},
 	 { "DBOR32_swiginit", DBOR32_swiginit, METH_VARARGS, NULL},
 	 { "new_DBOR64", _wrap_new_DBOR64, METH_VARARGS, NULL},
-	 { "DBOR64_fit", _wrap_DBOR64_fit, METH_VARARGS, NULL},
 	 { "DBOR64_fit_predict", _wrap_DBOR64_fit_predict, METH_VARARGS, NULL},
 	 { "DBOR64_window_size", _wrap_DBOR64_window_size, METH_O, NULL},
 	 { "DBOR64_get_window", _wrap_DBOR64_get_window, METH_VARARGS, NULL},
@@ -13580,26 +13508,20 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_HSChains64", _wrap_delete_HSChains64, METH_O, NULL},
 	 { "HSChains64_swigregister", HSChains64_swigregister, METH_O, NULL},
 	 { "HSChains64_swiginit", HSChains64_swiginit, METH_VARARGS, NULL},
-	 { "new_SWZScoreScaler32", _wrap_new_SWZScoreScaler32, METH_O, NULL},
-	 { "SWZScoreScaler32_transform", _wrap_SWZScoreScaler32_transform, METH_VARARGS, NULL},
-	 { "delete_SWZScoreScaler32", _wrap_delete_SWZScoreScaler32, METH_O, NULL},
-	 { "SWZScoreScaler32_swigregister", SWZScoreScaler32_swigregister, METH_O, NULL},
-	 { "SWZScoreScaler32_swiginit", SWZScoreScaler32_swiginit, METH_VARARGS, NULL},
-	 { "new_SWZScoreScaler64", _wrap_new_SWZScoreScaler64, METH_O, NULL},
-	 { "SWZScoreScaler64_transform", _wrap_SWZScoreScaler64_transform, METH_VARARGS, NULL},
-	 { "delete_SWZScoreScaler64", _wrap_delete_SWZScoreScaler64, METH_O, NULL},
-	 { "SWZScoreScaler64_swigregister", SWZScoreScaler64_swigregister, METH_O, NULL},
-	 { "SWZScoreScaler64_swiginit", SWZScoreScaler64_swiginit, METH_VARARGS, NULL},
-	 { "new_SWQuantileScaler32", _wrap_new_SWQuantileScaler32, METH_VARARGS, NULL},
-	 { "SWQuantileScaler32_transform", _wrap_SWQuantileScaler32_transform, METH_VARARGS, NULL},
-	 { "delete_SWQuantileScaler32", _wrap_delete_SWQuantileScaler32, METH_O, NULL},
-	 { "SWQuantileScaler32_swigregister", SWQuantileScaler32_swigregister, METH_O, NULL},
-	 { "SWQuantileScaler32_swiginit", SWQuantileScaler32_swiginit, METH_VARARGS, NULL},
-	 { "new_SWQuantileScaler64", _wrap_new_SWQuantileScaler64, METH_VARARGS, NULL},
-	 { "SWQuantileScaler64_transform", _wrap_SWQuantileScaler64_transform, METH_VARARGS, NULL},
-	 { "delete_SWQuantileScaler64", _wrap_delete_SWQuantileScaler64, METH_O, NULL},
-	 { "SWQuantileScaler64_swigregister", SWQuantileScaler64_swigregister, METH_O, NULL},
-	 { "SWQuantileScaler64_swiginit", SWQuantileScaler64_swiginit, METH_VARARGS, NULL},
+	 { "new_StatisticsTree32", _wrap_new_StatisticsTree32, METH_O, NULL},
+	 { "StatisticsTree32_process", _wrap_StatisticsTree32_process, METH_VARARGS, NULL},
+	 { "StatisticsTree32_transform_zscore", _wrap_StatisticsTree32_transform_zscore, METH_VARARGS, NULL},
+	 { "StatisticsTree32_transform_quantile", _wrap_StatisticsTree32_transform_quantile, METH_VARARGS, NULL},
+	 { "delete_StatisticsTree32", _wrap_delete_StatisticsTree32, METH_O, NULL},
+	 { "StatisticsTree32_swigregister", StatisticsTree32_swigregister, METH_O, NULL},
+	 { "StatisticsTree32_swiginit", StatisticsTree32_swiginit, METH_VARARGS, NULL},
+	 { "new_StatisticsTree64", _wrap_new_StatisticsTree64, METH_O, NULL},
+	 { "StatisticsTree64_process", _wrap_StatisticsTree64_process, METH_VARARGS, NULL},
+	 { "StatisticsTree64_transform_zscore", _wrap_StatisticsTree64_transform_zscore, METH_VARARGS, NULL},
+	 { "StatisticsTree64_transform_quantile", _wrap_StatisticsTree64_transform_quantile, METH_VARARGS, NULL},
+	 { "delete_StatisticsTree64", _wrap_delete_StatisticsTree64, METH_O, NULL},
+	 { "StatisticsTree64_swigregister", StatisticsTree64_swigregister, METH_O, NULL},
+	 { "StatisticsTree64_swiginit", StatisticsTree64_swiginit, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -13670,10 +13592,8 @@ static swig_type_info _swigt__p_SWKNN_wrapperT_double_t = {"_p_SWKNN_wrapperT_do
 static swig_type_info _swigt__p_SWKNN_wrapperT_float_t = {"_p_SWKNN_wrapperT_float_t", "SWKNN_wrapper< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SWLOF_wrapperT_double_t = {"_p_SWLOF_wrapperT_double_t", "SWLOF_wrapper< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SWLOF_wrapperT_float_t = {"_p_SWLOF_wrapperT_float_t", "SWLOF_wrapper< float > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_SWQuantileScaler_wrapperT_double_t = {"_p_SWQuantileScaler_wrapperT_double_t", "SWQuantileScaler_wrapper< double > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_SWQuantileScaler_wrapperT_float_t = {"_p_SWQuantileScaler_wrapperT_float_t", "SWQuantileScaler_wrapper< float > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_SWZScoreScaler_wrapperT_double_t = {"_p_SWZScoreScaler_wrapperT_double_t", "SWZScoreScaler_wrapper< double > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_SWZScoreScaler_wrapperT_float_t = {"_p_SWZScoreScaler_wrapperT_float_t", "SWZScoreScaler_wrapper< float > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_StatisticsTree_wrapperT_double_t = {"_p_StatisticsTree_wrapperT_double_t", "StatisticsTree_wrapper< double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_StatisticsTree_wrapperT_float_t = {"_p_StatisticsTree_wrapperT_float_t", "StatisticsTree_wrapper< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
@@ -13713,10 +13633,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_SWKNN_wrapperT_float_t,
   &_swigt__p_SWLOF_wrapperT_double_t,
   &_swigt__p_SWLOF_wrapperT_float_t,
-  &_swigt__p_SWQuantileScaler_wrapperT_double_t,
-  &_swigt__p_SWQuantileScaler_wrapperT_float_t,
-  &_swigt__p_SWZScoreScaler_wrapperT_double_t,
-  &_swigt__p_SWZScoreScaler_wrapperT_float_t,
+  &_swigt__p_StatisticsTree_wrapperT_double_t,
+  &_swigt__p_StatisticsTree_wrapperT_float_t,
   &_swigt__p_char,
 };
 
@@ -13756,10 +13674,8 @@ static swig_cast_info _swigc__p_SWKNN_wrapperT_double_t[] = {  {&_swigt__p_SWKNN
 static swig_cast_info _swigc__p_SWKNN_wrapperT_float_t[] = {  {&_swigt__p_SWKNN_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SWLOF_wrapperT_double_t[] = {  {&_swigt__p_SWLOF_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SWLOF_wrapperT_float_t[] = {  {&_swigt__p_SWLOF_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_SWQuantileScaler_wrapperT_double_t[] = {  {&_swigt__p_SWQuantileScaler_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_SWQuantileScaler_wrapperT_float_t[] = {  {&_swigt__p_SWQuantileScaler_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_SWZScoreScaler_wrapperT_double_t[] = {  {&_swigt__p_SWZScoreScaler_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_SWZScoreScaler_wrapperT_float_t[] = {  {&_swigt__p_SWZScoreScaler_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_StatisticsTree_wrapperT_double_t[] = {  {&_swigt__p_StatisticsTree_wrapperT_double_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_StatisticsTree_wrapperT_float_t[] = {  {&_swigt__p_StatisticsTree_wrapperT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
@@ -13799,10 +13715,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_SWKNN_wrapperT_float_t,
   _swigc__p_SWLOF_wrapperT_double_t,
   _swigc__p_SWLOF_wrapperT_float_t,
-  _swigc__p_SWQuantileScaler_wrapperT_double_t,
-  _swigc__p_SWQuantileScaler_wrapperT_float_t,
-  _swigc__p_SWZScoreScaler_wrapperT_double_t,
-  _swigc__p_SWZScoreScaler_wrapperT_float_t,
+  _swigc__p_StatisticsTree_wrapperT_double_t,
+  _swigc__p_StatisticsTree_wrapperT_float_t,
   _swigc__p_char,
 };
 
