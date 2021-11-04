@@ -28,15 +28,27 @@ class StatisticsTree(object):
     window: float
         Window length after which samples will be pruned.
 
+    what: list of strings, optional
+        Which statistics to compute. Elements of `what` can be one of
+        'sum', 'average', 'squares_sum', 'variance', 'min', 'max'
+        or 'median'.
+
+    quantiles: list of floats, optional
+        Quantile values to compute in addition to statistics in `what`.
+        Elements should be floats in [0,1].
+
     float_type: np.float32 or np.float64
         The floating point type to use for internal processing.
     """
-    def __init__(self, window, float_type=np.float64):
+    def __init__(self, window, what=[], quantiles=[], float_type=np.float64):
         self.window = window
         self.float_type = float_type
         cpp_obj = {np.float32: dSalmon_cpp.StatisticsTree32, np.float64: dSalmon_cpp.StatisticsTree64}[float_type]
         self.cpp_tree = cpp_obj(window)
-        self.mapping = {
+        if isinstance(what, str):
+            what = [ what ]
+        self.stats = what
+        stat_mapping = {
             'sum': self.cpp_tree.STAT_SUM,
             'average': self.cpp_tree.STAT_AVERAGE,
             'squares_sum': self.cpp_tree.STAT_SQUARES_SUM,
@@ -45,9 +57,12 @@ class StatisticsTree(object):
             'max': self.cpp_tree.STAT_MAX,
             'median': self.cpp_tree.STAT_MEDIAN,
         }
+        self.mapped_stats = [ stat_mapping[x] for x in what ]
+        self.quantiles = np.array(quantiles, dtype=self.float_type)
+        assert (0 <= self.quantiles).all() and (self.quantiles <= 1).all()
         self.last_time = 0
 
-    def process(self, X, times=None, what=[], quantiles=[]):
+    def fit_query(self, X, times=None):
         """
         Process next chunk of data.
 
@@ -59,15 +74,6 @@ class StatisticsTree(object):
         times: ndarray, shape (n_samples,), optional
             Timestamps for input data. If None, timestamps are linearly
             increased for each sample.
-
-        what: list of strings
-            Which statistics to compute. Elements of `what` can be one of
-            'sum', 'average', 'squares_sum', 'variance', 'min', 'max'
-            or 'median'.
-
-        quantiles: list of floats
-            Quantile values to compute in addition to statistics in `what`.
-            Elements should be floats in [0,1].
 
         Returns
         -------
@@ -82,17 +88,11 @@ class StatisticsTree(object):
         """
         X = sanitizeData(X, self.float_type)
         times = sanitizeTimes(times, X.shape[0], self.last_time, self.float_type)
-        if isinstance(what, str):
-            what = [ what ]
-        mapped_stats = [ self.mapping[x] for x in what ]
-        quantiles = np.array(quantiles, dtype=self.float_type)
-        assert (0 <= quantiles).all() and (quantiles <= 1).all()
-        result = np.empty((X.shape[0], len(mapped_stats) + len(quantiles), X.shape[1]), dtype=self.float_type)
+        result = np.empty((X.shape[0], len(self.mapped_stats) + len(self.quantiles), X.shape[1]), dtype=self.float_type)
         counts = np.empty(X.shape[0], dtype=np.int64)
-        self.cpp_tree.process(X, times, mapped_stats, quantiles, result, counts)
+        self.cpp_tree.fit_query(X, times, self.mapped_stats, self.quantiles, result, counts)
         self.last_time = times[-1]
         return result, counts
-
 
 
 class _MTreeByIndexLookup(object):

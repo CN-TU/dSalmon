@@ -12621,7 +12621,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_StatisticsTree32_process(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_StatisticsTree32_fit_query(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   StatisticsTree_wrapper< float > *arg1 = (StatisticsTree_wrapper< float > *) 0 ;
   NumpyArray2< float > arg2 ;
@@ -12645,10 +12645,10 @@ SWIGINTERN PyObject *_wrap_StatisticsTree32_process(PyObject *SWIGUNUSEDPARM(sel
   int i7 = 1 ;
   PyObject *swig_obj[7] ;
   
-  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree32_process", 7, 7, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree32_fit_query", 7, 7, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree32_process" "', argument " "1"" of type '" "StatisticsTree_wrapper< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree32_fit_query" "', argument " "1"" of type '" "StatisticsTree_wrapper< float > *""'"); 
   }
   arg1 = reinterpret_cast< StatisticsTree_wrapper< float > * >(argp1);
   {
@@ -12715,7 +12715,7 @@ SWIGINTERN PyObject *_wrap_StatisticsTree32_process(PyObject *SWIGUNUSEDPARM(sel
     (&arg7)->data = (long long*) array_data(array7);
     (&arg7)->dim1 = (int) array_size(array7,0);
   }
-  (arg1)->process(arg2,arg3,arg4,arg5,arg6,arg7);
+  (arg1)->fit_query(arg2,arg3,arg4,arg5,arg6,arg7);
   resultobj = SWIG_Py_Void();
   {
     if (is_new_object2 && array2)
@@ -12951,7 +12951,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_StatisticsTree64_process(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_StatisticsTree64_fit_query(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   StatisticsTree_wrapper< double > *arg1 = (StatisticsTree_wrapper< double > *) 0 ;
   NumpyArray2< double > arg2 ;
@@ -12975,10 +12975,10 @@ SWIGINTERN PyObject *_wrap_StatisticsTree64_process(PyObject *SWIGUNUSEDPARM(sel
   int i7 = 1 ;
   PyObject *swig_obj[7] ;
   
-  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree64_process", 7, 7, swig_obj)) SWIG_fail;
+  if (!SWIG_Python_UnpackTuple(args, "StatisticsTree64_fit_query", 7, 7, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_StatisticsTree_wrapperT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree64_process" "', argument " "1"" of type '" "StatisticsTree_wrapper< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StatisticsTree64_fit_query" "', argument " "1"" of type '" "StatisticsTree_wrapper< double > *""'"); 
   }
   arg1 = reinterpret_cast< StatisticsTree_wrapper< double > * >(argp1);
   {
@@ -13045,7 +13045,7 @@ SWIGINTERN PyObject *_wrap_StatisticsTree64_process(PyObject *SWIGUNUSEDPARM(sel
     (&arg7)->data = (long long*) array_data(array7);
     (&arg7)->dim1 = (int) array_size(array7,0);
   }
-  (arg1)->process(arg2,arg3,arg4,arg5,arg6,arg7);
+  (arg1)->fit_query(arg2,arg3,arg4,arg5,arg6,arg7);
   resultobj = SWIG_Py_Void();
   {
     if (is_new_object2 && array2)
@@ -13509,14 +13509,14 @@ static PyMethodDef SwigMethods[] = {
 	 { "HSChains64_swigregister", HSChains64_swigregister, METH_O, NULL},
 	 { "HSChains64_swiginit", HSChains64_swiginit, METH_VARARGS, NULL},
 	 { "new_StatisticsTree32", _wrap_new_StatisticsTree32, METH_O, NULL},
-	 { "StatisticsTree32_process", _wrap_StatisticsTree32_process, METH_VARARGS, NULL},
+	 { "StatisticsTree32_fit_query", _wrap_StatisticsTree32_fit_query, METH_VARARGS, NULL},
 	 { "StatisticsTree32_transform_zscore", _wrap_StatisticsTree32_transform_zscore, METH_VARARGS, NULL},
 	 { "StatisticsTree32_transform_quantile", _wrap_StatisticsTree32_transform_quantile, METH_VARARGS, NULL},
 	 { "delete_StatisticsTree32", _wrap_delete_StatisticsTree32, METH_O, NULL},
 	 { "StatisticsTree32_swigregister", StatisticsTree32_swigregister, METH_O, NULL},
 	 { "StatisticsTree32_swiginit", StatisticsTree32_swiginit, METH_VARARGS, NULL},
 	 { "new_StatisticsTree64", _wrap_new_StatisticsTree64, METH_O, NULL},
-	 { "StatisticsTree64_process", _wrap_StatisticsTree64_process, METH_VARARGS, NULL},
+	 { "StatisticsTree64_fit_query", _wrap_StatisticsTree64_fit_query, METH_VARARGS, NULL},
 	 { "StatisticsTree64_transform_zscore", _wrap_StatisticsTree64_transform_zscore, METH_VARARGS, NULL},
 	 { "StatisticsTree64_transform_quantile", _wrap_StatisticsTree64_transform_quantile, METH_VARARGS, NULL},
 	 { "delete_StatisticsTree64", _wrap_delete_StatisticsTree64, METH_O, NULL},

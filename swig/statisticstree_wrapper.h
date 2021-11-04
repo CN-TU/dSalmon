@@ -28,7 +28,7 @@ class StatisticsTree_wrapper {
         STAT_MEDIAN
     };
     StatisticsTree_wrapper(FloatType window);
-    void process(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times, const NumpyArray1<unsigned> stats, const NumpyArray1<FloatType> quantiles, NumpyArray3<FloatType> result, NumpyArray1<long long> counts);
+    void fit_query(const NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times, const NumpyArray1<unsigned> stats, const NumpyArray1<FloatType> quantiles, NumpyArray3<FloatType> result, NumpyArray1<long long> counts);
     void transform_zscore(NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times);
     void transform_quantile(NumpyArray2<FloatType> data, const NumpyArray1<FloatType> times, FloatType q);
 };

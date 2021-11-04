@@ -799,8 +799,8 @@ class StatisticsTree32(object):
     def __init__(self, window):
         _dSalmon.StatisticsTree32_swiginit(self, _dSalmon.new_StatisticsTree32(window))
 
-    def process(self, data, times, stats, quantiles, result, counts):
-        return _dSalmon.StatisticsTree32_process(self, data, times, stats, quantiles, result, counts)
+    def fit_query(self, data, times, stats, quantiles, result, counts):
+        return _dSalmon.StatisticsTree32_fit_query(self, data, times, stats, quantiles, result, counts)
 
     def transform_zscore(self, data, times):
         return _dSalmon.StatisticsTree32_transform_zscore(self, data, times)
@@ -826,8 +826,8 @@ class StatisticsTree64(object):
     def __init__(self, window):
         _dSalmon.StatisticsTree64_swiginit(self, _dSalmon.new_StatisticsTree64(window))
 
-    def process(self, data, times, stats, quantiles, result, counts):
-        return _dSalmon.StatisticsTree64_process(self, data, times, stats, quantiles, result, counts)
+    def fit_query(self, data, times, stats, quantiles, result, counts):
+        return _dSalmon.StatisticsTree64_fit_query(self, data, times, stats, quantiles, result, counts)
 
     def transform_zscore(self, data, times):
         return _dSalmon.StatisticsTree64_transform_zscore(self, data, times)
