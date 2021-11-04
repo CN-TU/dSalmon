@@ -1,0 +1,4 @@
+
+include cpp/*.h
+include swig/*.h
+recursive-include contrib *.hpp
