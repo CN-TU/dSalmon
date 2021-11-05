@@ -5,12 +5,15 @@
 # see accompanying file LICENSE or <https://www.gnu.org/licenses/>.
 
 import glob
+import os
+import pathlib
+
 try:
     from setuptools import setup, Extension
 except ImportError:
     from distutils.core import setup, Extension
 
-import os
+parent_path = pathlib.Path(__file__).parent
 
 try:
     import numpy
@@ -37,13 +40,18 @@ dSalmon_cpp = Extension(
 setup(
     name='dSalmon',
     version='0.1',
+    license='LGPL-3.0',
+    description='dSalmon is a framework for analyzing data streams',
     author='Alexander Hartl',
     author_email='alexander.hartl@tuwien.ac.at',
     url='https://github.com/CN-TU/dSalmon',
     project_urls={
         'Source': 'https://github.com/CN-TU/dSalmon',
+        'Documentation': 'https://dSalmon.readthedocs.io',
         'Tracker': 'https://github.com/CN-TU/dSalmon/issues'
     },
+    long_description=(parent_path / 'README.rst').read_text(encoding='utf-8'),
+    long_description_content_type='text/x-rst',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -57,5 +65,6 @@ setup(
     packages=['dSalmon', 'dSalmon.swig'],
     package_dir={'dSalmon': 'python', 'dSalmon.swig': 'swig'},
     ext_modules = [ dSalmon_cpp ],
-    install_requires=['numpy']
+    install_requires=['numpy'],
+    python_requires='>=3.5'
 )
