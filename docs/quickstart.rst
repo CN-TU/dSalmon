@@ -2,4 +2,4 @@ Getting Started
 ===============
 
 .. include:: ../README.rst
-   :start-line: 7
+   :start-line: 11
