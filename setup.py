@@ -7,6 +7,7 @@
 import glob
 import os
 import pathlib
+import platform
 
 try:
     from setuptools import setup, Extension
@@ -20,6 +21,28 @@ try:
 except:
     raise ImportError('Numpy is required for building this package.', name='numpy')
 
+try:
+    import cpuinfo
+except:
+    raise ImportError('py-cpuinfo is required for building this package.', name='py-cpuinfo')
+
+def get_simd_args():
+    info = cpuinfo.get_cpu_info()
+    flags = info.get('flags', [])
+    args = []
+    if 'avx2' in flags:
+        args.append('/arch:AVX2' if platform.system() == 'Windows' else '-mavx2')
+    if 'sse3' in flags:
+        args.append('/arch:SSE3' if platform.system() == 'Windows' else '-msse3')
+    return args
+    
+def get_strip_args():
+    # Strip .so file to an acceptable size
+    if platform.system() == 'Windows':
+        return [ ]
+    else:
+        return [ '-g0' ]
+    
 numpy_path = os.path.dirname(numpy.__file__)
 numpy_include = numpy_path + '/core/include'
 
@@ -34,7 +57,7 @@ dSalmon_cpp = Extension(
     'dSalmon.swig._dSalmon',
     CPP_SOURCES,
     include_dirs=['cpp', numpy_include, 'contrib/boost'],
-    extra_compile_args=['-g0'] # Strip .so file to an acceptable size
+    extra_compile_args=get_simd_args() + get_strip_args()
 )
 
 setup(

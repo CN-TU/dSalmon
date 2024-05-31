@@ -34,7 +34,13 @@ template<typename FloatType>
 class EuclideanDist_wrapper : public Distance_wrapper<FloatType> {
   public:
     typename Distance_wrapper<FloatType>::DistanceFunction getFunction() override  {
+#ifdef __AVX2__
+        return Vector<FloatType>::euclideanAVX2;
+#elif defined(__SSE3__)
+        return Vector<FloatType>::euclideanSSE3;
+#else
         return Vector<FloatType>::euclidean;
+#endif
     };
 };
 DEFINE_FLOATINSTANTIATIONS(EuclideanDist)
