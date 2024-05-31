@@ -58,7 +58,7 @@ class RSHash {
     }
 
     std::vector<int> computeCmsBins(const Vector<FloatType>& data) {
-        std::int64_t transformed_sample[dimension];
+        std::vector<std::int64_t> transformed_sample(dimension, 0);
         for (int i = 0; i < dimension; i++) {
             if (dimension_selected[i]) {
                 if (!std::isinf(data[i])) {

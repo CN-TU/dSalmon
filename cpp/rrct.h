@@ -129,7 +129,7 @@ class RRCT {
     }
 
     std::tuple<int,bool,FloatType> insertPointCut(const VectorType& point, const BboxRef& bbox) {
-        FloatType ranges[dimension]; // TODO: allocate on heap?
+        std::vector<FloatType> ranges(dimension, 0.0);
         FloatType tot_sum = 0;
         for (int i = 0; i < dimension; i++) {
             ranges[i] =

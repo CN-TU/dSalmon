@@ -51,9 +51,9 @@ void MTree_wrapper<FloatType>::insert(const NumpyArray2<FloatType> data, const N
     };
     int n_jobs = std::min<int>(data.dim1, insert_jobs);
     // TODO: use a different implementation when n_jobs==1
-    std::thread threads[n_jobs];
+    std::vector<std::thread> threads;
     for (int i = 0; i < n_jobs; i++)
-        threads[i] = std::thread{worker};
+        threads.emplace_back(worker);
     for (int i = 0; i < data.dim1; i++) {
         Entry new_entry;
         new_entry.key = indices.data[i];
@@ -339,9 +339,9 @@ MTreeRangeQuery_wrapper<FloatType>::MTreeRangeQuery_wrapper(MTree_wrapper<FloatT
         worker();
     }
     else {
-        std::thread threads[n_jobs];
+        std::vector<std::thread> threads;
         for (int i = 0; i < n_jobs; i++)
-            threads[i] = std::thread(worker);
+            threads.emplace_back(worker);
         for (int i = 0; i < n_jobs; i++)
             threads[i].join();
     }
@@ -400,9 +400,9 @@ MTreeKnnQuery_wrapper<FloatType>::MTreeKnnQuery_wrapper(MTree_wrapper<FloatType>
         worker();
     }
     else {
-        std::thread threads[n_jobs];
+        std::vector<std::thread> threads;
         for (int i = 0; i < n_jobs; i++)
-            threads[i] = std::thread(worker);
+            threads.emplace_back(worker);
         for (int i = 0; i < n_jobs; i++)
             threads[i].join();
     }

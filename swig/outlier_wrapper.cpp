@@ -26,9 +26,9 @@ static void fit_predict_ensemble(unsigned ensemble_size, int n_jobs, std::functi
         thread_worker();
     }
     else {
-        std::thread threads[n_jobs];
+        std::vector<std::thread> threads;
         for (int i = 0; i < n_jobs; i++)
-            threads[i] = std::thread{thread_worker};
+            threads.emplace_back(thread_worker);
         for (int i = 0; i < n_jobs; i++)
             threads[i].join();
     }
